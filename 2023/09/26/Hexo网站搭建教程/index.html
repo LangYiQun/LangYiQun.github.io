@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://langyiqun.github.io/2023/09/26/Hexo%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1684920495319.png">
 <meta property="og:image" content="https://langyiqun.github.io/2023/09/26/Hexo%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/image-20231003193554011.png">
 <meta property="article:published_time" content="2023-09-26T09:03:12.000Z">
-<meta property="article:modified_time" content="2023-10-07T11:44:55.109Z">
+<meta property="article:modified_time" content="2023-10-07T12:36:09.894Z">
 <meta property="article:author" content="Lang Yi Qun">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
@@ -185,7 +185,13 @@
 
 <p>默认情况下，访问网址为：<a target="_blank" rel="noopener" href="http://localhost:4000/%EF%BC%8C%E8%AE%BF%E9%97%AE%E8%BF%99%E4%B8%AA%E6%9C%AC%E5%9C%B0%E7%BD%91%E5%9D%80%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E8%87%AA%E5%B7%B1%E7%94%9F%E6%88%90%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99">http://localhost:4000/，访问这个本地网址就可以看到自己生成的博客网站</a></p>
 <hr>
-<h2 id="第四节-将博客部署到Github"><a href="#第四节-将博客部署到Github" class="headerlink" title="第四节 将博客部署到Github"></a>第四节 将博客部署到Github</h2><p>生成的博客网站只能在自己电脑本地访问当然没意思，所以接下来看看如何把写好的博客部署到Github上。</p>
+<h2 id="第四节-将博客部署到Github"><a href="#第四节-将博客部署到Github" class="headerlink" title="第四节 将博客部署到Github"></a>第四节 将博客部署到Github</h2><p>生成的博客网站只能在自己电脑本地访问当然没意思，所以接下来看看如何把写好的博客部署到Github Pages上。</p>
+<h5 id="GitHub-Pages-是什么"><a href="#GitHub-Pages-是什么" class="headerlink" title="GitHub Pages 是什么?"></a>GitHub Pages 是什么?</h5><ul>
+<li><a href="https://link.zhihu.com/?target=https://help.github.com/en/articles/what-is-github-pages">What is GitHub Pages? - GitHub Help</a></li>
+</ul>
+<p>GitHub Pages 是由 GitHub 官方提供的一种免费的静态站点托管服务，让我们可以在 GitHub 仓库里托管和发布自己的静态网站页面。</p>
+<h5 id="Hexo-Github-Pages-发布博客原理"><a href="#Hexo-Github-Pages-发布博客原理" class="headerlink" title="Hexo + Github Pages 发布博客原理"></a>Hexo + Github Pages 发布博客原理</h5><p>在本地撰写 Markdown 格式文章后，通过 Hexo 解析文档，渲染生成具有主题样式的 HTML 静态网页，再推送到 GitHub 上完成博文的发布。</p>
+<p>下面看看怎么实现</p>
 <h3 id="4-1-Github创建个人仓库"><a href="#4-1-Github创建个人仓库" class="headerlink" title="4.1 Github创建个人仓库"></a>4.1 Github创建个人仓库</h3><p>点击New repository，开始新建仓库</p>
 <p>新仓库的名字有固定格式要求，否组无法建站</p>
 <p>格式为：用户名 + .github.oi</p>
@@ -222,7 +228,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://langyiqun.github.io/2023/09/26/Hexo%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" data-id="clnfzqeyr0004pouv7ftg0jzn" data-title="Hexo网站搭建教程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://langyiqun.github.io/2023/09/26/Hexo%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" data-id="clngzudmk0006ykuvbld7dflj" data-title="Hexo网站搭建教程" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -261,7 +267,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
     </div>
   </div>
 
@@ -271,7 +277,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+      <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
     </div>
   </div>
 
@@ -291,6 +297,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/10/07/Markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/">Markdown常用语法</a>
+          </li>
         
           <li>
             <a href="/2023/10/07/Hexo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Hexo上传图片</a>
