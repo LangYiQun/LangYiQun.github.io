@@ -19,28 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="一、Gem5模拟器简介gem5是一个开源、模块化的时钟精确的全系统模拟器，应用于计算机体系结构研究。该模拟器可以对CPU、存储系统、片上互连系统、I&#x2F;O等系统组件进行详细的建模，并通过修改不同组件的具体实现和各个组件的配置参数可以灵活配置不同的计算系统。 1.1 模拟组件 $\color[RGB]{0,150,255}{多种ISA}$ ：gem5支持常见的各种指令集：X86、ARM、RI">
+    <meta name="description" content="1 指令系统结构的分类CPU中用来存放操作数的存储单元主要有三种：堆栈、累加器、通用寄存器组。据此，指令系统（Instruction Set Architecture）可分为三种：  $\color[RGB]{40,120,181}{堆栈型结构}$：堆栈栈顶和次栈顶中的数据，运算后写入栈顶。两个操作数都是隐式的。优点：指令字比较短，程序占用的空间小；缺点：不能随机地访问堆栈，难以生成有效的代码，而">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gem5模拟器学习">
-<meta property="og:url" content="https://langyiqun.github.io/2023/10/17/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="第二章：指令系统">
+<meta property="og:url" content="https://langyiqun.github.io/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="郎轶群的博客">
-<meta property="og:description" content="一、Gem5模拟器简介gem5是一个开源、模块化的时钟精确的全系统模拟器，应用于计算机体系结构研究。该模拟器可以对CPU、存储系统、片上互连系统、I&#x2F;O等系统组件进行详细的建模，并通过修改不同组件的具体实现和各个组件的配置参数可以灵活配置不同的计算系统。 1.1 模拟组件 $\color[RGB]{0,150,255}{多种ISA}$ ：gem5支持常见的各种指令集：X86、ARM、RI">
+<meta property="og:description" content="1 指令系统结构的分类CPU中用来存放操作数的存储单元主要有三种：堆栈、累加器、通用寄存器组。据此，指令系统（Instruction Set Architecture）可分为三种：  $\color[RGB]{40,120,181}{堆栈型结构}$：堆栈栈顶和次栈顶中的数据，运算后写入栈顶。两个操作数都是隐式的。优点：指令字比较短，程序占用的空间小；缺点：不能随机地访问堆栈，难以生成有效的代码，而">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-10-17T07:41:30.000Z">
-<meta property="article:modified_time" content="2023-10-19T16:31:39.499Z">
+<meta property="article:published_time" content="2023-10-22T08:21:00.000Z">
+<meta property="article:modified_time" content="2023-10-23T01:44:20.618Z">
 <meta property="article:author" content="Lang Yi Qun">
-<meta property="article:tag" content="Gem5">
+<meta property="article:tag" content="计算机体系结构">
+<meta property="article:tag" content="指令系统">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://langyiqun.github.io/2023/10/17/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+<link rel="canonical" href="https://langyiqun.github.io/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/10/17/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0/","path":"2023/10/17/Gem5模拟器学习/","title":"Gem5模拟器学习"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/","path":"2023/10/22/第二章：指令系统/","title":"第二章：指令系统"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Gem5模拟器学习 | 郎轶群的博客</title>
+<title>第二章：指令系统 | 郎轶群的博客</title>
   
 
 
@@ -113,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一、Gem5模拟器简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%A8%A1%E6%8B%9F%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 模拟组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%A8%A1%E6%8B%9F%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 模拟模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Gem5%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">二、Gem5安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%AB%99"><span class="nav-number">3.</span> <span class="nav-text">学习网站</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">1 指令系统结构的分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">2. 寻址方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F%E4%B8%BE%E4%BE%8B"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 寻址方式举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 字节对齐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%AD%98%E5%82%A8%E7%9A%84%E6%95%B4%E6%95%B0%E8%BE%B9%E7%95%8C"><span class="nav-number">2.2.1.</span> <span class="nav-text">信息存储的整数边界</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E4%BF%A1%E6%81%AF%E7%9A%84%E8%B5%B7%E5%A7%8B%E5%9C%B0%E5%9D%80%E4%B8%BA%EF%BC%9Ax%E2%80%A6xxxx"><span class="nav-number">2.2.1.0.1.</span> <span class="nav-text">字节信息的起始地址为：x…xxxx</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%8A%E5%AD%97%E4%BF%A1%E6%81%AF%E7%9A%84%E8%B5%B7%E5%A7%8B%E5%9C%B0%E5%9D%80%E4%B8%BA%EF%BC%9Ax%E2%80%A6xxx0"><span class="nav-number">2.2.1.0.2.</span> <span class="nav-text">半字信息的起始地址为：x…xxx0</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E5%AD%97%E4%BF%A1%E6%81%AF%E7%9A%84%E8%B5%B7%E5%A7%8B%E5%9C%B0%E5%9D%80%E4%B8%BA%EF%BC%9Ax%E2%80%A6xx00"><span class="nav-number">2.2.1.0.3.</span> <span class="nav-text">单字信息的起始地址为：x…xx00</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8C%E5%AD%97%E4%BF%A1%E6%81%AF%E7%9A%84%E8%B5%B7%E5%A7%8B%E5%9C%B0%E5%9D%80%E4%B8%BA%EF%BC%9Ax%E2%80%A6x000"><span class="nav-number">2.2.1.0.4.</span> <span class="nav-text">双字信息的起始地址为：x…x000</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -193,7 +194,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/17/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -206,12 +207,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Gem5模拟器学习 | 郎轶群的博客">
+      <meta itemprop="name" content="第二章：指令系统 | 郎轶群的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Gem5模拟器学习
+          第二章：指令系统
         </h1>
 
         <div class="post-meta-container">
@@ -222,14 +223,23 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-10-17 15:41:30" itemprop="dateCreated datePublished" datetime="2023-10-17T15:41:30+08:00">2023-10-17</time>
+      <time title="创建时间：2023-10-22 16:21:00" itemprop="dateCreated datePublished" datetime="2023-10-22T16:21:00+08:00">2023-10-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-20 00:31:39" itemprop="dateModified" datetime="2023-10-20T00:31:39+08:00">2023-10-20</time>
+      <time title="修改时间：2023-10-23 09:44:20" itemprop="dateModified" datetime="2023-10-23T09:44:20+08:00">2023-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《计算机体系结构》学习笔记</span></a>
+        </span>
     </span>
 
   
@@ -241,39 +251,32 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="一、Gem5模拟器简介"><a href="#一、Gem5模拟器简介" class="headerlink" title="一、Gem5模拟器简介"></a>一、Gem5模拟器简介</h1><p>gem5是一个开源、模块化的时钟精确的全系统模拟器，应用于计算机体系结构研究。该模拟器可以对CPU、存储系统、片上互连系统、I&#x2F;O等系统组件进行详细的建模，并通过修改不同组件的具体实现和各个组件的配置参数可以灵活配置不同的计算系统。</p>
-<h2 id="1-1-模拟组件"><a href="#1-1-模拟组件" class="headerlink" title="1.1 模拟组件"></a>1.1 模拟组件</h2><ul>
-<li><p><strong>$\color[RGB]{0,150,255}{多种ISA}$</strong> ：gem5支持常见的各种指令集：X86、ARM、RISCV、SPARC、POWER、MIPS。不同的指令集包含了每条指令执行的完整过程。当前gem5中可用于全系统模拟的ISA主要有ARM、X86和RISCV；</p>
-</li>
-<li><p><strong>$\color[RGB]{0,150,255}{多种CPU模型}$</strong> ：gem5支持4种CPU模型：Simple、In-Order、Out-of-Order(简称O3)和KVM。每种CPU的具体实现和ISA不关联，因此CPU模型和ISA间可以任意搭配以组成多种计算机系统；</p>
-</li>
-<li><p><strong>$\color[RGB]{0,150,255}{Port  Interface}$</strong> ：该组件的主要功能是将系统中各个组件通过端口进行连接，屏蔽不同架构硬件实现细节，简化不同组件间的连接方式并增强系统通用性；</p>
-</li>
-<li><p><strong>$\color[RGB]{0,150,255}{Cache模型}$</strong> ：在gem5中支持Ruby和Classic Cache两种模型。</p>
-</li>
-</ul>
-<p>  （1）<strong>Ruby存储模型</strong>:用户可以自定义不同Cache一致性协议，并对片上网络(Network-of-Chip, NoC)进行了详细建模；</p>
-<p>  （2）<strong>Classic存储模型</strong>: 支持硬编码的层次MOESI一致性协议</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="1-指令系统结构的分类"><a href="#1-指令系统结构的分类" class="headerlink" title="1 指令系统结构的分类"></a>1 指令系统结构的分类</h1><p>CPU中用来存放操作数的存储单元主要有三种：<strong>堆栈</strong>、<strong>累加器</strong>、<strong>通用寄存器组</strong>。据此，指令系统（Instruction Set Architecture）可分为三种：</p>
 <ul>
-<li><strong>$\color[RGB]{0,150,255}{DRAM模型}$</strong> ：gem5中的DRAM模型是事件驱动的，支持多种市面上常见的DRAM，如DDR3、DDR4、DDR5、GDDR、HMC、HBM等。在gem5中，DRAM模型不是时钟精确的，但是可以和时钟精确的DRAM模拟器DRAMSim3结合使用，gem5中提供了和DRAMSim连接的接口；</li>
-<li><strong>$\color[RGB]{0,150,255}{GPU模型}$</strong> ：其GPU模型基于AMD的Graphic Core Next(GCN),是一种基于计算的时钟级GPU，支持多种异构系统的计算应用程序，不支持图形应用程序。一般都使用AMD的APU模拟器(基于gem5)对GPU进行模拟；</li>
-<li><strong>$\color[RGB]{0,150,255}{I&#x2F;O设备}$</strong> ：支持常见的磁盘控制器、PCI、Ethernet等等，是进行全系统模拟必不可少的系统组件；</li>
-<li><strong>$\color[RGB]{0,150,255}{丰富的接口}$</strong>  ：虽然gem5模拟器功能全面、配置灵活，但是在对各个组件进行建模的过程中，考虑复杂性和实现等方面因素，并不是对所有系统组件进行详细建模，因此配置了多种其他体系结构模拟器的结构，如SST、SystemC、DRAMSys、DRAMSim。</li>
+<li><strong>$\color[RGB]{40,120,181}{堆栈型结构}$：</strong>堆栈栈顶和次栈顶中的数据，运算后写入栈顶。两个操作数都是隐式的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>不能随机地访问堆栈，难以生成有效的代码，而且对栈顶的访问是个瓶颈。</li>
+<li><strong>$\color[RGB]{40,120,181}{累加器型结构}$：</strong>一个操作数是隐式的，即累加器；另一个是显示给出的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>只有一个中间结果暂存在累加器中，需要频繁访问存储器。</li>
 </ul>
-<h2 id="1-2-模拟模式"><a href="#1-2-模拟模式" class="headerlink" title="1.2 模拟模式"></a>1.2 模拟模式</h2><p>gem5支持两种系统模拟方式，一种是System Call Emulation(SE)，也叫系统调用模拟模式；另一种是Full System Simuluation(FS)，也叫全系统模拟模式。</p>
+<p>早期计算机大多采用堆栈型结构或累加器型结构</p>
 <ul>
-<li><p>系统调用模拟模式 System Call Emulation(SE)</p>
-</li>
-<li><p>全系统模拟模式 Full System Simuluation(FS)</p>
+<li><strong>$\color[RGB]{40,120,181}{通用寄存器型结构}$：</strong>所有操作数都是显示给出的。<strong>优点：</strong>1.寄存器的访问比存储器快得多 2. 编译器能够更加容易、有效地分配寄存器 。根据操作数显式给出的来源不同，又可以分为两类：<ul>
+<li>$\color[RGB]{248,172,140}{寄存器-存储器型结构(RM结构)}:$一个操作数来自寄存器，另一个来自存储器。</li>
+<li>$\color[RGB]{248,172,140}{寄存器-寄存器型结构(RR结构)}:$两个操作数都来自寄存器。</li>
+</ul>
 </li>
 </ul>
-<h1 id="二、Gem5安装"><a href="#二、Gem5安装" class="headerlink" title="二、Gem5安装"></a>二、Gem5安装</h1><h1 id="学习网站"><a href="#学习网站" class="headerlink" title="学习网站"></a>学习网站</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45726331/article/details/129757815?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-2-129757815-blog-128272972.235%5Ev38%5Epc_relevant_sort_base2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-2-129757815-blog-128272972.235%5Ev38%5Epc_relevant_sort_base2&utm_relevant_index=5">有关gem5模拟器的资料导航</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.gem5.org/">Gem5官网</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/introduction/">Gem5官方学习向导</a></p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VoPI0jbAERg8VK98oVff4Q">gem5学习笔记一：模拟器安装与使用 (qq.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.terapines.com/post/767/">兆松科技研发的基于gem5的模拟器zemu</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39382032/category_10375918.html">官网教程的中文翻译</a></p>
-
+<p>**显式给出:**用指令字中的操作数字段给出</p>
+<p>**隐式给出:**用事先约定好的单元</p>
+<h1 id="2-寻址方式"><a href="#2-寻址方式" class="headerlink" title="2. 寻址方式"></a>2. 寻址方式</h1><p>寻址方式（Addressing Mode）是指指令系统中产生所要访问的数据地址的方法。寻址方式可以指明指令中的操作数是一个<strong>立即数</strong>、一个<strong>寄存器操作数</strong>或者是一个<strong>存储器操作数</strong></p>
+<h2 id="2-1-寻址方式举例"><a href="#2-1-寻址方式举例" class="headerlink" title="2.1 寻址方式举例"></a>2.1 寻址方式举例</h2><ul>
+<li>寄存器寻址</li>
+<li>立即数寻址</li>
+<li>偏移寻址</li>
+</ul>
+<p>等等</p>
+<h2 id="2-2-字节对齐"><a href="#2-2-字节对齐" class="headerlink" title="2.2 字节对齐"></a>2.2 字节对齐</h2><p>计算机中信息的单位可分为字节(8bit)、半字(16bit)、单字(32bit)、双字(64bit)。计算机中采用按字节编址，各类信息都是用改信息的首字节地址来寻址的。</p>
+<h3 id="信息存储的整数边界"><a href="#信息存储的整数边界" class="headerlink" title="信息存储的整数边界"></a>信息存储的整数边界</h3><p>此外还需要对它们的存储方式进行限制，如果允许它们任意存储，就可能出现一个信息跨存储字边界而存储与两个存储单元的情况，而在这种情况下，读取该信息就需要花费两个存储周期，为了避免出现这个问题，就要求<strong>宽度不超过主存宽度的信息必须存放在一个存储字内，信息在主存中存放的起始地址必须是该信息宽度（字节数）的整数倍</strong>，从而避免了跨边界，保证了访问速度。</p>
+<p>对于一个32位机器（主存宽度为32位），要求：</p>
+<h5 id="字节信息的起始地址为：x…xxxx"><a href="#字节信息的起始地址为：x…xxxx" class="headerlink" title="字节信息的起始地址为：x…xxxx"></a>字节信息的起始地址为：x…xxxx</h5><h5 id="半字信息的起始地址为：x…xxx0"><a href="#半字信息的起始地址为：x…xxx0" class="headerlink" title="半字信息的起始地址为：x…xxx0"></a>半字信息的起始地址为：x…xxx0</h5><h5 id="单字信息的起始地址为：x…xx00"><a href="#单字信息的起始地址为：x…xx00" class="headerlink" title="单字信息的起始地址为：x…xx00"></a>单字信息的起始地址为：x…xx00</h5><h5 id="双字信息的起始地址为：x…x000"><a href="#双字信息的起始地址为：x…x000" class="headerlink" title="双字信息的起始地址为：x…x000"></a>双字信息的起始地址为：x…x000</h5>
     </div>
 
     
@@ -282,21 +285,19 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Gem5/" rel="tag"># Gem5</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" rel="tag"># 计算机体系结构</a>
+              <a href="/tags/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" rel="tag"># 指令系统</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/10/07/Markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/" rel="prev" title="Markdown常用语法">
-                  <i class="fa fa-angle-left"></i> Markdown常用语法
+                <a href="/2023/10/19/1019-1021/" rel="prev" title="1019-1021">
+                  <i class="fa fa-angle-left"></i> 1019-1021
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/10/17/Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="next" title="Ubuntu虚拟机">
-                  Ubuntu虚拟机 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
