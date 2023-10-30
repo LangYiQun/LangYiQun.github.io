@@ -19,26 +19,34 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="this is a personal blog of lyq">
-<meta property="og:type" content="website">
-<meta property="og:title" content="郎轶群的博客">
-<meta property="og:url" content="https://langyiqun.github.io/index.html">
+    <meta name="description" content="本文是官网教程gem5: Creating SimObjects in the memory system的学习笔记。 本节教程是创建一个位于CPU和内存总线之间的阻塞式简单内存对象，主要实现了基本请求的传递。在下一节教程中，会在本节创建的简单内存对象之上增加部分逻辑，使其成为一个非常简单的阻塞单处理器缓存。下图是整个系统的示意图，其中，我们创建的内存对象有两个CPU侧的从端口（slave por">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gem5模拟器学习（四）">
+<meta property="og:url" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="郎轶群的博客">
-<meta property="og:description" content="this is a personal blog of lyq">
+<meta property="og:description" content="本文是官网教程gem5: Creating SimObjects in the memory system的学习笔记。 本节教程是创建一个位于CPU和内存总线之间的阻塞式简单内存对象，主要实现了基本请求的传递。在下一节教程中，会在本节创建的简单内存对象之上增加部分逻辑，使其成为一个非常简单的阻塞单处理器缓存。下图是整个系统的示意图，其中，我们创建的内存对象有两个CPU侧的从端口（slave por">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/simple_memobj.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/master_slave_1.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMzgxMTM1,size_16,color_FFFFFF,t_70.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMzgxMTM1,size_16,color_FFFFFF,t_70-169863203577313.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/memobj_api.png">
+<meta property="article:published_time" content="2023-10-30T00:39:24.000Z">
+<meta property="article:modified_time" content="2023-10-30T08:51:13.896Z">
 <meta property="article:author" content="Lang Yi Qun">
-<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Gem5">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/simple_memobj.png">
 
 
-<link rel="canonical" href="https://langyiqun.github.io/">
+<link rel="canonical" href="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/","path":"2023/10/30/Gem5模拟器学习（四）/","title":"Gem5模拟器学习（四）"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>郎轶群的博客</title>
+<title>Gem5模拟器学习（四） | 郎轶群的博客</title>
   
 
 
@@ -71,7 +79,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">郎轶群的博客</h1>
+      <p class="site-title">郎轶群的博客</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">却道天凉好个秋</p>
@@ -98,7 +106,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -111,6 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BB%E4%BB%8E%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">一、主从端口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">二、数据包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%B8%BB%E4%BB%8E%E4%BA%A4%E4%BA%92"><span class="nav-number">3.</span> <span class="nav-text">三、主从交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%AD%A3%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E4%B8%BB%E4%BB%8E%E4%BA%A4%E4%BA%92"><span class="nav-number">3.1.</span> <span class="nav-text">（1）正常情况下的主从交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%BB%8E%E6%9C%BA%E5%BF%99%E6%97%B6%E7%9A%84%E4%B8%BB%E4%BB%8E%E4%BA%A4%E4%BA%92"><span class="nav-number">3.2.</span> <span class="nav-text">（2）从机忙时的主从交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E4%B8%BB%E6%9C%BA%E5%BF%99%E6%97%B6%E7%9A%84%E4%B8%BB%E4%BB%8E%E4%BA%A4%E4%BA%92"><span class="nav-number">3.3.</span> <span class="nav-text">（3）主机忙时的主从交互</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81SimpleMemobj%E4%B8%BB%E4%BB%8E%E7%AB%AF%E5%8F%A3%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">四、SimpleMemobj主从端口函数实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#textcolor-RGB-250-106-106-1-%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%8C%83%E5%9B%B4-CPU-%E2%80%93-Mem-bus"><span class="nav-number">4.1.</span> <span class="nav-text">$$\textcolor[RGB]{250,106,106}{(1)获取内存模型的地址范围         (CPU –&gt; Mem bus)}$$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-SimpleMemobj-CPUSidePort-getAddrRanges"><span class="nav-number">4.1.1.</span> <span class="nav-text">1. SimpleMemobj::CPUSidePort::getAddrRanges</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SimpleMemobj-getAddrRanges"><span class="nav-number">4.1.2.</span> <span class="nav-text">2. SimpleMemobj::getAddrRanges</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#textcolor-RGB-100-106-255-2-%E9%80%9A%E7%9F%A5%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%8C%83%E5%9B%B4%E5%8F%91%E7%94%9F%E6%9B%B4%E6%94%B9-Mem-bus-%E2%80%93-CPU"><span class="nav-number">4.2.</span> <span class="nav-text">$$\textcolor[RGB]{100,106,255}{(2)通知内存模型的地址范围发生更改(Mem bus –&gt; CPU)} $$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-SimpleMemobj-MemSidePort-recvRangeChange"><span class="nav-number">4.2.1.</span> <span class="nav-text">1. SimpleMemobj::MemSidePort::recvRangeChange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SimpleMemobj-sendRangeChange"><span class="nav-number">4.2.2.</span> <span class="nav-text">2. SimpleMemobj::sendRangeChange</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#textcolor-RGB-250-250-100-3-%E5%8A%9F%E8%83%BD%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94-CPU-%E2%80%93-Mem-bus"><span class="nav-number">4.3.</span> <span class="nav-text">$$\textcolor[RGB]{250,250,100}{(3)功能请求与响应(CPU –&gt; Mem bus)} $$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-SimpleMemobj-CPUSidePort-recvFunctional"><span class="nav-number">4.3.1.</span> <span class="nav-text">1. SimpleMemobj::CPUSidePort::recvFunctional</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SimpleMemobj-handleFunctional"><span class="nav-number">4.3.2.</span> <span class="nav-text">2. SimpleMemobj::handleFunctional</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#textcolor-RGB-250-100-250-4-%E5%8F%91%E9%80%81%E5%AE%9A%E6%97%B6%E8%AF%B7%E6%B1%82-CPU-%E2%80%93-Mem-bus"><span class="nav-number">4.4.</span> <span class="nav-text">$$\textcolor[RGB]{250,100,250}{(4)发送定时请求(CPU –&gt; Mem bus)} $$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-SimpleMemobj-CPUSidePort-recvTimingReq"><span class="nav-number">4.4.1.</span> <span class="nav-text">1. SimpleMemobj::CPUSidePort::recvTimingReq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SimpleMemobj-handleRequest"><span class="nav-number">4.4.2.</span> <span class="nav-text">2. SimpleMemobj::handleRequest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SimpleMemobj-MemSidePort-sendPacket"><span class="nav-number">4.4.3.</span> <span class="nav-text">3. SimpleMemobj::MemSidePort::sendPacket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-SimpleMemobj-MemSidePort-recvReqRetry"><span class="nav-number">4.4.4.</span> <span class="nav-text">4. SimpleMemobj::MemSidePort::recvReqRetry</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#textcolor-RGB-100-250-250-5-%E6%8E%A5%E6%94%B6%E5%AE%9A%E6%97%B6%E8%AF%B7%E6%B1%82%E7%9A%84%E5%93%8D%E5%BA%94-Mem-bus-%E2%80%93-CPU"><span class="nav-number">4.5.</span> <span class="nav-text">$$\textcolor[RGB]{100,250,250}{(5)接收定时请求的响应(Mem bus –&gt; CPU)} $$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-SimpleMemobj-MemSidePort-recvTimingResp"><span class="nav-number">4.5.1.</span> <span class="nav-text">1. SimpleMemobj::MemSidePort::recvTimingResp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SimpleMemobj-handleResponse"><span class="nav-number">4.5.2.</span> <span class="nav-text">2. SimpleMemobj::handleResponse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SimpleMemobj-CPUSidePort-sendPacket"><span class="nav-number">4.5.3.</span> <span class="nav-text">3. SimpleMemobj::CPUSidePort::sendPacket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-SimpleMemobj-CPUSidePort-trySendRetry"><span class="nav-number">4.5.4.</span> <span class="nav-text">4. SimpleMemobj::CPUSidePort::trySendRetry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-SimpleMemobj-CPUSidePort-recvRespRetry"><span class="nav-number">4.5.5.</span> <span class="nav-text">5. SimpleMemobj::CPUSidePort::recvRespRetry</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AE%E8%84%9A%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text">五、配置脚本</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -179,16 +188,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -202,13 +212,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="name" content="Gem5模拟器学习（四） | 郎轶群的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（四）</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Gem5模拟器学习（四）
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -240,8 +250,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <p>本文是官网教程<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part2/memoryobject/">gem5: Creating SimObjects in the memory system</a>的学习笔记。</p>
+    <div class="post-body" itemprop="articleBody"><p>本文是官网教程<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part2/memoryobject/">gem5: Creating SimObjects in the memory system</a>的学习笔记。</p>
 <p>本节教程是创建一个位于CPU和内存总线之间的阻塞式简单内存对象，主要实现了基本请求的传递。在下一节教程中，会在本节创建的简单内存对象之上增加部分逻辑，使其成为一个非常简单的阻塞单处理器缓存。下图是整个系统的示意图，其中，我们创建的内存对象有两个CPU侧的从端口（slave port）和一个内存总线侧的主端口（master port）。它将实现将请求从CPU传递到内存总线，并将响应从内存总线传递到CPU。</p>
 <img src="/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/simple_memobj.png" class="" title="System with a simple memory object which sits between a CPU and the memory bus.">
 
@@ -377,7 +386,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Beginning simulation!</span><br><span class="line">      0: system.memobj: Got request for addr 0x190</span><br><span class="line">  77000: system.memobj: Got response for addr 0x190</span><br><span class="line">  77000: system.memobj: Got request for addr 0x190</span><br><span class="line"> 126000: system.memobj: Got response for addr 0x190</span><br><span class="line"> 126000: system.memobj: Got request for addr 0x190</span><br><span class="line"> 175000: system.memobj: Got response for addr 0x190</span><br><span class="line"> 175000: system.memobj: Got request for addr 0x94db0</span><br><span class="line"> 238000: system.memobj: Got response for addr 0x94db0</span><br><span class="line"> 238000: system.memobj: Got request for addr 0x190</span><br><span class="line"> 287000: system.memobj: Got response for addr 0x190</span><br><span class="line"> 287000: system.memobj: Got request for addr 0x198</span><br><span class="line"> 336000: system.memobj: Got response for addr 0x198</span><br><span class="line"> 336000: system.memobj: Got request for addr 0x198</span><br><span class="line"> 385000: system.memobj: Got response for addr 0x198</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
 
 
-      
     </div>
 
     
@@ -385,8 +393,21 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/Gem5/" rel="tag"># Gem5</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/25/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E2%80%94%E2%80%94%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/" rel="prev" title="数字图像处理——图片拼接">
+                  <i class="fa fa-angle-left"></i> 数字图像处理——图片拼接
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
@@ -394,826 +415,7 @@
 
 
 
-    
 
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/25/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E2%80%94%E2%80%94%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/25/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E2%80%94%E2%80%94%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/" class="post-title-link" itemprop="url">数字图像处理——图片拼接</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-10-25 14:32:02 / 修改时间：15:16:44" itemprop="dateCreated datePublished" datetime="2023-10-25T14:32:02+08:00">2023-10-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">数字图像处理</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="问题导入"><a href="#问题导入" class="headerlink" title="问题导入"></a>问题导入</h1><p>图片全景拼接</p>
-<p>观察者在同一个点，不是简单的平移旋转，需要运用投射关系（近大远小）</p>
-<h1 id="图像全局变换"><a href="#图像全局变换" class="headerlink" title="图像全局变换"></a>图像全局变换</h1><p>研究对象为二维图像</p>
-<h2 id="1-线性变换"><a href="#1-线性变换" class="headerlink" title="1. 线性变换"></a>1. 线性变换</h2><p>缩放 Scale</p>
-<p>旋转 Rotation</p>
-<p>剪切 Shear</p>
-<p>镜像 mirror</p>
-<p>S &#x3D; 2 * 2矩阵<br>$$<br>S &#x3D; \begin{bmatrix}<br> a &amp; b\<br> c &amp; d<br>\end{bmatrix}<br>$$</p>
-<h2 id="2-仿射变换"><a href="#2-仿射变换" class="headerlink" title="2. 仿射变换"></a>2. 仿射变换</h2><p>仿射变换 &#x3D; 线性变换+平移</p>
-<p>S &#x3D; 3 * 3矩阵<br>$$<br> S &#x3D; \begin{bmatrix} a &amp; b &amp; c\ d &amp; e &amp; f\ 0 &amp; 0 &amp; 1\end{bmatrix}<br>$$<br>6个未知数</p>
-<h2 id="3-投影变换"><a href="#3-投影变换" class="headerlink" title="3. 投影变换"></a>3. 投影变换</h2><p>S &#x3D; 3 * 3矩阵<br>$$<br>S &#x3D; \begin{bmatrix}<br> a &amp; b &amp; c\<br> d &amp; e &amp; f\<br> g &amp; h &amp; 1<br>\end{bmatrix}<br>$$<br>8个未知数，即8个自由度，表示能力最强</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（三）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-24 21:02:46" itemprop="dateCreated datePublished" datetime="2023-10-24T21:02:46+08:00">2023-10-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-30 08:40:46" itemprop="dateModified" datetime="2023-10-30T08:40:46+08:00">2023-10-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Gem5学习——创建一个简单的SimObject"><a href="#Gem5学习——创建一个简单的SimObject" class="headerlink" title="Gem5学习——创建一个简单的SimObject"></a>Gem5学习——创建一个简单的SimObject</h1><h2 id="一、名词解释"><a href="#一、名词解释" class="headerlink" title="一、名词解释"></a>一、名词解释</h2><ul>
-<li><p>$\textcolor[RGB]{200,50,50}{SimObject}$</p>
-<p>在gem5中，SimObject是一个基础类，用于<strong>创建和管理模拟对象</strong>。</p>
-</li>
-<li><p>$\textcolor[RGB]{200,50,50}{SimObjects}$</p>
-<p>SimObjects是gem5中用于管理模拟对象的组件。通常，gem5中的模拟对象都会继承自SimpleObject类，并且通过SimObjects组件来进行管理。</p>
-</li>
-<li><p>$\textcolor[RGB]{200,50,50}{SimpleObject}$</p>
-<p>SimpleObject是SimObject类的一个派生类，它在SimObject类的基础上增加了一些额外的功能，通常，在gem5中创建新的模拟对象时，都会从SimpleObject类进行派生，以便获得这些基本的功能。</p>
-</li>
-</ul>
-<h2 id="二、创建一个简单的SimObject"><a href="#二、创建一个简单的SimObject" class="headerlink" title="二、创建一个简单的SimObject"></a>二、创建一个简单的SimObject</h2><p>即官网教程创建helloobject<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part2/helloobject/">gem5: Creating a very simple SimObject</a></p>
-<p><strong>$\textcolor[RGB]{100,200,50}{Gem5使用了Python和C++两种编程语言混合编程}$</strong></p>
-<p>gem5一方面通过python语言配置模拟器运行的参数和控制模拟过程的脚本，优势在于便于快速阅读和编写配置脚本；另一方面通过C++实现gem5中的各种模型（SimObjects），优势在于C++是一种高性能的编程语言，能够保证其模拟性能。混合编程充分发挥了两种语言的优势。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（二）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-10-24 17:01:17 / 修改时间：21:02:34" itemprop="dateCreated datePublished" datetime="2023-10-24T17:01:17+08:00">2023-10-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>d69</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/23/1023-1028/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/23/1023-1028/" class="post-title-link" itemprop="url">1023-1028</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-10-23 23:35:49 / 修改时间：23:38:38" itemprop="dateCreated datePublished" datetime="2023-10-23T23:35:49+08:00">2023-10-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%95%E8%AE%BE%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">毕设学习记录</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>10月23日</strong></p>
-<p>根据博客，继续学习gem5的构建模拟环境、创建simObject</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/23/SCons/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/23/SCons/" class="post-title-link" itemprop="url">SCons</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-10-23 19:04:01 / 修改时间：19:15:40" itemprop="dateCreated datePublished" datetime="2023-10-23T19:04:01+08:00">2023-10-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>scons是一个Python写的自动化构建工具</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/danshiming/article/details/122771064?ops_request_misc=%7B%22request_id%22:%22169805899416777224422665%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169805899416777224422665&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-122771064-null-null.142%5Ev96%5Epc_search_result_base2&utm_term=SCons&spm=1018.2226.3001.4187">SCons简单入门（一）-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.scons.org/doc/production/HTML/scons-user/index.html">SCons 4.5.2官方文档</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">第二章：指令系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-22 16:21:00" itemprop="dateCreated datePublished" datetime="2023-10-22T16:21:00+08:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-23 09:44:20" itemprop="dateModified" datetime="2023-10-23T09:44:20+08:00">2023-10-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《计算机体系结构》学习笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="1-指令系统结构的分类"><a href="#1-指令系统结构的分类" class="headerlink" title="1 指令系统结构的分类"></a>1 指令系统结构的分类</h1><p>CPU中用来存放操作数的存储单元主要有三种：<strong>堆栈</strong>、<strong>累加器</strong>、<strong>通用寄存器组</strong>。据此，指令系统（Instruction Set Architecture）可分为三种：</p>
-<ul>
-<li><strong>$\color[RGB]{40,120,181}{堆栈型结构}$：</strong>堆栈栈顶和次栈顶中的数据，运算后写入栈顶。两个操作数都是隐式的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>不能随机地访问堆栈，难以生成有效的代码，而且对栈顶的访问是个瓶颈。</li>
-<li><strong>$\color[RGB]{40,120,181}{累加器型结构}$：</strong>一个操作数是隐式的，即累加器；另一个是显示给出的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>只有一个中间结果暂存在累加器中，需要频繁访问存储器。</li>
-</ul>
-<p>早期计算机大多采用堆栈型结构或累加器型结构</p>
-<ul>
-<li><strong>$\color[RGB]{40,120,181}{通用寄存器型结构}$：</strong>所有操作数都是显示给出的。<strong>优点：</strong>1.寄存器的访问比存储器快得多 2. 编译器能够更加容易、有效地分配寄存器 。根据操作数显式给出的来源不同，又可以分为两类：<ul>
-<li>$\color[RGB]{248,172,140}{寄存器-存储器型结构(RM结构)}:$一个操作数来自寄存器，另一个来自存储器。</li>
-<li>$\color[RGB]{248,172,140}{寄存器-寄存器型结构(RR结构)}:$两个操作数都来自寄存器。</li>
-</ul>
-</li>
-</ul>
-<p>**显式给出:**用指令字中的操作数字段给出</p>
-<p>**隐式给出:**用事先约定好的单元</p>
-<h1 id="2-寻址方式"><a href="#2-寻址方式" class="headerlink" title="2. 寻址方式"></a>2. 寻址方式</h1><p>寻址方式（Addressing Mode）是指指令系统中产生所要访问的数据地址的方法。寻址方式可以指明指令中的操作数是一个<strong>立即数</strong>、一个<strong>寄存器操作数</strong>或者是一个<strong>存储器操作数</strong></p>
-<h2 id="2-1-寻址方式举例"><a href="#2-1-寻址方式举例" class="headerlink" title="2.1 寻址方式举例"></a>2.1 寻址方式举例</h2><ul>
-<li>寄存器寻址</li>
-<li>立即数寻址</li>
-<li>偏移寻址</li>
-</ul>
-<p>等等</p>
-<h2 id="2-2-字节对齐"><a href="#2-2-字节对齐" class="headerlink" title="2.2 字节对齐"></a>2.2 字节对齐</h2><p>计算机中信息的单位可分为字节(8bit)、半字(16bit)、单字(32bit)、双字(64bit)。计算机中采用按字节编址，各类信息都是用改信息的首字节地址来寻址的。</p>
-<h3 id="信息存储的整数边界"><a href="#信息存储的整数边界" class="headerlink" title="信息存储的整数边界"></a>信息存储的整数边界</h3><p>此外还需要对它们的存储方式进行限制，如果允许它们任意存储，就可能出现一个信息跨存储字边界而存储与两个存储单元的情况，而在这种情况下，读取该信息就需要花费两个存储周期，为了避免出现这个问题，就要求<strong>宽度不超过主存宽度的信息必须存放在一个存储字内，信息在主存中存放的起始地址必须是该信息宽度（字节数）的整数倍</strong>，从而避免了跨边界，保证了访问速度。</p>
-<p>对于一个32位机器（主存宽度为32位），要求：</p>
-<h5 id="字节信息的起始地址为：x…xxxx"><a href="#字节信息的起始地址为：x…xxxx" class="headerlink" title="字节信息的起始地址为：x…xxxx"></a>字节信息的起始地址为：x…xxxx</h5><h5 id="半字信息的起始地址为：x…xxx0"><a href="#半字信息的起始地址为：x…xxx0" class="headerlink" title="半字信息的起始地址为：x…xxx0"></a>半字信息的起始地址为：x…xxx0</h5><h5 id="单字信息的起始地址为：x…xx00"><a href="#单字信息的起始地址为：x…xx00" class="headerlink" title="单字信息的起始地址为：x…xx00"></a>单字信息的起始地址为：x…xx00</h5><h5 id="双字信息的起始地址为：x…x000"><a href="#双字信息的起始地址为：x…x000" class="headerlink" title="双字信息的起始地址为：x…x000"></a>双字信息的起始地址为：x…x000</h5>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/19/1019-1021/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/19/1019-1021/" class="post-title-link" itemprop="url">1019-1021</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-19 23:50:11" itemprop="dateCreated datePublished" datetime="2023-10-19T23:50:11+08:00">2023-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-23 23:37:53" itemprop="dateModified" datetime="2023-10-23T23:37:53+08:00">2023-10-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%95%E8%AE%BE%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">毕设学习记录</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="10-18"><a href="#10-18" class="headerlink" title="10.18"></a>10.18</h1><p>在Ubuntu20.04系统上成功配置gem5模拟器，并根据官网的教程编译了第一个单核x86架构系统，并运行hello world负载。</p>
-<h1 id="10-19"><a href="#10-19" class="headerlink" title="10.19"></a>10.19</h1><p>进一步学习官网教程，阅读博客</p>
-<p><a target="_blank" rel="noopener" href="https://csdiy.wiki/">CS自学指南 (csdiy.wiki)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/18/hexo%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8F%92%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/18/hexo%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8F%92%E4%BB%B6/" class="post-title-link" itemprop="url">hexo主题和插件</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-18 23:43:03" itemprop="dateCreated datePublished" datetime="2023-10-18T23:43:03+08:00">2023-10-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-22 17:32:51" itemprop="dateModified" datetime="2023-10-22T17:32:51+08:00">2023-10-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="1-Hexo主题"><a href="#1-Hexo主题" class="headerlink" title="1. Hexo主题"></a>1. Hexo主题</h1><p>hexo官方提供了很多的主题模板，可以在<a target="_blank" rel="noopener" href="https://hexo.io/themes/index.html">hexo主题官网</a>中看到，<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/themes.html">官方教程</a>中也有配置主题操作</p>
-<h2 id="Next主题"><a href="#Next主题" class="headerlink" title="Next主题"></a><strong>Next主题</strong></h2><p>在众多主题中，Next是最受欢迎的主题之一，它提供了许多的界面模板，并且支持安装许多的插件。</p>
-<h2 id="Next主题下载"><a href="#Next主题下载" class="headerlink" title="Next主题下载"></a><strong>Next主题下载</strong></h2><ol>
-<li><p>$\color[RGB]{200, 100, 10}{下载}$。在git bash窗口中通过git clone即可下载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-
-<p>下载成功后，在<strong>blog&#x2F;themes</strong>文件夹下即可找到下载的next主题文件夹，其中包含了next主题的配置信息</p>
-</li>
-<li><p>$\color[RGB]{200, 100, 10}{修改Hexo主题}$。返回<strong>bolg根目录</strong>，打开**_config.yml 文件**，并将其中的theme项的值改为next</p>
-</li>
-</ol>
-<center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src=hexo主题和插件/image-20231019001323077.png>
-    <br>
-    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
-    display: inline-block;
-    color: #FFF;
-    padding: 2px;">hexo主题修改为next</div>
-</center>
-
-<p>经过以上两步，hexo的主题就成功更换为next啦！然后就通过hexo g重新生成博客，再通过hexo s 或 hexo d发布新的博客，看看新主题的样子。</p>
-<hr>
-<h1 id="2-添加分类、标签、关于"><a href="#2-添加分类、标签、关于" class="headerlink" title="2. 添加分类、标签、关于"></a>2. 添加分类、标签、关于</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_48927364/article/details/123295436">【Hexo】nexT主题使用攻略基础——添加分类、标签及关于_hexo 分类-CSDN博客</a></p>
-<h1 id="3-Hexo常用插件"><a href="#3-Hexo常用插件" class="headerlink" title="3. Hexo常用插件"></a>3. Hexo常用插件</h1><h2 id="（1）插入数学公式"><a href="#（1）插入数学公式" class="headerlink" title="（1）插入数学公式"></a>（1）插入数学公式</h2><p>在用markdown写技术文档时，免不了会碰到数学公式。Next这种大主题也集成了渲染数学公式的功能</p>
-<p>目前Next提供两种数学公式渲染引擎，分别是Mathjax和Katex。</p>
-<p>可以在Next主题的配置文件_config.yml中看到这两个项</p>
-<img src="/2023/10/18/hexo%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8F%92%E4%BB%B6/image-20231019132036641.png" class="" title="Next主题的配置文件_config.yml">
-
-<p>默认情况下两个引擎的enable使能选项均为false，只需要改为true就可以渲染数学公式了</p>
-<p>其中every_page项置为true的时候，引擎会默认对每篇博客中的数学公式进行渲染，但对于不含数学公式的博客，加载速度会额外变慢；而当置为false是，只会对在开头处声明使用mathjax引擎的博客进行渲染。</p>
-<img src="/2023/10/18/hexo%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8F%92%E4%BB%B6/image-20231019145600478.png" class="" title="博客开头声明使用mathjax引擎">
-
-<p><strong>效果展示：</strong></p>
-<ul>
-<li><p>行内公式：</p>
-<p>$f\left( x \right) &#x3D; \sum\limits_{i &#x3D; 1}^n {X_i^2} $</p>
-<p>$MD\left(n_{i, j}, n_{x, y}\right)&#x3D;|i-x|+|j-y|$</p>
-</li>
-<li><p>行间公式：</p>
-<p>$$f\left( x \right) &#x3D; \sum\limits_{i &#x3D; 1}^n {X_i^2} $$</p>
-<p>$$MD\left(n_{i, j}, n_{x, y}\right)&#x3D;|i-x|+|j-y|$$</p>
-</li>
-</ul>
-<p>（2）</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/17/Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/17/Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-title-link" itemprop="url">Ubuntu虚拟机</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-17 16:55:18" itemprop="dateCreated datePublished" datetime="2023-10-17T16:55:18+08:00">2023-10-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-18 09:46:17" itemprop="dateModified" datetime="2023-10-18T09:46:17+08:00">2023-10-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Ubuntu20-04-iso镜像国内阿里源下载"><a href="#Ubuntu20-04-iso镜像国内阿里源下载" class="headerlink" title="Ubuntu20.04 iso镜像国内阿里源下载"></a>Ubuntu20.04 iso镜像国内阿里源下载</h1><p><a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/ubuntu-releases/20.04/">ubuntu-releases-20.04安装包下载_开源镜像站-阿里云 (aliyun.com)</a></p>
-<h1 id="Ubuntu20-04更换清华源"><a href="#Ubuntu20-04更换清华源" class="headerlink" title="Ubuntu20.04更换清华源"></a>Ubuntu20.04更换清华源</h1><p>Ubuntu安装完之后进行更换为国内源可以让下载更新的的速度快一点。</p>
-<p>以下是具体操作的博客</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Lxk0825/p/9520002.html">ubuntu 执行apt-get update报错Failed to fetch - Lxk- - 博客园 (cnblogs.com)</a></p>
-<p>使用清华源，将以下代码输入&#x2F;etc&#x2F;apt&#x2F;sources.list文件中。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"># 预发布软件源，不建议启用</span><br><span class="line"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
 
 </div>
   </main>
