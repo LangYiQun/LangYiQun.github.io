@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、Cache技术现代计算机都在CPU和主存之间设置一个高速、小容量的缓冲处理器，称为Cache。Cache的存在填补了CPU和主存在速度上的巨大差距，对于提高整个计算机系统的性能有重要意义，是现代计算系统必不可少的部件，然而，Cache对程序员是透明的。 此外，Cache技术这个此被广泛用于指代利用缓冲技术来实现局部数据再利用的技术。其能够缓解两个部件之间访问数据速度差距较大的问题，在硬盘、网页">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cache基础知识">
+<meta property="og:url" content="https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="郎轶群的博客">
+<meta property="og:description" content="一、Cache技术现代计算机都在CPU和主存之间设置一个高速、小容量的缓冲处理器，称为Cache。Cache的存在填补了CPU和主存在速度上的巨大差距，对于提高整个计算机系统的性能有重要意义，是现代计算系统必不可少的部件，然而，Cache对程序员是透明的。 此外，Cache技术这个此被广泛用于指代利用缓冲技术来实现局部数据再利用的技术。其能够缓解两个部件之间访问数据速度差距较大的问题，在硬盘、网页">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031155331776.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031163658464.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031163555331.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031164639343.png">
+<meta property="article:published_time" content="2023-10-31T02:06:07.000Z">
+<meta property="article:modified_time" content="2023-10-31T11:28:20.141Z">
+<meta property="article:author" content="Lang Yi Qun">
+<meta property="article:tag" content="Cache">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031155331776.png">
+
+
+<link rel="canonical" href="https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/","path":"2023/10/31/Cache基础知识/","title":"Cache基础知识"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cache基础知识 | 郎轶群的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">郎轶群的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">却道天凉好个秋</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Cache%E6%8A%80%E6%9C%AF"><span class="nav-number">1.</span> <span class="nav-text">一、Cache技术</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Cache%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">二、Cache结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Cache%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">三、Cache工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%98%A0%E5%83%8F%E8%A7%84%E5%88%99"><span class="nav-number">3.1.</span> <span class="nav-text">（1）映像规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%9B%B4%E6%8E%A5%E6%98%A0%E5%83%8F"><span class="nav-number">3.1.1.</span> <span class="nav-text">1. 直接映像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%85%A8%E7%9B%B8%E8%81%94%E6%98%A0%E5%83%8F"><span class="nav-number">3.1.2.</span> <span class="nav-text">2. 全相联映像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%BB%84%E7%9B%B8%E8%81%94%E6%98%A0%E5%83%8F"><span class="nav-number">3.1.3.</span> <span class="nav-text">3. 组相联映像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%9F%A5%E6%89%BE%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">（2）查找方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9F%A5%E6%89%BE%E7%9B%B4%E6%8E%A5%E6%98%A0%E5%83%8FCache"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 查找直接映像Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9F%A5%E6%89%BE%E7%BB%84%E7%9B%B8%E8%81%94Cache"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 查找组相联Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9F%A5%E6%89%BE%E5%85%A8%E7%9B%B8%E8%81%94Cache"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. 查找全相联Cache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">（3）替换算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%9A%8F%E6%9C%BA%E6%B3%95"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">1. 随机法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BA%E6%B3%95"><span class="nav-number">3.3.0.2.</span> <span class="nav-text">2. 先进先出法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%9C%80%E8%BF%91%E6%9C%80%E5%B0%91%E4%BD%BF%E7%94%A8%E6%B3%95"><span class="nav-number">3.3.0.3.</span> <span class="nav-text">3. 最近最少使用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%9C%80%E4%B8%8D%E5%B8%B8%E4%BD%BF%E7%94%A8%E6%B3%95"><span class="nav-number">3.3.0.4.</span> <span class="nav-text">4. 最不常使用法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%86%99%E7%AD%96%E7%95%A5"><span class="nav-number">3.4.</span> <span class="nav-text">（4）写策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AF%B9%E4%BA%8E%E5%86%99%E5%A4%B1%E6%95%88%E6%83%85%E5%86%B5%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%80%89%E6%8B%A9%E6%98%AF%E5%90%A6%E5%B0%86%E5%93%8D%E5%BA%94%E7%9A%84%E5%9D%97%E8%B0%83%E5%85%A5Cache"><span class="nav-number">3.4.1.</span> <span class="nav-text">1. 对于写失效情况，可以选择是否将响应的块调入Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AF%B9%E4%BA%8E%E5%86%99%E5%91%BD%E4%B8%AD%E6%88%96%E5%86%99%E5%A4%B1%E6%95%88%E6%97%B6%E6%8C%89%E5%86%99%E5%88%86%E9%85%8D%EF%BC%8C%E6%9C%89%E4%B8%A4%E7%A7%8D%E7%AD%96%E7%95%A5%E6%9D%A5%E7%BB%B4%E6%8A%A4Cache%E4%B8%8E%E4%B8%BB%E5%AD%98%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">3.4.2.</span> <span class="nav-text">2. 对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lang Yi Qun</p>
+  <div class="site-description" itemprop="description">this is a personal blog of lyq</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/yourname" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener me" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Cache基础知识 | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Cache基础知识
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-10-31 10:06:07 / 修改时间：19:28:20" itemprop="dateCreated datePublished" datetime="2023-10-31T10:06:07+08:00">2023-10-31</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="一、Cache技术"><a href="#一、Cache技术" class="headerlink" title="一、Cache技术"></a>一、Cache技术</h1><p>现代计算机都在CPU和主存之间设置一个高速、小容量的缓冲处理器，称为Cache。Cache的存在填补了CPU和主存在速度上的巨大差距，对于提高整个计算机系统的性能有重要意义，是现代计算系统必不可少的部件，然而，<strong>Cache对程序员是透明的</strong>。</p>
+<p>此外，Cache技术这个此被广泛用于指代利用缓冲技术来实现局部数据再利用的技术。其能够缓解两个部件之间访问数据速度差距较大的问题，在硬盘、网页中都能看见缓冲技术的身影，本文专指CPU与主存之间的Cache。</p>
+<h1 id="二、Cache结构"><a href="#二、Cache结构" class="headerlink" title="二、Cache结构"></a>二、Cache结构</h1><p>Cache 和主存间信息的交互<strong>按块来组织</strong>。Cache和主存均被分割为大小相同的块，块大小（blocksize）通常为2的幂次方字节。</p>
+<p>【图一：Cache、内存被分割为块】</p>
+<p>CPU通过访存指令中的主存地址向Cache请求主存数据，该主存地址被分割为两部分：<strong>块地址</strong>和<strong>块内位移</strong></p>
+<img src="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031155331776.png" class="" title="内存地址分割为块地址和块内偏移">
+
+<p>【图二：主存地址被分割为块地址和块内偏移】</p>
+<p>硬件会<u>根据<strong>块地址</strong>查找该块在Cache中的位置</u>，再<u>通过<strong>块内位移</strong>确定所访问的数据再该块中的位置</u>。</p>
+<h1 id="三、Cache工作原理"><a href="#三、Cache工作原理" class="headerlink" title="三、Cache工作原理"></a>三、Cache工作原理</h1><p>在每个存储层次中，都绕不开这四个关键问题：</p>
+<ul>
+<li>映像规则：当把一个块从主存调入Cache时，可以放到哪些位置上？</li>
+<li>查找算法：当所要访问的块在Cache中时，如何找到该块？</li>
+<li>替换算法：当发生失效时，应该替换Cache中的哪一个块？</li>
+<li>写策略：当进行写访问时，应该如何操作？</li>
+</ul>
+<p>下面一一进行探讨：</p>
+<h2 id="（1）映像规则"><a href="#（1）映像规则" class="headerlink" title="（1）映像规则"></a>（1）映像规则</h2><p>当要把一个块从主存调入Cache中时，首先要确定这个块可以放在Cache中的哪些位置上。一般来说，主存的容量远远大于Cache的容量，因此要确定较多的主存块与较少的Cache块之间的对应关系，这就是Cache与主存间的映像规则。主要有以下三种：</p>
+<h3 id="1-直接映像"><a href="#1-直接映像" class="headerlink" title="1. 直接映像"></a>1. 直接映像</h3><p>直接映像（Direct Mapping）是指每个主存块只能被放置到唯一的一个Cache块位置。</p>
+<p>通常采用直接取模的方式进行映像。对于主存的第i块（即块地址为i），设它映像到Cache的第j块（即块地址为j），Cache总共有M块，则对应关系为：<br>$$<br>j &#x3D; i mod M<br>$$</p>
+<h3 id="2-全相联映像"><a href="#2-全相联映像" class="headerlink" title="2. 全相联映像"></a>2. 全相联映像</h3><p>全相联映像（Fully Associative Mapping）是指每个主存块可以被放置到任何一个Cache块位置。</p>
+<h3 id="3-组相联映像"><a href="#3-组相联映像" class="headerlink" title="3. 组相联映像"></a>3. 组相联映像</h3><p>组相联映像（Set Associative Mapping）是指每个主存块可以被放置到Cache中唯一的一个组中的任何一个块位置。</p>
+<p>这里引入了组的概念，Cache被等分为若干个组，每组由若干个块构成。具体地，假设组相联Cache一共有M个块，这M个块被分为G组，则每组有n&#x3D;M&#x2F;G个块，称该映像规则为n路组相联（n-way Set Associative）,直接映像实际上即为1路组相联，全相联即为M路组相联。</p>
+<p>通常也通过直接取模的方法进行组的映像，对于主存的第i块（即块地址为i），设它映像到Cache的第k组，Cache总共有G组，则对应关系为：<br>$$<br>k &#x3D; i mod G<br>$$<br>相联度的高低有利有弊，在实际设计时是一个值得tradeoff的事情。</p>
+<p>相联度越高，Cache空间的利用率越高，块冲突的概率就越低，因此Cache的失效率就越低。但高相联度的查找块过程较复杂，会使Cache的实现复杂度和代价增大，从而降低访问速度。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>利</th>
+<th>弊</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>高相联度</td>
+<td>Cache失效率低</td>
+<td>访问Cache速度慢</td>
+</tr>
+<tr>
+<td>低相联度</td>
+<td>访问Cache速度块</td>
+<td>Cache失效率高</td>
+</tr>
+</tbody></table>
+<h2 id="（2）查找方法"><a href="#（2）查找方法" class="headerlink" title="（2）查找方法"></a>（2）查找方法</h2><p>前面提到，当CPU发送内存地址给Cache后，Cache需要查找该地址所在的主存块当前是否在Cache中，如果在，则命中（Hit），如果不在，则失效（Miss）。主存地址被分为块地址和块内位移，我们需要根据块地址来进行查找。</p>
+<p>无论采取哪种映像规则，多个主存块都可能映像到同一个Cache块的位置，为了区分当前某Cache块位置保存的是哪一个主存块，必须记录唯一标识此主存块的信息，记录这些信息的硬件结构称为<strong>目录表</strong>。目录表共有M项，每个目录项对应于Cache中的一个块，目录项记录了其对应保存的主存块的块地址中除了索引意外的部分，称为标识（tag），每个主存块能唯一地由其标识来确定。此外，每个目录项还有一个有效位，用以指示该项是否有效。</p>
+<p>当要在Cache中查找某一块时，首先根据索引找到块（组）的位置，然后通过查找目录表来确定该块是否在这些位置中的一个。</p>
+<p>查找Cache块的方法基本取决于Cache的映像规则，下面分别进行讨论：</p>
+<h3 id="1-查找直接映像Cache"><a href="#1-查找直接映像Cache" class="headerlink" title="1. 查找直接映像Cache"></a>1. 查找直接映像Cache</h3><p>对于直接映像Cache，其主存块地址被分为tag和块索引，该主存块在Cache中具有唯一位置。因此当CPU访问该主存块时，利用块索引查找到这个位置对应的唯一一个目录项，如果主存地址的tag于该目录项的tag相同，且该目录项有效位为1，则命中；否则失效。</p>
+<img src="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031163658464.png" class="" title="直接映像Cache块地址划分">
+
+<h3 id="2-查找组相联Cache"><a href="#2-查找组相联Cache" class="headerlink" title="2. 查找组相联Cache"></a>2. 查找组相联Cache</h3><p>对于组相联Cache，其主存地址划分为tag和组索引，该主存块在Cache中具有唯一组别。因此当CPU访问该主存块时，首先通过组索引找到具有该组索引的若干目录项，然后比较这些目录项的tag与主存地址的tag，如果其中有一个目录项的tag与主存地址tag相同，且该目录项有效位为1，则该目录项命中；否则失效。</p>
+<img src="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031163555331.png" class="" title="4路组相联">
+
+<h3 id="3-查找全相联Cache"><a href="#3-查找全相联Cache" class="headerlink" title="3. 查找全相联Cache"></a>3. 查找全相联Cache</h3><p>对于全相联Cache，其主存块地址即为tag，该主存块可能在Cache的任意位置。当CPU访问该主存块时，该tag需要与Cache中所有块对应的tag比较，若其中有一个块的tag与主存地址的tag相同，且该目录项有效位为1，则该目录项命中；否则失效。</p>
+<img src="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031164639343.png" class="" title="全相联">
+
+
+
+<h2 id="（3）替换算法"><a href="#（3）替换算法" class="headerlink" title="（3）替换算法"></a>（3）替换算法</h2><p>之前说过，无论哪种映像，都会有较多主存块共享一个（或一组）Cache块的位置的情况，所以当一个块要从主存调入Cache时。可能会出现该块所映像的一个（或一组）Cache块位置已经全部被占用的情况。这是需要通过替换算法选择一个块位置来存放这个新调入的块，替换掉这个位置原来的块。</p>
+<ul>
+<li>对于直接映像Cache，每个内存块只映像到一个Cache块位置，因此必定是原来在该位置的块被替换，不存在替换策略。</li>
+<li>对于组相联和全相联Cache，每个内存块映像到一组或全部Cache块，有多个Cache块可能被选择替换掉，则就需要使用合理的替换策略，以<strong>达到尽可能避免替换掉马上就要用的Cache块的目的</strong>。</li>
+</ul>
+<p>主要的替换算法有以下几种：</p>
+<h4 id="1-随机法"><a href="#1-随机法" class="headerlink" title="1. 随机法"></a>1. 随机法</h4><p>顾名思义，随机法在可能被替换的Cache块中随机地选择，<u>以便均匀使用一组中的各个块</u></p>
+<h4 id="2-先进先出法"><a href="#2-先进先出法" class="headerlink" title="2. 先进先出法"></a>2. 先进先出法</h4><p>先进先出法（First In First Out, FIFO）选择最早调入地块作为被替换的块。其很容易实现，但<u>与局部性原理相左</u>，因为最先进入的块很可能马上就要再次使用。</p>
+<h4 id="3-最近最少使用法"><a href="#3-最近最少使用法" class="headerlink" title="3. 最近最少使用法"></a>3. 最近最少使用法</h4><p>最近最少使用法（Least Recently Used, LRU）选择近期最久没有被访问过的块作为被替换的块，它所依据的是<u>局部性原理的推论：如果最近刚使用的块很可能就是马上要再用到的块，那么最久没有被用过的块就是最不可能再被用到的块</u></p>
+<h4 id="4-最不常使用法"><a href="#4-最不常使用法" class="headerlink" title="4. 最不常使用法"></a>4. 最不常使用法</h4><p>最不常使用法（Least Frequently Used, LFU）选择过去一个时间段内访问次数最少的数据块，是<u>最符合局部性原理的算法</u>，但这种算法需要记录一段时间内各块被访问的次数，实现起来代价很大。</p>
+<h2 id="（4）写策略"><a href="#（4）写策略" class="headerlink" title="（4）写策略"></a>（4）写策略</h2><p>相较于读操作，写操作显然更为复杂，因为写会更新数据，改变Cache中数据的状态，而读不会。写策略需要解决以下两个问题：</p>
+<p>如果被写的块不在Cache中（写失效），应该怎样更新？</p>
+<p>如果被写的块在Cache中（写命中），应该只更新Cache，还是同时更新主存中的内容？</p>
+<h3 id="1-对于写失效情况，可以选择是否将响应的块调入Cache"><a href="#1-对于写失效情况，可以选择是否将响应的块调入Cache" class="headerlink" title="1. 对于写失效情况，可以选择是否将响应的块调入Cache"></a>1. 对于写失效情况，可以选择是否将响应的块调入Cache</h3><ul>
+<li><strong>按写分配（Write Allocate）</strong>：先把需要写的块从内存调入Cache，然后再进行写操作。</li>
+<li><strong>不按写分配（No Write Allocate）</strong>：直接写入内存。也称为<strong>绕写（Write Around）</strong>。</li>
+</ul>
+<h3 id="2-对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性"><a href="#2-对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性" class="headerlink" title="2. 对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性"></a>2. 对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性</h3><ul>
+<li><p><strong>写直达（Write Through）</strong>：把数据写入Cache中相应的块，同时也写入主存中相应的块。也称为<strong>写穿透</strong>。</p>
+</li>
+<li><p><strong>写回（Write Back）</strong>：只把数据写入Cache中相应的块，只有后面在该块被替换时，才会写回内存。</p>
+</li>
+<li><p>按写分配通常与写回搭配；不按写分配通常与写直达搭配。</p>
+</li>
+<li><p>在写回法中，为了减少在替换时块的写回，常采用“脏位”标志，即为每个Cache中的块设置一个脏位（dirty）。当该块第一次被改写时，该块的脏位就会置为1，表示这个Cache块曾经被修改过，如果之后再次被改写，脏位仍为1，如果该块需要被替换回内存，则需要将该块写回内存的对应块中。反之，若该块一次都没有被改写，则不需要写回内存。</p>
+</li>
+<li><p>写回与写直达比较</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>优点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>写回</td>
+<td>1. <strong>速度快</strong>。写操作能以Cache的速度进行       2. <strong>使用存储器带宽小</strong>。多次写只需更新一次</td>
+</tr>
+<tr>
+<td>写直达</td>
+<td>1. <strong>实现简单</strong>  2. <strong>简化了数据一致性问题</strong>。内存中的数据总是最新的</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>在进行写直达时，若写操作中CPU必须等待数据写入内存，则称CPU<strong>写停顿（Write Stall）</strong>，造成性能大量损失。为了缓解该问题，可采用<strong>写缓冲器（Write Buffer）</strong>来减少写停顿的时间，写访问数据一旦进入该缓冲器，CPU就可以继续执行，从而实现延迟隐藏。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Cache/" rel="tag"># Cache</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="prev" title="Gem5模拟器学习（四）">
+                  <i class="fa fa-angle-left"></i> Gem5模拟器学习（四）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/31/%E5%A4%9A%E7%BA%A7%E5%AD%98%E5%82%A8%E5%B1%82%E6%AC%A1/" rel="next" title="多级存储层次">
+                  多级存储层次 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Lang Yi Qun</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
