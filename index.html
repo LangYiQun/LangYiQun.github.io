@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,7 +134,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -180,6 +180,175 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-title-link" itemprop="url">MobaXterm通过SSH连接虚拟机</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-11-04 10:00:26 / 修改时间：10:12:00" itemprop="dateCreated datePublished" datetime="2023-11-04T10:00:26+08:00">2023-11-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-在Ubuntu下安装SSH服务"><a href="#1-在Ubuntu下安装SSH服务" class="headerlink" title="1. 在Ubuntu下安装SSH服务"></a>1. 在Ubuntu下安装SSH服务</h2><p>查看SSH是否启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service sshd status</span><br></pre></td></tr></table></figure>
+
+<p>如果没有安装SSH，会出现以下报错</p>
+<img src="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/image-20231104100420401.png" class="" title="image-20231104100420401">
+
+<p>那么需要通过以下命令进行安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
+
+<p>安装完毕后再次查看SSH是否启动，若成功，会出现以下输出</p>
+<img src="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/image-20231104100550221.png" class="" title="image-20231104100550221">
+
+
+
+<h2 id="2-查看虚拟机ip"><a href="#2-查看虚拟机ip" class="headerlink" title="2. 查看虚拟机ip"></a>2. 查看虚拟机ip</h2><p>通过ifconfig命令查看虚拟机ip</p>
+<img src="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/image-20231104100736596.png" class="" title="image-20231104100736596">
+
+<p>可以虚拟机ip为192.168.199.128</p>
+<h2 id="3-通过SSH连接虚拟机"><a href="#3-通过SSH连接虚拟机" class="headerlink" title="3. 通过SSH连接虚拟机"></a>3. 通过SSH连接虚拟机</h2><p>打开MobaXterm，首先进入主页的Session，然后选择SSH，再输入虚拟机IP，最后OK即可连接虚拟机。</p>
+<img src="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/image-20231104101010696.png" class="" title="image-20231104101010696">
+
+<p>一般通过SSH连接虚拟机是为了能够在主机和虚拟机之间互传文件</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（五）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-11-02 08:39:25 / 修改时间：08:40:05" itemprop="dateCreated datePublished" datetime="2023-11-02T08:39:25+08:00">2023-11-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="FS全系统模拟"><a href="#FS全系统模拟" class="headerlink" title="FS全系统模拟"></a>FS全系统模拟</h1>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -464,9 +633,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-10-30 08:39:24 / 修改时间：19:36:32" itemprop="dateCreated datePublished" datetime="2023-10-30T08:39:24+08:00">2023-10-30</time>
+      <time title="创建时间：2023-10-30 08:39:24" itemprop="dateCreated datePublished" datetime="2023-10-30T08:39:24+08:00">2023-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-01 20:35:44" itemprop="dateModified" datetime="2023-11-01T20:35:44+08:00">2023-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -527,13 +702,13 @@
 </li>
 <li>CPUSidePort类的成员变量<ul>
 <li><strong>父对象指针（即SimpleMemobj对象）</strong> SimpleMemobj *owner;</li>
-<li><strong>是否需要重发</strong> bool needRetry;</li>
-<li><strong>被阻塞的数据包指针</strong> PacketPtr blockedPacket;</li>
+<li><strong>是否需要重发</strong> CPU试图发送请求给端口，但被拒绝的情况下，需要记录一下存在这种情况，端口在结束忙态后会通知CPU重发。bool needRetry;</li>
+<li><strong>被阻塞的数据包指针</strong> 该端口试图给CPU发送响应，但被CPU拒绝，需要暂存这个数据包。PacketPtr blockedPacket;</li>
 </ul>
 </li>
 <li>MemSidePort类的成员变量<ul>
 <li><strong>父对象指针（即SimpleMemobj对象）</strong> SimpleMemobj *owner;</li>
-<li><strong>被阻塞的数据包指针</strong> PacketPtr blockedPacket;</li>
+<li><strong>被阻塞的数据包指针</strong> 该端口试图给主存发送请求，但被主存拒绝，需要暂存这个数据包。PacketPtr blockedPacket;</li>
 </ul>
 </li>
 </ul>
@@ -590,7 +765,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bool</span><br><span class="line">SimpleMemobj::MemSidePort::recvTimingResp(PacketPtr pkt)</span><br><span class="line">&#123;</span><br><span class="line">    // Just forward to the memobj.</span><br><span class="line">    return owner-&gt;handleResponse(pkt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-SimpleMemobj-handleResponse"><a href="#2-SimpleMemobj-handleResponse" class="headerlink" title="2. SimpleMemobj::handleResponse"></a>2. SimpleMemobj::handleResponse</h3><p>SimpleMemobj处理响应时，首先因为收到了响应所以消除阻塞状态，然后根据数据包的属性确定是发送给指令端口还是数据端口。</p>
-<p>接触了阻塞状态以后，会尝试通过trySendRetry()函数让CPU重发未能成功发送的请求（如果有的话）。</p>
+<p>结束了阻塞状态以后，会尝试通过trySendRetry()函数让CPU重发未能成功发送的请求（如果有的话）。</p>
 <p>注意：在接收响应时，SimpleMemobj应该一定处于阻塞状态，否则报错。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">bool</span><br><span class="line">SimpleMemobj::handleResponse(PacketPtr pkt)</span><br><span class="line">&#123;</span><br><span class="line">    assert(blocked);</span><br><span class="line">    DPRINTF(SimpleMemobj, &quot;Got response for addr %#x\n&quot;, pkt-&gt;getAddr());</span><br><span class="line"></span><br><span class="line">    // The packet is now done. We&#x27;re about to put it in the port, no need for</span><br><span class="line">    // this object to continue to stall.</span><br><span class="line">    // We need to free the resource before sending the packet in case the CPU</span><br><span class="line">    // tries to send another request immediately (e.g., in the same callchain).</span><br><span class="line">    blocked = false;</span><br><span class="line"></span><br><span class="line">    // Simply forward to the memory port</span><br><span class="line">    if (pkt-&gt;req-&gt;isInstFetch()) &#123;</span><br><span class="line">        instPort.sendPacket(pkt);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        dataPort.sendPacket(pkt);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // For each of the cpu ports, if it needs to send a retry, it should do it</span><br><span class="line">    // now since this memory object may be unblocked now.</span><br><span class="line">    instPort.trySendRetry();</span><br><span class="line">    dataPort.trySendRetry();</span><br><span class="line"></span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1041,202 +1216,6 @@
           <p>scons是一个Python写的自动化构建工具</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/danshiming/article/details/122771064?ops_request_misc=%7B%22request_id%22:%22169805899416777224422665%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169805899416777224422665&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-122771064-null-null.142%5Ev96%5Epc_search_result_base2&utm_term=SCons&spm=1018.2226.3001.4187">SCons简单入门（一）-CSDN博客</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.scons.org/doc/production/HTML/scons-user/index.html">SCons 4.5.2官方文档</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">第二章：指令系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-22 16:21:00" itemprop="dateCreated datePublished" datetime="2023-10-22T16:21:00+08:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-23 09:44:20" itemprop="dateModified" datetime="2023-10-23T09:44:20+08:00">2023-10-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《计算机体系结构》学习笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="1-指令系统结构的分类"><a href="#1-指令系统结构的分类" class="headerlink" title="1 指令系统结构的分类"></a>1 指令系统结构的分类</h1><p>CPU中用来存放操作数的存储单元主要有三种：<strong>堆栈</strong>、<strong>累加器</strong>、<strong>通用寄存器组</strong>。据此，指令系统（Instruction Set Architecture）可分为三种：</p>
-<ul>
-<li><strong>$\color[RGB]{40,120,181}{堆栈型结构}$：</strong>堆栈栈顶和次栈顶中的数据，运算后写入栈顶。两个操作数都是隐式的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>不能随机地访问堆栈，难以生成有效的代码，而且对栈顶的访问是个瓶颈。</li>
-<li><strong>$\color[RGB]{40,120,181}{累加器型结构}$：</strong>一个操作数是隐式的，即累加器；另一个是显示给出的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>只有一个中间结果暂存在累加器中，需要频繁访问存储器。</li>
-</ul>
-<p>早期计算机大多采用堆栈型结构或累加器型结构</p>
-<ul>
-<li><strong>$\color[RGB]{40,120,181}{通用寄存器型结构}$：</strong>所有操作数都是显示给出的。<strong>优点：</strong>1.寄存器的访问比存储器快得多 2. 编译器能够更加容易、有效地分配寄存器 。根据操作数显式给出的来源不同，又可以分为两类：<ul>
-<li>$\color[RGB]{248,172,140}{寄存器-存储器型结构(RM结构)}:$一个操作数来自寄存器，另一个来自存储器。</li>
-<li>$\color[RGB]{248,172,140}{寄存器-寄存器型结构(RR结构)}:$两个操作数都来自寄存器。</li>
-</ul>
-</li>
-</ul>
-<p>**显式给出:**用指令字中的操作数字段给出</p>
-<p>**隐式给出:**用事先约定好的单元</p>
-<h1 id="2-寻址方式"><a href="#2-寻址方式" class="headerlink" title="2. 寻址方式"></a>2. 寻址方式</h1><p>寻址方式（Addressing Mode）是指指令系统中产生所要访问的数据地址的方法。寻址方式可以指明指令中的操作数是一个<strong>立即数</strong>、一个<strong>寄存器操作数</strong>或者是一个<strong>存储器操作数</strong></p>
-<h2 id="2-1-寻址方式举例"><a href="#2-1-寻址方式举例" class="headerlink" title="2.1 寻址方式举例"></a>2.1 寻址方式举例</h2><ul>
-<li>寄存器寻址</li>
-<li>立即数寻址</li>
-<li>偏移寻址</li>
-</ul>
-<p>等等</p>
-<h2 id="2-2-字节对齐"><a href="#2-2-字节对齐" class="headerlink" title="2.2 字节对齐"></a>2.2 字节对齐</h2><p>计算机中信息的单位可分为字节(8bit)、半字(16bit)、单字(32bit)、双字(64bit)。计算机中采用按字节编址，各类信息都是用改信息的首字节地址来寻址的。</p>
-<h3 id="信息存储的整数边界"><a href="#信息存储的整数边界" class="headerlink" title="信息存储的整数边界"></a>信息存储的整数边界</h3><p>此外还需要对它们的存储方式进行限制，如果允许它们任意存储，就可能出现一个信息跨存储字边界而存储与两个存储单元的情况，而在这种情况下，读取该信息就需要花费两个存储周期，为了避免出现这个问题，就要求<strong>宽度不超过主存宽度的信息必须存放在一个存储字内，信息在主存中存放的起始地址必须是该信息宽度（字节数）的整数倍</strong>，从而避免了跨边界，保证了访问速度。</p>
-<p>对于一个32位机器（主存宽度为32位），要求：</p>
-<h5 id="字节信息的起始地址为：x…xxxx"><a href="#字节信息的起始地址为：x…xxxx" class="headerlink" title="字节信息的起始地址为：x…xxxx"></a>字节信息的起始地址为：x…xxxx</h5><h5 id="半字信息的起始地址为：x…xxx0"><a href="#半字信息的起始地址为：x…xxx0" class="headerlink" title="半字信息的起始地址为：x…xxx0"></a>半字信息的起始地址为：x…xxx0</h5><h5 id="单字信息的起始地址为：x…xx00"><a href="#单字信息的起始地址为：x…xx00" class="headerlink" title="单字信息的起始地址为：x…xx00"></a>单字信息的起始地址为：x…xx00</h5><h5 id="双字信息的起始地址为：x…x000"><a href="#双字信息的起始地址为：x…x000" class="headerlink" title="双字信息的起始地址为：x…x000"></a>双字信息的起始地址为：x…x000</h5>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/19/1019-1021/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/19/1019-1021/" class="post-title-link" itemprop="url">1019-1021</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-19 23:50:11" itemprop="dateCreated datePublished" datetime="2023-10-19T23:50:11+08:00">2023-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-23 23:37:53" itemprop="dateModified" datetime="2023-10-23T23:37:53+08:00">2023-10-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%95%E8%AE%BE%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">毕设学习记录</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="10-18"><a href="#10-18" class="headerlink" title="10.18"></a>10.18</h1><p>在Ubuntu20.04系统上成功配置gem5模拟器，并根据官网的教程编译了第一个单核x86架构系统，并运行hello world负载。</p>
-<h1 id="10-19"><a href="#10-19" class="headerlink" title="10.19"></a>10.19</h1><p>进一步学习官网教程，阅读博客</p>
-<p><a target="_blank" rel="noopener" href="https://csdiy.wiki/">CS自学指南 (csdiy.wiki)</a></p>
 
       
     </div>

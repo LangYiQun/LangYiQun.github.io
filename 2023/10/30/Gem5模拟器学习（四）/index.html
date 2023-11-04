@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMzgxMTM1,size_16,color_FFFFFF,t_70-169863203577313.png">
 <meta property="og:image" content="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/memobj_api.png">
 <meta property="article:published_time" content="2023-10-30T00:39:24.000Z">
-<meta property="article:modified_time" content="2023-10-30T11:36:32.241Z">
+<meta property="article:modified_time" content="2023-11-01T12:35:44.612Z">
 <meta property="article:author" content="Lang Yi Qun">
 <meta property="article:tag" content="Gem5">
 <meta name="twitter:card" content="summary">
@@ -132,7 +132,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -143,7 +143,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -227,9 +227,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-10-30 08:39:24 / 修改时间：19:36:32" itemprop="dateCreated datePublished" datetime="2023-10-30T08:39:24+08:00">2023-10-30</time>
+      <time title="创建时间：2023-10-30 08:39:24" itemprop="dateCreated datePublished" datetime="2023-10-30T08:39:24+08:00">2023-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-01 20:35:44" itemprop="dateModified" datetime="2023-11-01T20:35:44+08:00">2023-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -289,13 +295,13 @@
 </li>
 <li>CPUSidePort类的成员变量<ul>
 <li><strong>父对象指针（即SimpleMemobj对象）</strong> SimpleMemobj *owner;</li>
-<li><strong>是否需要重发</strong> bool needRetry;</li>
-<li><strong>被阻塞的数据包指针</strong> PacketPtr blockedPacket;</li>
+<li><strong>是否需要重发</strong> CPU试图发送请求给端口，但被拒绝的情况下，需要记录一下存在这种情况，端口在结束忙态后会通知CPU重发。bool needRetry;</li>
+<li><strong>被阻塞的数据包指针</strong> 该端口试图给CPU发送响应，但被CPU拒绝，需要暂存这个数据包。PacketPtr blockedPacket;</li>
 </ul>
 </li>
 <li>MemSidePort类的成员变量<ul>
 <li><strong>父对象指针（即SimpleMemobj对象）</strong> SimpleMemobj *owner;</li>
-<li><strong>被阻塞的数据包指针</strong> PacketPtr blockedPacket;</li>
+<li><strong>被阻塞的数据包指针</strong> 该端口试图给主存发送请求，但被主存拒绝，需要暂存这个数据包。PacketPtr blockedPacket;</li>
 </ul>
 </li>
 </ul>
@@ -352,7 +358,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bool</span><br><span class="line">SimpleMemobj::MemSidePort::recvTimingResp(PacketPtr pkt)</span><br><span class="line">&#123;</span><br><span class="line">    // Just forward to the memobj.</span><br><span class="line">    return owner-&gt;handleResponse(pkt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-SimpleMemobj-handleResponse"><a href="#2-SimpleMemobj-handleResponse" class="headerlink" title="2. SimpleMemobj::handleResponse"></a>2. SimpleMemobj::handleResponse</h3><p>SimpleMemobj处理响应时，首先因为收到了响应所以消除阻塞状态，然后根据数据包的属性确定是发送给指令端口还是数据端口。</p>
-<p>接触了阻塞状态以后，会尝试通过trySendRetry()函数让CPU重发未能成功发送的请求（如果有的话）。</p>
+<p>结束了阻塞状态以后，会尝试通过trySendRetry()函数让CPU重发未能成功发送的请求（如果有的话）。</p>
 <p>注意：在接收响应时，SimpleMemobj应该一定处于阻塞状态，否则报错。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">bool</span><br><span class="line">SimpleMemobj::handleResponse(PacketPtr pkt)</span><br><span class="line">&#123;</span><br><span class="line">    assert(blocked);</span><br><span class="line">    DPRINTF(SimpleMemobj, &quot;Got response for addr %#x\n&quot;, pkt-&gt;getAddr());</span><br><span class="line"></span><br><span class="line">    // The packet is now done. We&#x27;re about to put it in the port, no need for</span><br><span class="line">    // this object to continue to stall.</span><br><span class="line">    // We need to free the resource before sending the packet in case the CPU</span><br><span class="line">    // tries to send another request immediately (e.g., in the same callchain).</span><br><span class="line">    blocked = false;</span><br><span class="line"></span><br><span class="line">    // Simply forward to the memory port</span><br><span class="line">    if (pkt-&gt;req-&gt;isInstFetch()) &#123;</span><br><span class="line">        instPort.sendPacket(pkt);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        dataPort.sendPacket(pkt);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // For each of the cpu ports, if it needs to send a retry, it should do it</span><br><span class="line">    // now since this memory object may be unblocked now.</span><br><span class="line">    instPort.trySendRetry();</span><br><span class="line">    dataPort.trySendRetry();</span><br><span class="line"></span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
