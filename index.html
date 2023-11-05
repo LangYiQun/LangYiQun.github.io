@@ -451,9 +451,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-10-31 10:06:07 / 修改时间：19:28:20" itemprop="dateCreated datePublished" datetime="2023-10-31T10:06:07+08:00">2023-10-31</time>
+      <time title="创建时间：2023-10-31 10:06:07" itemprop="dateCreated datePublished" datetime="2023-10-31T10:06:07+08:00">2023-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-05 09:17:21" itemprop="dateModified" datetime="2023-11-05T09:17:21+08:00">2023-11-05</time>
     </span>
 
   
@@ -468,111 +474,14 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="一、Cache技术"><a href="#一、Cache技术" class="headerlink" title="一、Cache技术"></a>一、Cache技术</h1><p>现代计算机都在CPU和主存之间设置一个高速、小容量的缓冲处理器，称为Cache。Cache的存在填补了CPU和主存在速度上的巨大差距，对于提高整个计算机系统的性能有重要意义，是现代计算系统必不可少的部件，然而，<strong>Cache对程序员是透明的</strong>。</p>
 <p>此外，Cache技术这个此被广泛用于指代利用缓冲技术来实现局部数据再利用的技术。其能够缓解两个部件之间访问数据速度差距较大的问题，在硬盘、网页中都能看见缓冲技术的身影，本文专指CPU与主存之间的Cache。</p>
-<h1 id="二、Cache结构"><a href="#二、Cache结构" class="headerlink" title="二、Cache结构"></a>二、Cache结构</h1><p>Cache 和主存间信息的交互<strong>按块来组织</strong>。Cache和主存均被分割为大小相同的块，块大小（blocksize）通常为2的幂次方字节。</p>
-<p>【图一：Cache、内存被分割为块】</p>
-<p>CPU通过访存指令中的主存地址向Cache请求主存数据，该主存地址被分割为两部分：<strong>块地址</strong>和<strong>块内位移</strong></p>
-<img src="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031155331776.png" class="" title="内存地址分割为块地址和块内偏移">
-
-<p>【图二：主存地址被分割为块地址和块内偏移】</p>
-<p>硬件会<u>根据<strong>块地址</strong>查找该块在Cache中的位置</u>，再<u>通过<strong>块内位移</strong>确定所访问的数据再该块中的位置</u>。</p>
-<h1 id="三、Cache工作原理"><a href="#三、Cache工作原理" class="headerlink" title="三、Cache工作原理"></a>三、Cache工作原理</h1><p>在每个存储层次中，都绕不开这四个关键问题：</p>
-<ul>
-<li>映像规则：当把一个块从主存调入Cache时，可以放到哪些位置上？</li>
-<li>查找算法：当所要访问的块在Cache中时，如何找到该块？</li>
-<li>替换算法：当发生失效时，应该替换Cache中的哪一个块？</li>
-<li>写策略：当进行写访问时，应该如何操作？</li>
-</ul>
-<p>下面一一进行探讨：</p>
-<h2 id="（1）映像规则"><a href="#（1）映像规则" class="headerlink" title="（1）映像规则"></a>（1）映像规则</h2><p>当要把一个块从主存调入Cache中时，首先要确定这个块可以放在Cache中的哪些位置上。一般来说，主存的容量远远大于Cache的容量，因此要确定较多的主存块与较少的Cache块之间的对应关系，这就是Cache与主存间的映像规则。主要有以下三种：</p>
-<h3 id="1-直接映像"><a href="#1-直接映像" class="headerlink" title="1. 直接映像"></a>1. 直接映像</h3><p>直接映像（Direct Mapping）是指每个主存块只能被放置到唯一的一个Cache块位置。</p>
-<p>通常采用直接取模的方式进行映像。对于主存的第i块（即块地址为i），设它映像到Cache的第j块（即块地址为j），Cache总共有M块，则对应关系为：<br>$$<br>j &#x3D; i mod M<br>$$</p>
-<h3 id="2-全相联映像"><a href="#2-全相联映像" class="headerlink" title="2. 全相联映像"></a>2. 全相联映像</h3><p>全相联映像（Fully Associative Mapping）是指每个主存块可以被放置到任何一个Cache块位置。</p>
-<h3 id="3-组相联映像"><a href="#3-组相联映像" class="headerlink" title="3. 组相联映像"></a>3. 组相联映像</h3><p>组相联映像（Set Associative Mapping）是指每个主存块可以被放置到Cache中唯一的一个组中的任何一个块位置。</p>
-<p>这里引入了组的概念，Cache被等分为若干个组，每组由若干个块构成。具体地，假设组相联Cache一共有M个块，这M个块被分为G组，则每组有n&#x3D;M&#x2F;G个块，称该映像规则为n路组相联（n-way Set Associative）,直接映像实际上即为1路组相联，全相联即为M路组相联。</p>
-<p>通常也通过直接取模的方法进行组的映像，对于主存的第i块（即块地址为i），设它映像到Cache的第k组，Cache总共有G组，则对应关系为：<br>$$<br>k &#x3D; i mod G<br>$$<br>相联度的高低有利有弊，在实际设计时是一个值得tradeoff的事情。</p>
-<p>相联度越高，Cache空间的利用率越高，块冲突的概率就越低，因此Cache的失效率就越低。但高相联度的查找块过程较复杂，会使Cache的实现复杂度和代价增大，从而降低访问速度。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>利</th>
-<th>弊</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>高相联度</td>
-<td>Cache失效率低</td>
-<td>访问Cache速度慢</td>
-</tr>
-<tr>
-<td>低相联度</td>
-<td>访问Cache速度块</td>
-<td>Cache失效率高</td>
-</tr>
-</tbody></table>
-<h2 id="（2）查找方法"><a href="#（2）查找方法" class="headerlink" title="（2）查找方法"></a>（2）查找方法</h2><p>前面提到，当CPU发送内存地址给Cache后，Cache需要查找该地址所在的主存块当前是否在Cache中，如果在，则命中（Hit），如果不在，则失效（Miss）。主存地址被分为块地址和块内位移，我们需要根据块地址来进行查找。</p>
-<p>无论采取哪种映像规则，多个主存块都可能映像到同一个Cache块的位置，为了区分当前某Cache块位置保存的是哪一个主存块，必须记录唯一标识此主存块的信息，记录这些信息的硬件结构称为<strong>目录表</strong>。目录表共有M项，每个目录项对应于Cache中的一个块，目录项记录了其对应保存的主存块的块地址中除了索引意外的部分，称为标识（tag），每个主存块能唯一地由其标识来确定。此外，每个目录项还有一个有效位，用以指示该项是否有效。</p>
-<p>当要在Cache中查找某一块时，首先根据索引找到块（组）的位置，然后通过查找目录表来确定该块是否在这些位置中的一个。</p>
-<p>查找Cache块的方法基本取决于Cache的映像规则，下面分别进行讨论：</p>
-<h3 id="1-查找直接映像Cache"><a href="#1-查找直接映像Cache" class="headerlink" title="1. 查找直接映像Cache"></a>1. 查找直接映像Cache</h3><p>对于直接映像Cache，其主存块地址被分为tag和块索引，该主存块在Cache中具有唯一位置。因此当CPU访问该主存块时，利用块索引查找到这个位置对应的唯一一个目录项，如果主存地址的tag于该目录项的tag相同，且该目录项有效位为1，则命中；否则失效。</p>
-<img src="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031163658464.png" class="" title="直接映像Cache块地址划分">
-
-<h3 id="2-查找组相联Cache"><a href="#2-查找组相联Cache" class="headerlink" title="2. 查找组相联Cache"></a>2. 查找组相联Cache</h3><p>对于组相联Cache，其主存地址划分为tag和组索引，该主存块在Cache中具有唯一组别。因此当CPU访问该主存块时，首先通过组索引找到具有该组索引的若干目录项，然后比较这些目录项的tag与主存地址的tag，如果其中有一个目录项的tag与主存地址tag相同，且该目录项有效位为1，则该目录项命中；否则失效。</p>
-<img src="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031163555331.png" class="" title="4路组相联">
-
-<h3 id="3-查找全相联Cache"><a href="#3-查找全相联Cache" class="headerlink" title="3. 查找全相联Cache"></a>3. 查找全相联Cache</h3><p>对于全相联Cache，其主存块地址即为tag，该主存块可能在Cache的任意位置。当CPU访问该主存块时，该tag需要与Cache中所有块对应的tag比较，若其中有一个块的tag与主存地址的tag相同，且该目录项有效位为1，则该目录项命中；否则失效。</p>
-<img src="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image-20231031164639343.png" class="" title="全相联">
-
-
-
-<h2 id="（3）替换算法"><a href="#（3）替换算法" class="headerlink" title="（3）替换算法"></a>（3）替换算法</h2><p>之前说过，无论哪种映像，都会有较多主存块共享一个（或一组）Cache块的位置的情况，所以当一个块要从主存调入Cache时。可能会出现该块所映像的一个（或一组）Cache块位置已经全部被占用的情况。这是需要通过替换算法选择一个块位置来存放这个新调入的块，替换掉这个位置原来的块。</p>
-<ul>
-<li>对于直接映像Cache，每个内存块只映像到一个Cache块位置，因此必定是原来在该位置的块被替换，不存在替换策略。</li>
-<li>对于组相联和全相联Cache，每个内存块映像到一组或全部Cache块，有多个Cache块可能被选择替换掉，则就需要使用合理的替换策略，以<strong>达到尽可能避免替换掉马上就要用的Cache块的目的</strong>。</li>
-</ul>
-<p>主要的替换算法有以下几种：</p>
-<h4 id="1-随机法"><a href="#1-随机法" class="headerlink" title="1. 随机法"></a>1. 随机法</h4><p>顾名思义，随机法在可能被替换的Cache块中随机地选择，<u>以便均匀使用一组中的各个块</u></p>
-<h4 id="2-先进先出法"><a href="#2-先进先出法" class="headerlink" title="2. 先进先出法"></a>2. 先进先出法</h4><p>先进先出法（First In First Out, FIFO）选择最早调入地块作为被替换的块。其很容易实现，但<u>与局部性原理相左</u>，因为最先进入的块很可能马上就要再次使用。</p>
-<h4 id="3-最近最少使用法"><a href="#3-最近最少使用法" class="headerlink" title="3. 最近最少使用法"></a>3. 最近最少使用法</h4><p>最近最少使用法（Least Recently Used, LRU）选择近期最久没有被访问过的块作为被替换的块，它所依据的是<u>局部性原理的推论：如果最近刚使用的块很可能就是马上要再用到的块，那么最久没有被用过的块就是最不可能再被用到的块</u></p>
-<h4 id="4-最不常使用法"><a href="#4-最不常使用法" class="headerlink" title="4. 最不常使用法"></a>4. 最不常使用法</h4><p>最不常使用法（Least Frequently Used, LFU）选择过去一个时间段内访问次数最少的数据块，是<u>最符合局部性原理的算法</u>，但这种算法需要记录一段时间内各块被访问的次数，实现起来代价很大。</p>
-<h2 id="（4）写策略"><a href="#（4）写策略" class="headerlink" title="（4）写策略"></a>（4）写策略</h2><p>相较于读操作，写操作显然更为复杂，因为写会更新数据，改变Cache中数据的状态，而读不会。写策略需要解决以下两个问题：</p>
-<p>如果被写的块不在Cache中（写失效），应该怎样更新？</p>
-<p>如果被写的块在Cache中（写命中），应该只更新Cache，还是同时更新主存中的内容？</p>
-<h3 id="1-对于写失效情况，可以选择是否将响应的块调入Cache"><a href="#1-对于写失效情况，可以选择是否将响应的块调入Cache" class="headerlink" title="1. 对于写失效情况，可以选择是否将响应的块调入Cache"></a>1. 对于写失效情况，可以选择是否将响应的块调入Cache</h3><ul>
-<li><strong>按写分配（Write Allocate）</strong>：先把需要写的块从内存调入Cache，然后再进行写操作。</li>
-<li><strong>不按写分配（No Write Allocate）</strong>：直接写入内存。也称为<strong>绕写（Write Around）</strong>。</li>
-</ul>
-<h3 id="2-对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性"><a href="#2-对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性" class="headerlink" title="2. 对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性"></a>2. 对于写命中或写失效时按写分配，有两种策略来维护Cache与主存的一致性</h3><ul>
-<li><p><strong>写直达（Write Through）</strong>：把数据写入Cache中相应的块，同时也写入主存中相应的块。也称为<strong>写穿透</strong>。</p>
-</li>
-<li><p><strong>写回（Write Back）</strong>：只把数据写入Cache中相应的块，只有后面在该块被替换时，才会写回内存。</p>
-</li>
-<li><p>按写分配通常与写回搭配；不按写分配通常与写直达搭配。</p>
-</li>
-<li><p>在写回法中，为了减少在替换时块的写回，常采用“脏位”标志，即为每个Cache中的块设置一个脏位（dirty）。当该块第一次被改写时，该块的脏位就会置为1，表示这个Cache块曾经被修改过，如果之后再次被改写，脏位仍为1，如果该块需要被替换回内存，则需要将该块写回内存的对应块中。反之，若该块一次都没有被改写，则不需要写回内存。</p>
-</li>
-<li><p>写回与写直达比较</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>优点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>写回</td>
-<td>1. <strong>速度快</strong>。写操作能以Cache的速度进行       2. <strong>使用存储器带宽小</strong>。多次写只需更新一次</td>
-</tr>
-<tr>
-<td>写直达</td>
-<td>1. <strong>实现简单</strong>  2. <strong>简化了数据一致性问题</strong>。内存中的数据总是最新的</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>在进行写直达时，若写操作中CPU必须等待数据写入内存，则称CPU<strong>写停顿（Write Stall）</strong>，造成性能大量损失。为了缓解该问题，可采用<strong>写缓冲器（Write Buffer）</strong>来减少写停顿的时间，写访问数据一旦进入该缓冲器，CPU就可以继续执行，从而实现延迟隐藏。</p>
-</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/10/31/Cache%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
