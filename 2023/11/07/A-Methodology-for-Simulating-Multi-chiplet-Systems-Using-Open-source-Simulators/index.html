@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、论文总结二、摘要为了支持早期的Chiplets系统的设计空间探索，提出了一种基于gem5、snipe、gpgpu-sim等开源模拟器的Chiplets架构模拟方法。 并开源在Github上 https:&#x2F;&#x2F;github.com&#x2F;FCAS-SCUT&#x2F;chiplet_simulators 三、背景&amp;目前待解决的问题Chiplet是后摩尔时代一种很有前途的设计模式，但针对Chiplet的体系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chiplet论文阅读—— Methodology for Simulating Multi-chiplet Systems UsingOpen-source Simulators">
+<meta property="og:url" content="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/index.html">
+<meta property="og:site_name" content="郎轶群的博客">
+<meta property="og:description" content="一、论文总结二、摘要为了支持早期的Chiplets系统的设计空间探索，提出了一种基于gem5、snipe、gpgpu-sim等开源模拟器的Chiplets架构模拟方法。 并开源在Github上 https:&#x2F;&#x2F;github.com&#x2F;FCAS-SCUT&#x2F;chiplet_simulators 三、背景&amp;目前待解决的问题Chiplet是后摩尔时代一种很有前途的设计模式，但针对Chiplet的体系">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/image-20231107214349591.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/image-20231107220406161.png">
+<meta property="article:published_time" content="2023-11-07T12:24:05.000Z">
+<meta property="article:modified_time" content="2023-11-07T14:05:07.471Z">
+<meta property="article:author" content="Lang Yi Qun">
+<meta property="article:tag" content="Chiplet">
+<meta property="article:tag" content="模拟器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/image-20231107214349591.png">
+
+
+<link rel="canonical" href="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/","path":"2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/","title":"Chiplet论文阅读—— Methodology for Simulating Multi-chiplet Systems UsingOpen-source Simulators"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Chiplet论文阅读—— Methodology for Simulating Multi-chiplet Systems UsingOpen-source Simulators | 郎轶群的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">郎轶群的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">却道天凉好个秋</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">一、论文总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%91%98%E8%A6%81"><span class="nav-number">2.</span> <span class="nav-text">二、摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%83%8C%E6%99%AF-%E7%9B%AE%E5%89%8D%E5%BE%85%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">三、背景&amp;目前待解决的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Chiplets%E5%BE%AE%E6%9E%B6%E6%9E%84%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%A9%BA%E9%97%B4%E6%AF%94SoC%E8%A6%81%E5%A4%A7%E5%BE%97%E5%A4%9A%EF%BC%8C%E5%9B%A0%E6%AD%A4%E9%9C%80%E8%A6%81%E6%8E%A2%E7%B4%A2%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%9B%B4%E5%A4%9A"><span class="nav-number">3.1.</span> <span class="nav-text">1. Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%8E%B0%E6%9C%89%E5%BC%80%E6%BA%90%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E7%9B%B4%E6%8E%A5%E7%94%A8%E4%BA%8Echiplets%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A8%A1%E6%8B%9F%EF%BC%8C%E5%9B%A0%E4%B8%BA%E4%BB%A5%E4%B8%8B%E4%B8%A4%E4%B8%AA%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">2. 现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%96%87%E7%AB%A0%E8%B4%A1%E7%8C%AE"><span class="nav-number">4.</span> <span class="nav-text">四、文章贡献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81Multi-Chiplets%E7%B3%BB%E7%BB%9F%E4%BB%BF%E7%9C%9F%E6%A1%86%E6%9E%B6"><span class="nav-number">5.</span> <span class="nav-text">五、Multi-Chiplets系统仿真框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E6%A1%86%E6%9E%B6%E6%80%BB%E8%A7%88"><span class="nav-number">5.1.</span> <span class="nav-text">3.1 框架总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E8%BF%9C%E7%A8%8B%E8%AF%BB%E5%86%99%E5%8D%8F%E8%AE%AE"><span class="nav-number">5.2.</span> <span class="nav-text">3.2 远程读写协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%BF%9C%E7%A8%8B%E8%AF%BB"><span class="nav-number">5.2.1.</span> <span class="nav-text">（1）远程读</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lang Yi Qun</p>
+  <div class="site-description" itemprop="description">this is a personal blog of lyq</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/yourname" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener me" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Chiplet论文阅读—— Methodology for Simulating Multi-chiplet Systems UsingOpen-source Simulators | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Chiplet论文阅读—— Methodology for Simulating Multi-chiplet Systems UsingOpen-source Simulators
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-11-07 20:24:05 / 修改时间：22:05:07" itemprop="dateCreated datePublished" datetime="2023-11-07T20:24:05+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Chiplet%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">Chiplet论文阅读</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="一、论文总结"><a href="#一、论文总结" class="headerlink" title="一、论文总结"></a>一、论文总结</h1><h1 id="二、摘要"><a href="#二、摘要" class="headerlink" title="二、摘要"></a>二、摘要</h1><p>为了支持早期的Chiplets系统的设计空间探索，提出了一种基于gem5、snipe、gpgpu-sim等开源模拟器的Chiplets架构模拟方法。</p>
+<p>并开源在Github上 <a target="_blank" rel="noopener" href="https://github.com/FCAS-SCUT/chiplet_simulators">https://github.com/FCAS-SCUT/chiplet_simulators</a></p>
+<h1 id="三、背景-目前待解决的问题"><a href="#三、背景-目前待解决的问题" class="headerlink" title="三、背景&amp;目前待解决的问题"></a>三、背景&amp;目前待解决的问题</h1><p>Chiplet是后摩尔时代一种很有前途的设计模式，但针对Chiplet的体系结构研究缺乏可靠的模拟器。</p>
+<h2 id="1-Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多"><a href="#1-Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多" class="headerlink" title="1. Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多"></a>1. Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多</h2><p>主要包括<strong>核的组织方式</strong>（128核系统可以分为32cores * 4 chiplets、16cores * 8 chiplets等）、<strong>互联的拓扑结构</strong>、<strong>内存模型</strong></p>
+<h2 id="2-现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因："><a href="#2-现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因：" class="headerlink" title="2. 现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因："></a>2. 现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因：</h2><ul>
+<li><p>没有精确的Chiplet间互联模型。现有开源模拟器（如gem5、sniper、Graphite、gpgpu-sim）都是纯网络模拟器（network-only simulator），缺乏详细准确的中介层互连延迟和功率模型{❓意思是仅能够精确模拟chiplet内部多核的互联，对chiplet间的互联模拟不精确吗❓}。</p>
+</li>
+<li><p>无法进行大规模并行模拟。Multi-Chiplets系统一般具有大量的核，这样的系统模拟起来会很耗时，因此需要通过大规模的并行来加速模拟。虽然Graphite和sniper支持并行模拟，但并不支持精确的互联建模。</p>
+</li>
+</ul>
+<h1 id="四、文章贡献"><a href="#四、文章贡献" class="headerlink" title="四、文章贡献"></a>四、文章贡献</h1><p>文章通过集成和修改开源模拟器，提出了一种模拟Multi-Chiplets系统的方法。</p>
+<ol>
+<li>现有开源模拟器用来模拟单个chiplet，通过多开[reuse]模拟器并行运行实现Multi-Chiplets。并提出模拟器间进程通信和同步协议[a full set of inter-simulator-process communication and synchronization protocol]来模拟chiplets之间的通信。</li>
+<li>基于插入器的互连[Interposer-based interconnection]是使用特定参数精确建模的。互联可以通过<u>仅网络方式[Network Only]</u>、<u>系统调用仿真[SE]</u>、<u>全系统仿真[FS]</u>来模拟。可以容易的实现各种chiplet间和chiplet内的网络拓扑。</li>
+<li>支持两种典型的内存模型：消息传递和共享内存</li>
+<li>提出了一种基于文件的模拟器间进程通信和同步协议，使得多个模拟器进程同步运行，同理可集成其他模拟器。通过时序模型文件[Timing models files]和功能模型文件[Functional models files]支持远程存储器读写。这种通过进程的多开模拟器方法可以很好地实现并行模拟。</li>
+</ol>
+<h1 id="五、Multi-Chiplets系统仿真框架"><a href="#五、Multi-Chiplets系统仿真框架" class="headerlink" title="五、Multi-Chiplets系统仿真框架"></a>五、Multi-Chiplets系统仿真框架</h1><p>此部分对应文章第三章</p>
+<h2 id="3-1-框架总览"><a href="#3-1-框架总览" class="headerlink" title="3.1 框架总览"></a>3.1 框架总览</h2><img src="/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/image-20231107214349591.png" class="" title="image-20231107214349591">
+
+<ul>
+<li><strong>电路和物理层[Circuit and physical layer]：</strong></li>
+<li><strong>微体系结构和chiplet内部层 [micro-architectural and intra-chiplet layer]：</strong>每个单独的chiplet由一个模拟器进行模拟，模拟器还用于模拟路由器间的通道</li>
+<li><strong>chiplet间网络层[ inter-chiplet network layer]：</strong>该框架利用集中式网络管理器读取配置文件，以配置chiplet间的网络拓扑</li>
+<li><strong>系统层[system layer]：</strong>通过功能模型文件和时序模型文件来实现共享内存模型和分布式内存模型。<ul>
+<li>功能模型文件：远程读写请求写入每对模拟器进程的功能模型文件。</li>
+<li>时序模型文件：积累远程读写请求的延迟❓用来统计吗❓。</li>
+</ul>
+</li>
+<li><strong>应用层[Application layer]：</strong>该框架在应用层为程序员提供了用于远程读写的API，程序员可以借助此API开发测试程序。在gem5中的FS模式下，这个API使用m5 opt向主机生成时序模型文件和功能模型文件，用于模拟器之间的进程通信。在gem5的SE模式下，这个API系统调用处理程序向主机生成时序和功能模型文件，用于模拟器之间的进程通信。</li>
+</ul>
+<h2 id="3-2-远程读写协议"><a href="#3-2-远程读写协议" class="headerlink" title="3.2 远程读写协议"></a>3.2 远程读写协议</h2><h3 id="（1）远程读"><a href="#（1）远程读" class="headerlink" title="（1）远程读"></a>（1）远程读</h3><p>远程读遵从握手协议</p>
+<img src="/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/image-20231107220406161.png" class="" title="image-20231107220406161">
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Chiplet/" rel="tag"># Chiplet</a>
+              <a href="/tags/%E6%A8%A1%E6%8B%9F%E5%99%A8/" rel="tag"># 模拟器</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/07/gcc%E7%BC%96%E8%AF%91%E5%99%A8%E5%8F%82%E6%95%B0/" rel="prev" title="gcc编译器参数">
+                  <i class="fa fa-angle-left"></i> gcc编译器参数
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Lang Yi Qun</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
