@@ -19,18 +19,22 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="FS全系统模拟m5端1. m5介绍2. 启动m5端启动m5有两种方法，一种是通过系统自带的telnet或者gem5中提供的m5term工具，推荐m5term。 （1）telnet使用不需要额外安装或配置，直接 1telent &lt;host&gt; &lt;post&gt;  例如 123telnet localhost 3456&#x2F;&#x2F; 3456表示用于连接模拟系统的端口号，再gem5模拟中，默认">
+    <meta name="description" content="FS全系统模拟一、构建X86系统切换到gem目录下，使用Scons进行构建 1scons .&#x2F;build&#x2F;X86&#x2F;gem5.opt -j [NumberOfThread]  二、获取镜像文件和Linux内核文件 FS模拟会启动Linux操作系统，会模拟系统的所有组件。因此需要给系统配置相应的Linux内核以及磁盘镜像 img 文件和 vmlinux 文件是 gem5 中启动操作系统所需的两个重要文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gem5模拟器学习（五）">
 <meta property="og:url" content="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/index.html">
 <meta property="og:site_name" content="郎轶群的博客">
-<meta property="og:description" content="FS全系统模拟m5端1. m5介绍2. 启动m5端启动m5有两种方法，一种是通过系统自带的telnet或者gem5中提供的m5term工具，推荐m5term。 （1）telnet使用不需要额外安装或配置，直接 1telent &lt;host&gt; &lt;post&gt;  例如 123telnet localhost 3456&#x2F;&#x2F; 3456表示用于连接模拟系统的端口号，再gem5模拟中，默认">
+<meta property="og:description" content="FS全系统模拟一、构建X86系统切换到gem目录下，使用Scons进行构建 1scons .&#x2F;build&#x2F;X86&#x2F;gem5.opt -j [NumberOfThread]  二、获取镜像文件和Linux内核文件 FS模拟会启动Linux操作系统，会模拟系统的所有组件。因此需要给系统配置相应的Linux内核以及磁盘镜像 img 文件和 vmlinux 文件是 gem5 中启动操作系统所需的两个重要文">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114123822874.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114093504398.png">
+<meta property="og:image" content="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114093427885.png">
 <meta property="article:published_time" content="2023-11-02T00:39:25.000Z">
-<meta property="article:modified_time" content="2023-11-13T11:21:10.487Z">
+<meta property="article:modified_time" content="2023-11-14T11:20:42.156Z">
 <meta property="article:author" content="Lang Yi Qun">
 <meta property="article:tag" content="Gem5">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114123822874.png">
 
 
 <link rel="canonical" href="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/">
@@ -113,7 +117,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FS%E5%85%A8%E7%B3%BB%E7%BB%9F%E6%A8%A1%E6%8B%9F"><span class="nav-number">1.</span> <span class="nav-text">FS全系统模拟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#m5%E7%AB%AF"><span class="nav-number">2.</span> <span class="nav-text">m5端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-m5%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.1.</span> <span class="nav-text">1. m5介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%90%AF%E5%8A%A8m5%E7%AB%AF"><span class="nav-number">2.2.</span> <span class="nav-text">2. 启动m5端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89telnet"><span class="nav-number">2.2.1.</span> <span class="nav-text">（1）telnet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89m5term"><span class="nav-number">2.2.2.</span> <span class="nav-text">（2）m5term</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FS%E5%85%A8%E7%B3%BB%E7%BB%9F%E6%A8%A1%E6%8B%9F"><span class="nav-number">1.</span> <span class="nav-text">FS全系统模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%9E%84%E5%BB%BAX86%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.1.</span> <span class="nav-text">一、构建X86系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6%E5%92%8CLinux%E5%86%85%E6%A0%B8%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">二、获取镜像文件和Linux内核文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E8%84%9A%E6%9C%AC"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 自动获取脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%87%AA%E5%B7%B1%E5%88%B6%E4%BD%9Cimg%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.自己制作img文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#m5%E7%AB%AF"><span class="nav-number">2.</span> <span class="nav-text">m5端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-m5%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. m5介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%90%AF%E5%8A%A8m5%E7%AB%AF"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 启动m5端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89telnet"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">（1）telnet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89m5term"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">（2）m5term</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%94%9F%E6%88%90m5%E4%BB%A5%E5%8F%8A%E5%AF%B9%E5%BA%94%E7%9A%84libm5-a%E5%BA%93"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 生成m5以及对应的libm5.a库</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -229,7 +233,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-13 19:21:10" itemprop="dateModified" datetime="2023-11-13T19:21:10+08:00">2023-11-13</time>
+      <time title="修改时间：2023-11-14 19:20:42" itemprop="dateModified" datetime="2023-11-14T19:20:42+08:00">2023-11-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -250,8 +254,47 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="FS全系统模拟"><a href="#FS全系统模拟" class="headerlink" title="FS全系统模拟"></a>FS全系统模拟</h1><h1 id="m5端"><a href="#m5端" class="headerlink" title="m5端"></a>m5端</h1><h2 id="1-m5介绍"><a href="#1-m5介绍" class="headerlink" title="1. m5介绍"></a>1. m5介绍</h2><h2 id="2-启动m5端"><a href="#2-启动m5端" class="headerlink" title="2. 启动m5端"></a>2. 启动m5端</h2><p>启动m5有两种方法，一种是通过系统自带的telnet或者gem5中提供的m5term工具，推荐m5term。</p>
-<h3 id="（1）telnet"><a href="#（1）telnet" class="headerlink" title="（1）telnet"></a>（1）telnet</h3><p>使用不需要额外安装或配置，直接</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="FS全系统模拟"><a href="#FS全系统模拟" class="headerlink" title="FS全系统模拟"></a>FS全系统模拟</h1><h2 id="一、构建X86系统"><a href="#一、构建X86系统" class="headerlink" title="一、构建X86系统"></a>一、构建X86系统</h2><p>切换到gem目录下，使用Scons进行构建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scons ./build/X86/gem5.opt -j [NumberOfThread]</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、获取镜像文件和Linux内核文件"><a href="#二、获取镜像文件和Linux内核文件" class="headerlink" title="二、获取镜像文件和Linux内核文件"></a>二、获取镜像文件和Linux内核文件</h2><p> FS模拟会启动Linux操作系统，会模拟系统的所有组件。因此需要给系统配置相应的Linux内核以及磁盘镜像</p>
+<p>img 文件和 vmlinux 文件是 gem5 中启动操作系统所需的两个重要文件。</p>
+<ul>
+<li><strong>磁盘镜像（img 文件）</strong>储存了操作系统的文件系统和应用程序，这些文件是操作系统运行所必需的。操作系统需要文件系统来存储和组织文件，需要应用程序来实现特定功能。</li>
+<li><strong>Linux内核文件（vmlinux 文件）</strong>储存了操作系统的内核代码。内核是操作系统的核心部分，负责管理系统资源和提供基本的服务。如果没有内核，操作系统就无法正常启动和运行。</li>
+</ul>
+<h3 id="1-自动获取脚本"><a href="#1-自动获取脚本" class="headerlink" title="1. 自动获取脚本"></a>1. 自动获取脚本</h3><p>官方教程中使用的img和vmlinux直接来自于gem5资源库（resource repository），直接利用Resource类（<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/general_docs/gem5_resources/">gem5: gem5-resources</a>）下载到本地。Gem5官网提供了通过Resource自动获取img文件和vmlinux文件，并运行全系统模拟的示例脚本，脚本代码在<code>configs/example/gem5_library/</code>目录中。以configs&#x2F;example&#x2F;gem5_library&#x2F;x86-parsec-benchmarks.py为例</p>
+<p>gem5可以通过KVM对仿真进行加速，但有的CPU不支持KVM，查看你的处理器是否支持KVM。可以通过安装sudo apt install qemu-kvm并通过kvm-ok来查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 安装qemu-kvm</span><br><span class="line">sudo apt install qemu-kvm</span><br><span class="line"># 查看KVM是否安装</span><br><span class="line">kvm-ok</span><br></pre></td></tr></table></figure>
+
+<p>我的处理器并不支持KVM</p>
+<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114123822874.png" class="" title="image-20231114123822874">
+
+<p>因此只能关闭KVM</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># Step1 使用requires进行检查时将kvm_required置为False</span><br><span class="line">requires(</span><br><span class="line">    isa_required=ISA.X86,</span><br><span class="line">    coherence_protocol_required=CoherenceProtocol.MESI_TWO_LEVEL,</span><br><span class="line">    # kvm_required=True,</span><br><span class="line">    kvm_required=False,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Step2 设置处理器时，均使用TIMING处理器</span><br><span class="line">processor = SimpleSwitchableProcessor(</span><br><span class="line">    # starting_core_type=CPUTypes.KVM,</span><br><span class="line">    starting_core_type=CPUTypes.TIMING,</span><br><span class="line">    switch_core_type=CPUTypes.TIMING,</span><br><span class="line">    isa=ISA.X86,</span><br><span class="line">    num_cores=2,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以运行模拟了，使用的benchmark和size可以在该脚本的注释中查看</p>
+<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114093504398.png" class="" title="image-20231114093504398">
+
+
+
+
+
+
+
+
+
+<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114093427885.png" class="" title="image-20231114093427885">
+
+
+
+<h3 id="2-自己制作img文件"><a href="#2-自己制作img文件" class="headerlink" title="2.自己制作img文件"></a>2.自己制作img文件</h3><p>二、设置环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 修改bashrc文件以添加环境变量</span><br><span class="line">vim ~/.bashrc</span><br><span class="line"># 在打开的文件的尾部加入环境变量</span><br><span class="line">export M5_PATH=gem5绝对路径/full-system-image</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="m5端"><a href="#m5端" class="headerlink" title="m5端"></a>m5端</h1><h3 id="1-m5介绍"><a href="#1-m5介绍" class="headerlink" title="1. m5介绍"></a>1. m5介绍</h3><h3 id="2-启动m5端"><a href="#2-启动m5端" class="headerlink" title="2. 启动m5端"></a>2. 启动m5端</h3><p>启动m5有两种方法，一种是通过系统自带的telnet或者gem5中提供的m5term工具，推荐m5term。</p>
+<h4 id="（1）telnet"><a href="#（1）telnet" class="headerlink" title="（1）telnet"></a>（1）telnet</h4><p>使用不需要额外安装或配置，直接</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telent &lt;host&gt; &lt;post&gt;</span><br></pre></td></tr></table></figure>
 
 <p>例如</p>
@@ -259,12 +302,28 @@
 
 
 
-<h3 id="（2）m5term"><a href="#（2）m5term" class="headerlink" title="（2）m5term"></a>（2）m5term</h3><p>使用m5前，必须先根据源码构建该工具</p>
+<h4 id="（2）m5term"><a href="#（2）m5term" class="headerlink" title="（2）m5term"></a>（2）m5term</h4><p>使用m5前，必须先根据源码构建该工具</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Step 1 切换到gem5/util/term目录</span><br><span class="line"> cd util/term</span><br><span class="line"># Step 2 编译</span><br><span class="line"> gcc  -o m5term term.c</span><br><span class="line"># Step 3 安装</span><br><span class="line"> sudo install -o root -m 555 m5term /usr/local/bin</span><br></pre></td></tr></table></figure>
 
 <p>之后，就可以通过与telnet类似的方式启动m5了</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m5term &lt;host&gt; &lt;post&gt;</span><br></pre></td></tr></table></figure>
 
+
+
+
+
+<h3 id="3-生成m5以及对应的libm5-a库"><a href="#3-生成m5以及对应的libm5-a库" class="headerlink" title="3. 生成m5以及对应的libm5.a库"></a>3. 生成m5以及对应的libm5.a库</h3><p>要在应用程序中使用m5提供的指令，首先需要生成m5以及对应的libm5.a库</p>
+<p>ps: 编译之前好像要确保安装clang，并保证其版本为6-10</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Step 1 切换到gem5/util/m5目录</span><br><span class="line"> cd util/m5</span><br><span class="line"># Step 2 编译</span><br><span class="line"> scons build/x86/out/m5</span><br></pre></td></tr></table></figure>
+
+<p> 利用libm5.a库，即可在应用程序中使用libm5.a库中的函数</p>
+<p>编写如下测试程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">########hello_m5.cpp##########</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &quot;gem5/m5ops.h&quot;  //引入m5ops.h库</span><br><span class="line"> </span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">    m5_reset_stats(0,0);  //重置模拟统计数据，m5库中实现的函数</span><br><span class="line"> </span><br><span class="line">    printf(&quot;Hello world!\n&quot;);</span><br><span class="line">    </span><br><span class="line">    m5_dump_stats(0,0);  //将模拟统计数据保存，m5库中实现的函数</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用g++和库进行编译</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-Igem5绝对路径/include \</span><br><span class="line">-Lgem5绝对路径/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/util/m5/build/x86/out -lm5</span><br></pre></td></tr></table></figure>
+
+<p>然后将编译出的可执行文件通过文件挂载的方式存储到img镜像文件中。</p>
 
     </div>
 
