@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="scons是一个Python写的自动化构建工具 VictorWANG1992 - 简书 (jianshu.com) SCons简单入门（一）-CSDN博客 SCons 4.5.2官方文档">
+    <meta name="description" content="scons是一个Python写的自动化构建工具，使用SConstruct文件进行构建。  SConstruct文件，类似于Make系统中的Makefile文件，这是SCons读取并控制编译构建的输入文件。 SConstruct和Makefile的最大不同是：SConstruct文件是python脚本，这会大大简化构建的过程。 Scons函数与构建顺序无关    SConstruct有一点和一般py">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SCons">
 <meta property="og:url" content="https://langyiqun.github.io/2023/10/23/SCons/index.html">
 <meta property="og:site_name" content="郎轶群的博客">
-<meta property="og:description" content="scons是一个Python写的自动化构建工具 VictorWANG1992 - 简书 (jianshu.com) SCons简单入门（一）-CSDN博客 SCons 4.5.2官方文档">
+<meta property="og:description" content="scons是一个Python写的自动化构建工具，使用SConstruct文件进行构建。  SConstruct文件，类似于Make系统中的Makefile文件，这是SCons读取并控制编译构建的输入文件。 SConstruct和Makefile的最大不同是：SConstruct文件是python脚本，这会大大简化构建的过程。 Scons函数与构建顺序无关    SConstruct有一点和一般py">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-23T11:04:01.000Z">
-<meta property="article:modified_time" content="2023-11-09T16:20:04.184Z">
+<meta property="article:modified_time" content="2023-11-22T16:20:04.739Z">
 <meta property="article:author" content="Lang Yi Qun">
 <meta property="article:tag" content="Scons">
 <meta name="twitter:card" content="summary">
@@ -100,7 +100,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -113,6 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Scons%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">Scons构建方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Program%E6%9E%84%E5%BB%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1. Program构建二进制文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%8C%87%E5%AE%9A%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 指定二进制文件名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%AE%80%E5%8C%96%E6%9E%84%E5%BB%BA%E8%BE%93%E5%87%BA"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 简化构建输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E7%BC%96%E8%AF%91%E5%A4%9A%E4%B8%AA%E6%BA%90%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 编译多个源文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 关键字参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E6%9E%84%E5%BB%BA%E5%A4%9A%E4%B8%AA%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5  构建多个工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E5%A4%9A%E5%B7%A5%E7%A8%8B%E7%BC%96%E8%AF%91%E5%85%B1%E4%BA%AB%E4%B8%AD%E9%97%B4%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6 多工程编译共享中间文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E6%B8%85%E7%90%86%E6%9E%84%E5%BB%BA%E7%9A%84%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7 清理构建的工程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Object%E6%9E%84%E5%BB%BA%E4%B8%AD%E9%97%B4%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2. Object构建中间文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Libary%E7%BC%96%E8%AF%91%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3. Libary编译库文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%85%A8%E9%83%A8%E9%80%9A%E8%BF%87%E6%BA%90%E6%96%87%E4%BB%B6%E6%9D%A5%E7%BC%96%E8%AF%91%E5%BA%93"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 全部通过源文件来编译库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%80%9A%E8%BF%87%E4%B8%AD%E9%97%B4%E6%96%87%E4%BB%B6%E6%88%96%E6%BA%90%E6%96%87%E4%BB%B6%E5%92%8C%E4%B8%AD%E9%97%B4%E6%96%87%E4%BB%B6%E6%9D%A5%E7%BC%96%E8%AF%91%E5%BA%93"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 通过中间文件或源文件和中间文件来编译库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-StaticLibrary%E7%BC%96%E8%AF%91%E9%9D%99%E6%80%81%E5%BA%93"><span class="nav-number">1.4.</span> <span class="nav-text">4. StaticLibrary编译静态库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-SharedLibrary%E6%9E%84%E5%BB%BA%E5%8A%A8%E6%80%81%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">5. SharedLibrary构建动态库文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">链接库文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-LIBS%E5%85%B3%E9%94%AE%E5%AD%97%E6%8C%87%E6%98%8E%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">1. LIBS关键字指明库文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-LIBPATH%E5%85%B3%E9%94%AE%E5%AD%97%E6%8C%87%E6%98%8E%E5%BA%93%E6%96%87%E4%BB%B6%E7%9A%84%E6%9F%A5%E6%89%BE%E8%B7%AF%E5%BE%84"><span class="nav-number">2.2.</span> <span class="nav-text">2.LIBPATH关键字指明库文件的查找路径</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -125,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -228,7 +229,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-10 00:20:04" itemprop="dateModified" datetime="2023-11-10T00:20:04+08:00">2023-11-10</time>
+      <time title="修改时间：2023-11-23 00:20:04" itemprop="dateModified" datetime="2023-11-23T00:20:04+08:00">2023-11-23</time>
     </span>
 
   
@@ -240,7 +241,115 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>scons是一个Python写的自动化构建工具</p>
+    <div class="post-body" itemprop="articleBody"><p>scons是一个Python写的自动化构建工具，使用SConstruct文件进行构建。</p>
+<p> SConstruct文件，类似于Make系统中的Makefile文件，这是SCons读取并控制编译构建的输入文件。 SConstruct和Makefile的最大不同是：SConstruct文件是python脚本，这会大大简化构建的过程。</p>
+<p><strong>Scons函数与构建顺序无关</strong></p>
+<p>   SConstruct有一点和一般python脚本不同，SCons函数的书写调用顺序，并不影响SCons真实的构建顺序，这点和Makefile有点相似。换句话说，当你调用Program构建时（或者其他构建方法），SCons并非在此刻构建可执行文件，相反，这仅仅是告诉SCons你想要获得一个可执行文件的构建结果。举例来说，需要构建hello.c的源文件，SCons也仅仅是获取了构建可执行文件hello和源码hello.c之间的关系。</p>
+<h1 id="Scons构建方法"><a href="#Scons构建方法" class="headerlink" title="Scons构建方法"></a>Scons构建方法</h1><h2 id="1-Program构建二进制文件"><a href="#1-Program构建二进制文件" class="headerlink" title="1. Program构建二进制文件"></a>1. Program构建二进制文件</h2><p>如果想构建hello.c程序，新建一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;hello.c&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>在SCons命令行中执行<code>scons</code>命令进行构建，会有scons会执行以下编译命令，默认得到<code>hello</code>二进制可执行文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o hello hello.o</span><br><span class="line">scons: done building targets. </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-指定二进制文件名称"><a href="#1-1-指定二进制文件名称" class="headerlink" title="1.1 指定二进制文件名称"></a>1.1 指定二进制文件名称</h3><p>如果想要<strong>指定二进制文件的文件名</strong>，则需要在源文件的前面，指明输出名称即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;new_hello&#x27;, &#x27;hello.c&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-简化构建输出"><a href="#1-2-简化构建输出" class="headerlink" title="1.2 简化构建输出"></a>1.2 简化构建输出</h3><p>如果想要<strong>简化构建时命令行的输出</strong>，只看实际执行的编译命令，则在构建时使用-Q选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o new_hello hello.o</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-编译多个源文件"><a href="#1-3-编译多个源文件" class="headerlink" title="1.3 编译多个源文件"></a>1.3 编译多个源文件</h3><p><strong>编译多个源文件</strong>，可以采用列表的方式指定多个源文件名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># build hello.c only</span><br><span class="line">Program(&quot;My_hello&quot;, &quot;hello.c&quot;)</span><br><span class="line"></span><br><span class="line"># build hello.c name.c</span><br><span class="line">Program(&quot;My_hello&quot;, [&quot;hello.c&quot;, &quot;name.c&quot;])</span><br><span class="line"></span><br><span class="line"># build all the .c file in the current dir</span><br><span class="line">Program(&quot;My_hello&quot;, Glob(&#x27;*.c&#x27;))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以用scons内置的Split函数自动分割字符串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Split function help divide the file string</span><br><span class="line">Program(&#x27;program&#x27;, Split(&#x27;main.c file1.c file2.c&#x27;))</span><br><span class="line"></span><br><span class="line">src_file = Split(&quot;&quot;&quot;&quot; main.c</span><br><span class="line">                      file1.c </span><br><span class="line">                      file2.c&quot;&quot;&quot;)</span><br><span class="line">Program(&#x27;program&#x27;, src_files)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-关键字参数"><a href="#1-4-关键字参数" class="headerlink" title="1.4 关键字参数"></a>1.4 关键字参数</h3><p>SCons同样支持输入或输出文件的关键字定义。输出文件的关键字是<em>target</em>，输入源文件的关键字是<em>source</em>， 因为关键字已经指明了该参数的含义，因此关键字的顺序不做要求</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src_files = Split(&#x27;main.c file1.c file2.c&#x27;)</span><br><span class="line">Program(source=src_files, target=&#x27;program&#x27;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-5-构建多个工程"><a href="#1-5-构建多个工程" class="headerlink" title="1.5  构建多个工程"></a>1.5  构建多个工程</h3><p>用一个SConstruct文件，构建多个工程，最简单的方式是调用Program多次构建：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;foo.c&#x27;)</span><br><span class="line">Program(&#x27;bar&#x27;, [&#x27;bar1.c&#x27;, &#x27;bar2.c&#x27;])</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-6-多工程编译共享中间文件"><a href="#1-6-多工程编译共享中间文件" class="headerlink" title="1.6 多工程编译共享中间文件"></a>1.6 多工程编译共享中间文件</h3><p>   同一份源码文件对应多个工程，最直接的方式是每个工程都加入该源码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(Split(<span class="string">&#x27;foo.c common1.c common2.c&#x27;</span>))</span><br><span class="line">Program(<span class="string">&#x27;bar&#x27;</span>, Split(<span class="string">&#x27;bar1.c bar2.c common1.c common2.c&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>   当采用这种方式构建时，SCons会意识到common1.c和common2.c的复用，因此会将其仅仅编译一份中间文件，尽管生成的目标文件分别链接到各自的中间文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">% scons -Q</span><br><span class="line">cc -o bar1.o -c bar1.c</span><br><span class="line">cc -o bar2.o -c bar2.c</span><br><span class="line">cc -o common1.o -c common1.c</span><br><span class="line">cc -o common2.o -c common2.c</span><br><span class="line">cc -o bar bar1.o bar2.o common1.o common2.o</span><br><span class="line">cc -o foo.o -c foo.c</span><br><span class="line">cc -o foo foo.o common1.o common2.o</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-7-清理构建的工程"><a href="#1-7-清理构建的工程" class="headerlink" title="1.7 清理构建的工程"></a>1.7 清理构建的工程</h3><p>采用SCons我们不需要增加特殊的指令在构建后执行清除操作，相反，你可以简单使用-c或者–clean选项，此时SCons会自动删除构建的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o hello hello.o</span><br><span class="line">scons: done building targets.</span><br><span class="line"></span><br><span class="line">&gt; scons -c</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Cleaning targets ...</span><br><span class="line">Removed hello.o</span><br><span class="line">Removed hello</span><br><span class="line">scons: done cleaning targets.</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="2-Object构建中间文件"><a href="#2-Object构建中间文件" class="headerlink" title="2. Object构建中间文件"></a>2. Object构建中间文件</h2><p>Object用于构建中间文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object(<span class="string">&#x27;hello.c&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>执行scons命令，去构建整个工程，在LINUX工程中这将会仅仅构建hello.o。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: <span class="keyword">done</span> reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">scons: <span class="keyword">done</span> building targets.</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="3-Libary编译库文件"><a href="#3-Libary编译库文件" class="headerlink" title="3. Libary编译库文件"></a>3. Libary编译库文件</h2><p>与Program格式相同</p>
+<h3 id="3-1-全部通过源文件来编译库"><a href="#3-1-全部通过源文件来编译库" class="headerlink" title="3.1 全部通过源文件来编译库"></a>3.1 全部通过<code>源文件</code>来编译库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.c&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>SCons会自动根据系统来创建合适的库文件前缀和后缀，因此在Linux系统上，上述示例将会构建以下内容：</p>
+<p>SCons会自动给库文件加入前缀和后缀。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f2.o -c f2.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o</span><br><span class="line">ranlib libfoo.a</span><br></pre></td></tr></table></figure>
+
+<p>如果不特别指定目标库文件名称，SCons将会从源文件列表中选择第一个作为库文件名称。</p>
+<h3 id="3-2-通过中间文件或源文件和中间文件来编译库"><a href="#3-2-通过中间文件或源文件和中间文件来编译库" class="headerlink" title="3.2 通过中间文件或源文件和中间文件来编译库"></a>3.2 通过<code>中间文件</code>或<code>源文件和中间文件</code>来编译库</h3><p>上述示例介绍了通过源文件列表构建库文件，SCons同样也支持通过中间文件构建，或者源文件和中间文件混在一起构建也可以。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.o&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>, <span class="string">&#x27;f4.o&#x27;</span>])</span><br><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.o&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>, <span class="string">&#x27;f4.o&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>   同时SCons也会意识到，只有源文件才需要进一步构建成中间文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o f4.o</span><br><span class="line">ranlib libfoo.a</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-StaticLibrary编译静态库"><a href="#4-StaticLibrary编译静态库" class="headerlink" title="4. StaticLibrary编译静态库"></a>4. StaticLibrary编译静态库</h2><p> 对于<strong>Library</strong>和<strong>StaticLibrary</strong>，他们完全等价，没有任何区别。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StaticLibrary(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-SharedLibrary构建动态库文件"><a href="#5-SharedLibrary构建动态库文件" class="headerlink" title="5. SharedLibrary构建动态库文件"></a>5. SharedLibrary构建动态库文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SharedLibrary(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br></pre></td></tr></table></figure>
+
+<p>Linux系统上输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.os -c f1.c</span><br><span class="line">cc -o f2.os -c f2.c</span><br><span class="line">cc -o f3.os -c f3.c</span><br><span class="line">cc -o libfoo.so -shared f1.os f2.os f3.os</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="链接库文件"><a href="#链接库文件" class="headerlink" title="链接库文件"></a>链接库文件</h1><h2 id="1-LIBS关键字指明库文件"><a href="#1-LIBS关键字指明库文件" class="headerlink" title="1. LIBS关键字指明库文件"></a>1. LIBS关键字指明库文件</h2><p>通过指明<strong>LIBS</strong>变量关键字，来指定需要链接的库文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Library(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br><span class="line">Program(&#x27;prog.c&#x27;, LIBS=[&#x27;foo&#x27;, &#x27;bar&#x27;], LIBPATH=&#x27;.&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>不需要特别声明库文件的前缀（如lib），或者后缀（如.a或.lib），SCons会自动根据系统来查找相关前缀或后缀。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f2.o -c f2.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o</span><br><span class="line">ranlib libfoo.a</span><br><span class="line">cc -o prog.o -c prog.c</span><br><span class="line">cc -o prog prog.o -L. -lfoo -lbar</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-LIBPATH关键字指明库文件的查找路径"><a href="#2-LIBPATH关键字指明库文件的查找路径" class="headerlink" title="2.LIBPATH关键字指明库文件的查找路径"></a>2.LIBPATH关键字指明库文件的查找路径</h2><p>通过指明<strong>LIBPATH</strong>变量关键字，来指定库文件的查找路径</p>
+<p>默认情况下，连接器只会在系统路径中查找库文件，SCons可以通过用户指定的LIBPATH变量，来查找用户定义路径：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(<span class="string">&#x27;prog.c&#x27;</span>, LIBS = <span class="string">&#x27;m&#x27;</span>,</span><br><span class="line">                  LIBPATH = [<span class="string">&#x27;/usr/lib&#x27;</span>, <span class="string">&#x27;usr/local/lib&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>Linux 中输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o prog.o -c prog.c</span><br><span class="line">cc -o prog prog.o -L/usr/lib -L/usr/local/lib -lm</span><br></pre></td></tr></table></figure>
+
+<p>这里推荐使用python的列表（list），因为python是跨平台的，这要迁移起来比较方便。当然您也可以将搜索路径放到一个字符串中，采用系统指定的分割符分开，如POSIX系统中采用冒号，Windows系统中采用分号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># POSIX</span></span><br><span class="line">LIBPATH = <span class="string">&#x27;/usr/lib:/usr/local/lib&#x27;</span></span><br><span class="line"><span class="comment"># Windows</span></span><br><span class="line">LIBPATH = <span class="string">&#x27;C:\\lib;D:\\lib&#x27;</span>  </span><br></pre></td></tr></table></figure>
+
+<p>python在Windows路径中要求采用<strong>反斜杠</strong>转义符</p>
+<p>参考资料：</p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/u/ddb7903b52e4">VictorWANG1992 - 简书 (jianshu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/danshiming/article/details/122771064?ops_request_misc=%7B%22request_id%22:%22169805899416777224422665%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169805899416777224422665&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-122771064-null-null.142%5Ev96%5Epc_search_result_base2&utm_term=SCons&spm=1018.2226.3001.4187">SCons简单入门（一）-CSDN博客</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.scons.org/doc/production/HTML/scons-user/index.html">SCons 4.5.2官方文档</a></p>
