@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,7 +134,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -180,6 +180,558 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/" class="post-title-link" itemprop="url">Chiplet论文阅读—— Methodology for Simulating Multi-chiplet Systems UsingOpen-source Simulators</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 20:24:05" itemprop="dateCreated datePublished" datetime="2023-11-07T20:24:05+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-21 15:16:22" itemprop="dateModified" datetime="2023-11-21T15:16:22+08:00">2023-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Chiplet%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">Chiplet论文阅读</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一、论文总结"><a href="#一、论文总结" class="headerlink" title="一、论文总结"></a>一、论文总结</h1><h1 id="二、摘要"><a href="#二、摘要" class="headerlink" title="二、摘要"></a>二、摘要</h1><p>为了支持早期的Chiplets系统的设计空间探索，提出了一种基于gem5、snipe、gpgpu-sim等开源模拟器的Chiplets架构模拟方法。</p>
+<p>并开源在Github上 <a target="_blank" rel="noopener" href="https://github.com/FCAS-SCUT/chiplet_simulators">https://github.com/FCAS-SCUT/chiplet_simulators</a></p>
+<h1 id="三、背景-目前待解决的问题"><a href="#三、背景-目前待解决的问题" class="headerlink" title="三、背景&amp;目前待解决的问题"></a>三、背景&amp;目前待解决的问题</h1><p>Chiplet是后摩尔时代一种很有前途的设计模式，但针对Chiplet的体系结构研究缺乏可靠的模拟器。</p>
+<h2 id="1-Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多"><a href="#1-Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多" class="headerlink" title="1. Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多"></a>1. Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多</h2><p>主要包括<strong>核的组织方式</strong>（128核系统可以分为32cores * 4 chiplets、16cores * 8 chiplets等）、<strong>互联的拓扑结构</strong>、<strong>内存模型</strong></p>
+<h2 id="2-现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因："><a href="#2-现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因：" class="headerlink" title="2. 现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因："></a>2. 现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因：</h2><ul>
+<li><p>没有精确的Chiplet间互联模型。现有开源模拟器（如gem5、sniper、Graphite、gpgpu-sim）都是纯网络模拟器（network-only simulator），缺乏详细准确的中介层互连延迟和功率模型{❓意思是仅能够精确模拟chiplet内部多核的互联，对chiplet间的互联模拟不精确吗❓}。</p>
+</li>
+<li><p>无法进行大规模并行模拟。Multi-Chiplets系统一般具有大量的核，这样的系统模拟起来会很耗时，因此需要通过大规模的并行来加速模拟。虽然Graphite和sniper支持并行模拟，但并不支持精确的互联建模。</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/07/gcc%E7%BC%96%E8%AF%91%E5%99%A8%E5%8F%82%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/07/gcc%E7%BC%96%E8%AF%91%E5%99%A8%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">gcc编译器参数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 15:41:18" itemprop="dateCreated datePublished" datetime="2023-11-07T15:41:18+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-15 20:48:16" itemprop="dateModified" datetime="2023-11-15T20:48:16+08:00">2023-11-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一、什么是GCC？"><a href="#一、什么是GCC？" class="headerlink" title="一、什么是GCC？"></a>一、什么是GCC？</h1><p>GCC(GNU Compiler Collection)即GNU编译器套件，属于一种编程语言编译器。其原名也为GCC（GNU C Compiler），虽然缩写一样但是仅可编译C语言，后来经过发展才变成支持编译多语言。GCC的初衷是为GNU操作系统专门编写的一款编译器，原本的GNU是专用于编译C代码，现如今已扩展为可以编译C、C++、Java、Objective-C等多种编程语言的编译器集合了。</p>
+<h1 id="二、GCC、gcc、g-三者有何关系？"><a href="#二、GCC、gcc、g-三者有何关系？" class="headerlink" title="二、GCC、gcc、g++三者有何关系？"></a>二、GCC、gcc、g++三者有何关系？</h1><p><strong>gcc</strong>（GUN C Compiler）是GCC中的c编译器，而**g++**（GUN C++ Compiler）是GCC中的c++编译器。<br>gcc和g++两者都可以编译c和cpp文件，但存在差异。</p>
+<ul>
+<li><p>gcc在编译cpp时语法按照c来编译但默认不能链接到c++的库（gcc默认链接c库，g++默认链接c++库）。</p>
+</li>
+<li><p>g++编译.c和.cpp文件都统一按cpp的语法规则来编译。</p>
+<p>  一般<strong>编译c用gcc</strong>，**编译c++用g++**。</p>
+</li>
+</ul>
+<h1 id="三、GCC编译步骤"><a href="#三、GCC编译步骤" class="headerlink" title="三、GCC编译步骤"></a>三、GCC编译步骤</h1><p>GCC广义上的编译流程可分为以下四个部分：</p>
+<ul>
+<li>预处理（Pre-Processing）</li>
+<li>编译（Compiling）</li>
+<li>汇编（Assembling）</li>
+<li>链接（Linking）</li>
+</ul>
+<h1 id="gcc-参数"><a href="#gcc-参数" class="headerlink" title="gcc 参数"></a>gcc 参数</h1><img src="/2023/11/07/gcc%E7%BC%96%E8%AF%91%E5%99%A8%E5%8F%82%E6%95%B0/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQmFsYWFhbQ==,size_20,color_FFFFFF,t_70,g_se,x_16.png" class="" title="请添加图片描述">
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42475711/article/details/85224010">浅显易懂的GCC使用教程——初级篇_gcc -ddebug-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_50697073/article/details/123759516?app_version=6.2.2&csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22123759516%22,%22source%22:%22m0_52631482%22%7D&utm_source=app">【精选】gcc的基本使用-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wohu1104/article/details/110789570">GCC 编译 C(C++)静态链接库（gcc -L、gcc -l）和动态链接库（gcc -fPIC -shared）的创建和使用_c++ 链接 -l-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/alan666/p/8311984.html">gcc -I -L -l区别 - 隔壁王叔叔a - 博客园 (cnblogs.com)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/06/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/06/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（六）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-06 14:57:54" itemprop="dateCreated datePublished" datetime="2023-11-06T14:57:54+08:00">2023-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-15 16:07:44" itemprop="dateModified" datetime="2023-11-15T16:07:44+08:00">2023-11-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Checkpoints"><a href="#Checkpoints" class="headerlink" title="Checkpoints"></a>Checkpoints</h1><p>官网介绍<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/general_docs/checkpoints/">gem5: Checkpoints</a></p>
+<p>检查点相当于gem5模拟系统的快照。通常来说，创建一个全系统模拟需要大量的时间，但为这个模拟系统创建了检查点之后，可以在下次启动时将模拟系统快速回复至检查点状态，从而节省系统启动时间。</p>
+<p>一旦创建了checkpoint，gem5会在输出目录中增加一个cpt目录（cpt.TICKNUMBER，其中TICKNUMBER为创建此检查点时的Tick值），该目录存储checkpoint相关信息。</p>
+<h2 id="1-创建检查点"><a href="#1-创建检查点" class="headerlink" title="1. 创建检查点"></a>1. 创建检查点</h2><p>有三种创建检查点的方式：</p>
+<ul>
+<li>启动模拟器环境后，在模拟器终端执行<strong>m5 checkpoint命令</strong>，也可以将其包含在运行脚本中。</li>
+<li>专门有一个<strong>伪指令</strong>用于创建检查点，例如可以在应用中创建检查点（还不熟悉）</li>
+<li>python配置脚本（fs.py、ruby_fs.py）中通过<strong>命令行参数</strong>设置检查点。–take-checkpoints选项可以定期储存检查点，–checkpoint-at-end可以在模拟结束创建检查点</li>
+</ul>
+<h2 id="2-恢复检查点"><a href="#2-恢复检查点" class="headerlink" title="2. 恢复检查点"></a>2. 恢复检查点</h2><p>检查点恢复需要在启动系统模拟时设置几个命令行参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">build/X86/gem5.opt -d 指定输出目录 configs/example/fs.py --num-cpus=2 -r 1 --checkpoint-dir=checkpoint目录在指定的输出目录 --restore-with-cpu=O3CPU --cpu-type=O3CPU</span><br><span class="line"></span><br><span class="line">build/X86/gem5.opt  configs/example/fs.py --num-cpus=2 -r 1 --checkpoint-dir=m5out</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>–checkpoint-dir</strong>：用于指定使用的checkpoint的cpt文件夹所在路径</li>
+<li><strong>-r</strong>：用于指定使用的checkpoint的序号</li>
+<li><strong>–restore-with-cpu</strong>用于指定恢复时CPU的类型</li>
+</ul>
+<p>启动系统模拟后，再通过m5term接入模拟系统，然后很快就会进入到命令行了。</p>
+<h1 id="m5"><a href="#m5" class="headerlink" title="m5"></a>m5</h1><p>在使用m5时首先要用Scons编译</p>
+<h1 id="修改镜像文件"><a href="#修改镜像文件" class="headerlink" title="修改镜像文件"></a>修改镜像文件</h1><p>在全系统模拟中，运行程序一般比较慢，特别是一些比较大的benchmark，如果在全系统模拟中编译会极慢，因此需要将benchmark在宿主机编译完之后，直接放在镜像文件中，这样就可以开启模拟后直接运行benchmark了。</p>
+<p>然而，镜像文件不可以像文件一样直接操作，必须进行磁盘挂载。在 Linux 中，挂载磁盘是将新的磁盘设备连接到文件系统的过程，使得该磁盘可用于存储和访问文件。简单来说，就是将镜像文件挂载到一个文件夹中，再像文件一样直接操作。</p>
+<p>首先，创建一个文件夹作为挂载点。在disks文件夹中新建文件夹.&#x2F;mnt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ./mnt</span><br></pre></td></tr></table></figure>
+
+<p>然后，使用mount命令挂载镜像文件到指定挂载点。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -o loop,offset=1048576 镜像文件 ./mnt</span><br></pre></td></tr></table></figure>
+
+<p>此时，可以通过df -h命令查看磁盘设备列表，并打开.&#x2F;mnt文件夹可以看到镜像文件的内容。</p>
+<img src="/2023/11/06/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/image-20231107111710727.png" class="" title="image-20231107111710727">
+
+<img src="/2023/11/06/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/image-20231107111521636.png" class="" title="image-20231107111521636">
+
+<p>将测试文件放入挂载点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp 测试文件 ./mnt</span><br></pre></td></tr></table></figure>
+
+<p>最后，取消挂载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo umount ./mnt</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-title-link" itemprop="url">MobaXterm通过SSH连接虚拟机</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-04 10:00:26" itemprop="dateCreated datePublished" datetime="2023-11-04T10:00:26+08:00">2023-11-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-05 09:13:15" itemprop="dateModified" datetime="2023-11-05T09:13:15+08:00">2023-11-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-在Ubuntu下安装SSH服务"><a href="#1-在Ubuntu下安装SSH服务" class="headerlink" title="1. 在Ubuntu下安装SSH服务"></a>1. 在Ubuntu下安装SSH服务</h2><p>查看SSH是否启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service sshd status</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（五）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-02 08:39:25" itemprop="dateCreated datePublished" datetime="2023-11-02T08:39:25+08:00">2023-11-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-21 15:36:42" itemprop="dateModified" datetime="2023-11-21T15:36:42+08:00">2023-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="FS全系统模拟"><a href="#FS全系统模拟" class="headerlink" title="FS全系统模拟"></a>FS全系统模拟</h1><h2 id="一、构建X86系统"><a href="#一、构建X86系统" class="headerlink" title="一、构建X86系统"></a>一、构建X86系统</h2><p>切换到gem目录下，使用Scons进行构建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scons ./build/X86/gem5.opt -j [NumberOfThread]</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、获取镜像文件和Linux内核文件"><a href="#二、获取镜像文件和Linux内核文件" class="headerlink" title="二、获取镜像文件和Linux内核文件"></a>二、获取镜像文件和Linux内核文件</h2><p> FS模拟会启动Linux操作系统，会模拟系统的所有组件。因此需要给系统配置相应的Linux内核以及磁盘镜像</p>
+<p>img 文件和 vmlinux 文件是 gem5 中启动操作系统所需的两个重要文件。</p>
+<ul>
+<li><strong>磁盘镜像（img 文件）</strong>储存了操作系统的文件系统和应用程序，这些文件是操作系统运行所必需的。操作系统需要文件系统来存储和组织文件，需要应用程序来实现特定功能。</li>
+<li><strong>Linux内核文件（vmlinux 文件）</strong>储存了操作系统的内核代码。内核是操作系统的核心部分，负责管理系统资源和提供基本的服务。如果没有内核，操作系统就无法正常启动和运行。</li>
+</ul>
+<h3 id="1-自动获取脚本"><a href="#1-自动获取脚本" class="headerlink" title="1. 自动获取脚本"></a>1. 自动获取脚本</h3><p>官方教程中使用的img和vmlinux直接来自于gem5资源库（resource repository），直接利用Resource类（<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/general_docs/gem5_resources/">gem5: gem5-resources</a>）下载到本地。Gem5官网提供了通过Resource自动获取img文件和vmlinux文件，并运行全系统模拟的示例脚本，脚本代码在<code>configs/example/gem5_library/</code>目录中。以configs&#x2F;example&#x2F;gem5_library&#x2F;x86-parsec-benchmarks.py为例</p>
+<p>gem5可以通过KVM对仿真进行加速，但有的CPU不支持KVM，查看你的处理器是否支持KVM。可以通过安装sudo apt install qemu-kvm并通过kvm-ok来查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 安装qemu-kvm</span><br><span class="line">sudo apt install qemu-kvm</span><br><span class="line"># 查看KVM是否安装</span><br><span class="line">kvm-ok</span><br></pre></td></tr></table></figure>
+
+<p>我的处理器并不支持KVM</p>
+<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114123822874.png" class="" title="image-20231114123822874">
+
+<p>因此只能关闭KVM</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># Step1 使用requires进行检查时将kvm_required置为False</span><br><span class="line">requires(</span><br><span class="line">    isa_required=ISA.X86,</span><br><span class="line">    coherence_protocol_required=CoherenceProtocol.MESI_TWO_LEVEL,</span><br><span class="line">    # kvm_required=True,</span><br><span class="line">    kvm_required=False,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Step2 设置处理器时，均使用TIMING处理器</span><br><span class="line">processor = SimpleSwitchableProcessor(</span><br><span class="line">    # starting_core_type=CPUTypes.KVM,</span><br><span class="line">    starting_core_type=CPUTypes.TIMING,</span><br><span class="line">    switch_core_type=CPUTypes.TIMING,</span><br><span class="line">    isa=ISA.X86,</span><br><span class="line">    num_cores=2,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以运行模拟了，使用的benchmark和size可以在该脚本的注释中查看</p>
+<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114093504398.png" class="" title="image-20231114093504398">
+
+
+
+
+
+
+
+
+
+<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114093427885.png" class="" title="image-20231114093427885">
+
+
+
+<h3 id="2-自己制作img文件"><a href="#2-自己制作img文件" class="headerlink" title="2.自己制作img文件"></a>2.自己制作img文件</h3><h2 id="三、设置环境变量"><a href="#三、设置环境变量" class="headerlink" title="三、设置环境变量"></a>三、设置环境变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 修改bashrc文件以添加环境变量</span><br><span class="line">vim ~/.bashrc</span><br><span class="line"># 在打开的文件的尾部加入环境变量</span><br><span class="line">export M5_PATH=gem5绝对路径/full-system-image</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="四、通过配置文件启动模拟系统"><a href="#四、通过配置文件启动模拟系统" class="headerlink" title="四、通过配置文件启动模拟系统"></a>四、通过配置文件启动模拟系统</h2><p>gem5提供了许多配置文件来配置不同的系统，其中可以由fs.py与命令行参数搭配快速实现不同配置的全系统模拟</p>
+<p>fs.py的各种命令行参数可以通过<code>fs.py -h</code>查看</p>
+<h1 id="m5端"><a href="#m5端" class="headerlink" title="m5端"></a>m5端</h1><h3 id="1-m5介绍"><a href="#1-m5介绍" class="headerlink" title="1. m5介绍"></a>1. m5介绍</h3><h3 id="2-启动m5端"><a href="#2-启动m5端" class="headerlink" title="2. 启动m5端"></a>2. 启动m5端</h3><p>启动m5有两种方法，一种是通过系统自带的telnet或者gem5中提供的m5term工具，推荐m5term。</p>
+<h4 id="（1）telnet"><a href="#（1）telnet" class="headerlink" title="（1）telnet"></a>（1）telnet</h4><p>使用不需要额外安装或配置，直接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telent &lt;host&gt; &lt;post&gt;</span><br></pre></td></tr></table></figure>
+
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">telnet localhost 3456</span><br><span class="line">// 3456表示用于连接模拟系统的端口号，再gem5模拟中，默认的起始端口号为3456，</span><br><span class="line">// 当后续需要模拟多个系统，端口号需要每次增加1</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="（2）m5term"><a href="#（2）m5term" class="headerlink" title="（2）m5term"></a>（2）m5term</h4><p>使用m5前，必须先根据源码构建该工具</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Step 1 切换到gem5/util/term目录</span><br><span class="line"> cd util/term</span><br><span class="line"># Step 2 编译</span><br><span class="line"> gcc  -o m5term term.c</span><br><span class="line"># Step 3 安装</span><br><span class="line"> sudo install -o root -m 555 m5term /usr/local/bin</span><br></pre></td></tr></table></figure>
+
+<p>之后，就可以通过与telnet类似的方式启动m5了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m5term &lt;host&gt; &lt;post&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="3-生成m5以及对应的libm5-a库"><a href="#3-生成m5以及对应的libm5-a库" class="headerlink" title="3. 生成m5以及对应的libm5.a库"></a>3. 生成m5以及对应的libm5.a库</h3><p>要在应用程序中使用m5提供的指令，首先需要生成m5以及对应的libm5.a库</p>
+<p>ps: 编译之前好像要确保安装clang，并保证其版本为6-10</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Step 1 切换到gem5/util/m5目录</span><br><span class="line"> cd util/m5</span><br><span class="line"># Step 2 编译</span><br><span class="line"> scons build/x86/out/m5</span><br></pre></td></tr></table></figure>
+
+<p> 利用libm5.a库，即可在应用程序中使用libm5.a库中的函数</p>
+<p>编写如下测试程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">########hello_m5.cpp##########</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &quot;gem5/m5ops.h&quot;  //引入m5ops.h库</span><br><span class="line"> </span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">    m5_reset_stats(0,0);  //重置模拟统计数据，m5库中实现的函数</span><br><span class="line"> </span><br><span class="line">    printf(&quot;Hello world!\n&quot;);</span><br><span class="line">    </span><br><span class="line">    m5_dump_stats(0,0);  //将模拟统计数据保存，m5库中实现的函数</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用g++和库进行编译</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-Igem5绝对路径/include \</span><br><span class="line">-Lgem5绝对路径/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/include -lm5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后将编译出的可执行文件通过文件挂载的方式存储到img镜像文件中。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -297,7 +849,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-05 09:17:21" itemprop="dateModified" datetime="2023-11-05T09:17:21+08:00">2023-11-05</time>
+      <time title="修改时间：2023-11-27 16:39:18" itemprop="dateModified" datetime="2023-11-27T16:39:18+08:00">2023-11-27</time>
     </span>
 
   
@@ -381,7 +933,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-17 10:44:44" itemprop="dateModified" datetime="2023-11-17T10:44:44+08:00">2023-11-17</time>
+      <time title="修改时间：2023-11-24 09:37:16" itemprop="dateModified" datetime="2023-11-24T09:37:16+08:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -617,576 +1169,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（二）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-24 17:01:17" itemprop="dateCreated datePublished" datetime="2023-10-24T17:01:17+08:00">2023-10-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-18 17:31:12" itemprop="dateModified" datetime="2023-11-18T17:31:12+08:00">2023-11-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>启动模拟</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">./build/X86/gem5.opt \</span><br><span class="line">-d checkpoint_parsec_1 \</span><br><span class="line">./configs/example/fs.py \</span><br><span class="line">--kernel=x86-linux-kernel-4.19.83 \</span><br><span class="line">--disk-image=x86-parsec.img \</span><br><span class="line">--num-cpus=2 \</span><br><span class="line">--mem-size=256MB</span><br></pre></td></tr></table></figure>
-
-
-
-<p>恢复模拟</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">build/X86/gem5.opt \</span><br><span class="line">-d parsecout_1 \</span><br><span class="line">configs/example/fs.py \</span><br><span class="line">--num-cpus=2 \</span><br><span class="line">--kernel=x86-linux-kernel-4.19.83 \</span><br><span class="line">--disk=x86-parsec.img \</span><br><span class="line">-r 1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>结果可以恢复模拟，但是进入命令行以后发现输入命令后出现磁盘故障 ，报错如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print_req_error: I/O error, dev hda, sector</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">build/X86/gem5.opt \</span><br><span class="line">-d m5out \</span><br><span class="line">configs/example/fs.py \</span><br><span class="line">--num-cpus=2 \</span><br><span class="line">--kernel=x86-linux-kernel-4.19.83 \</span><br><span class="line">--disk=x86-parsec.img \</span><br><span class="line">--restore-with-cpu=TimingSimpleCPU \</span><br><span class="line">--cpu-type=TimingSimpleCPU \</span><br><span class="line">-r 1 \</span><br><span class="line">--checkpoint-dir=parsecout_2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--mem-size=4GB \</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-<p>RISCV1024核模拟报错</p>
-<img src="/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20231118163457835.png" class="" title="image-20231118163457835">
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/23/1023-1028/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/23/1023-1028/" class="post-title-link" itemprop="url">1023-1028</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-10-23 23:35:49 / 修改时间：23:38:38" itemprop="dateCreated datePublished" datetime="2023-10-23T23:35:49+08:00">2023-10-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%95%E8%AE%BE%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">毕设学习记录</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>10月23日</strong></p>
-<p>根据博客，继续学习gem5的构建模拟环境、创建simObject</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/23/SCons/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/23/SCons/" class="post-title-link" itemprop="url">SCons</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-23 19:04:01" itemprop="dateCreated datePublished" datetime="2023-10-23T19:04:01+08:00">2023-10-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-23 00:20:04" itemprop="dateModified" datetime="2023-11-23T00:20:04+08:00">2023-11-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>scons是一个Python写的自动化构建工具，使用SConstruct文件进行构建。</p>
-<p> SConstruct文件，类似于Make系统中的Makefile文件，这是SCons读取并控制编译构建的输入文件。 SConstruct和Makefile的最大不同是：SConstruct文件是python脚本，这会大大简化构建的过程。</p>
-<p><strong>Scons函数与构建顺序无关</strong></p>
-<p>   SConstruct有一点和一般python脚本不同，SCons函数的书写调用顺序，并不影响SCons真实的构建顺序，这点和Makefile有点相似。换句话说，当你调用Program构建时（或者其他构建方法），SCons并非在此刻构建可执行文件，相反，这仅仅是告诉SCons你想要获得一个可执行文件的构建结果。举例来说，需要构建hello.c的源文件，SCons也仅仅是获取了构建可执行文件hello和源码hello.c之间的关系。</p>
-<h1 id="Scons构建方法"><a href="#Scons构建方法" class="headerlink" title="Scons构建方法"></a>Scons构建方法</h1><h2 id="1-Program构建二进制文件"><a href="#1-Program构建二进制文件" class="headerlink" title="1. Program构建二进制文件"></a>1. Program构建二进制文件</h2><p>如果想构建hello.c程序，新建一个</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;hello.c&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>在SCons命令行中执行<code>scons</code>命令进行构建，会有scons会执行以下编译命令，默认得到<code>hello</code>二进制可执行文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o hello hello.o</span><br><span class="line">scons: done building targets. </span><br></pre></td></tr></table></figure>
-
-<h3 id="1-1-指定二进制文件名称"><a href="#1-1-指定二进制文件名称" class="headerlink" title="1.1 指定二进制文件名称"></a>1.1 指定二进制文件名称</h3><p>如果想要<strong>指定二进制文件的文件名</strong>，则需要在源文件的前面，指明输出名称即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;new_hello&#x27;, &#x27;hello.c&#x27;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-2-简化构建输出"><a href="#1-2-简化构建输出" class="headerlink" title="1.2 简化构建输出"></a>1.2 简化构建输出</h3><p>如果想要<strong>简化构建时命令行的输出</strong>，只看实际执行的编译命令，则在构建时使用-Q选项</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o new_hello hello.o</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-编译多个源文件"><a href="#1-3-编译多个源文件" class="headerlink" title="1.3 编译多个源文件"></a>1.3 编译多个源文件</h3><p><strong>编译多个源文件</strong>，可以采用列表的方式指定多个源文件名</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># build hello.c only</span><br><span class="line">Program(&quot;My_hello&quot;, &quot;hello.c&quot;)</span><br><span class="line"></span><br><span class="line"># build hello.c name.c</span><br><span class="line">Program(&quot;My_hello&quot;, [&quot;hello.c&quot;, &quot;name.c&quot;])</span><br><span class="line"></span><br><span class="line"># build all the .c file in the current dir</span><br><span class="line">Program(&quot;My_hello&quot;, Glob(&#x27;*.c&#x27;))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以用scons内置的Split函数自动分割字符串</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Split function help divide the file string</span><br><span class="line">Program(&#x27;program&#x27;, Split(&#x27;main.c file1.c file2.c&#x27;))</span><br><span class="line"></span><br><span class="line">src_file = Split(&quot;&quot;&quot;&quot; main.c</span><br><span class="line">                      file1.c </span><br><span class="line">                      file2.c&quot;&quot;&quot;)</span><br><span class="line">Program(&#x27;program&#x27;, src_files)</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-4-关键字参数"><a href="#1-4-关键字参数" class="headerlink" title="1.4 关键字参数"></a>1.4 关键字参数</h3><p>SCons同样支持输入或输出文件的关键字定义。输出文件的关键字是<em>target</em>，输入源文件的关键字是<em>source</em>， 因为关键字已经指明了该参数的含义，因此关键字的顺序不做要求</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src_files = Split(&#x27;main.c file1.c file2.c&#x27;)</span><br><span class="line">Program(source=src_files, target=&#x27;program&#x27;)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="1-5-构建多个工程"><a href="#1-5-构建多个工程" class="headerlink" title="1.5  构建多个工程"></a>1.5  构建多个工程</h3><p>用一个SConstruct文件，构建多个工程，最简单的方式是调用Program多次构建：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;foo.c&#x27;)</span><br><span class="line">Program(&#x27;bar&#x27;, [&#x27;bar1.c&#x27;, &#x27;bar2.c&#x27;])</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="1-6-多工程编译共享中间文件"><a href="#1-6-多工程编译共享中间文件" class="headerlink" title="1.6 多工程编译共享中间文件"></a>1.6 多工程编译共享中间文件</h3><p>   同一份源码文件对应多个工程，最直接的方式是每个工程都加入该源码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(Split(<span class="string">&#x27;foo.c common1.c common2.c&#x27;</span>))</span><br><span class="line">Program(<span class="string">&#x27;bar&#x27;</span>, Split(<span class="string">&#x27;bar1.c bar2.c common1.c common2.c&#x27;</span>))</span><br></pre></td></tr></table></figure>
-
-<p>   当采用这种方式构建时，SCons会意识到common1.c和common2.c的复用，因此会将其仅仅编译一份中间文件，尽管生成的目标文件分别链接到各自的中间文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">% scons -Q</span><br><span class="line">cc -o bar1.o -c bar1.c</span><br><span class="line">cc -o bar2.o -c bar2.c</span><br><span class="line">cc -o common1.o -c common1.c</span><br><span class="line">cc -o common2.o -c common2.c</span><br><span class="line">cc -o bar bar1.o bar2.o common1.o common2.o</span><br><span class="line">cc -o foo.o -c foo.c</span><br><span class="line">cc -o foo foo.o common1.o common2.o</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="1-7-清理构建的工程"><a href="#1-7-清理构建的工程" class="headerlink" title="1.7 清理构建的工程"></a>1.7 清理构建的工程</h3><p>采用SCons我们不需要增加特殊的指令在构建后执行清除操作，相反，你可以简单使用-c或者–clean选项，此时SCons会自动删除构建的文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o hello hello.o</span><br><span class="line">scons: done building targets.</span><br><span class="line"></span><br><span class="line">&gt; scons -c</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Cleaning targets ...</span><br><span class="line">Removed hello.o</span><br><span class="line">Removed hello</span><br><span class="line">scons: done cleaning targets.</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h2 id="2-Object构建中间文件"><a href="#2-Object构建中间文件" class="headerlink" title="2. Object构建中间文件"></a>2. Object构建中间文件</h2><p>Object用于构建中间文件：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object(<span class="string">&#x27;hello.c&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>执行scons命令，去构建整个工程，在LINUX工程中这将会仅仅构建hello.o。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: <span class="keyword">done</span> reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">scons: <span class="keyword">done</span> building targets.</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="3-Libary编译库文件"><a href="#3-Libary编译库文件" class="headerlink" title="3. Libary编译库文件"></a>3. Libary编译库文件</h2><p>与Program格式相同</p>
-<h3 id="3-1-全部通过源文件来编译库"><a href="#3-1-全部通过源文件来编译库" class="headerlink" title="3.1 全部通过源文件来编译库"></a>3.1 全部通过<code>源文件</code>来编译库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.c&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>])</span><br></pre></td></tr></table></figure>
-
-<p>SCons会自动根据系统来创建合适的库文件前缀和后缀，因此在Linux系统上，上述示例将会构建以下内容：</p>
-<p>SCons会自动给库文件加入前缀和后缀。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f2.o -c f2.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o</span><br><span class="line">ranlib libfoo.a</span><br></pre></td></tr></table></figure>
-
-<p>如果不特别指定目标库文件名称，SCons将会从源文件列表中选择第一个作为库文件名称。</p>
-<h3 id="3-2-通过中间文件或源文件和中间文件来编译库"><a href="#3-2-通过中间文件或源文件和中间文件来编译库" class="headerlink" title="3.2 通过中间文件或源文件和中间文件来编译库"></a>3.2 通过<code>中间文件</code>或<code>源文件和中间文件</code>来编译库</h3><p>上述示例介绍了通过源文件列表构建库文件，SCons同样也支持通过中间文件构建，或者源文件和中间文件混在一起构建也可以。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.o&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>, <span class="string">&#x27;f4.o&#x27;</span>])</span><br><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.o&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>, <span class="string">&#x27;f4.o&#x27;</span>])</span><br></pre></td></tr></table></figure>
-
-<p>   同时SCons也会意识到，只有源文件才需要进一步构建成中间文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o f4.o</span><br><span class="line">ranlib libfoo.a</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="4-StaticLibrary编译静态库"><a href="#4-StaticLibrary编译静态库" class="headerlink" title="4. StaticLibrary编译静态库"></a>4. StaticLibrary编译静态库</h2><p> 对于<strong>Library</strong>和<strong>StaticLibrary</strong>，他们完全等价，没有任何区别。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StaticLibrary(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="5-SharedLibrary构建动态库文件"><a href="#5-SharedLibrary构建动态库文件" class="headerlink" title="5. SharedLibrary构建动态库文件"></a>5. SharedLibrary构建动态库文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SharedLibrary(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br></pre></td></tr></table></figure>
-
-<p>Linux系统上输出为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.os -c f1.c</span><br><span class="line">cc -o f2.os -c f2.c</span><br><span class="line">cc -o f3.os -c f3.c</span><br><span class="line">cc -o libfoo.so -shared f1.os f2.os f3.os</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="链接库文件"><a href="#链接库文件" class="headerlink" title="链接库文件"></a>链接库文件</h1><h2 id="1-LIBS关键字指明库文件"><a href="#1-LIBS关键字指明库文件" class="headerlink" title="1. LIBS关键字指明库文件"></a>1. LIBS关键字指明库文件</h2><p>通过指明<strong>LIBS</strong>变量关键字，来指定需要链接的库文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Library(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br><span class="line">Program(&#x27;prog.c&#x27;, LIBS=[&#x27;foo&#x27;, &#x27;bar&#x27;], LIBPATH=&#x27;.&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>不需要特别声明库文件的前缀（如lib），或者后缀（如.a或.lib），SCons会自动根据系统来查找相关前缀或后缀。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f2.o -c f2.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o</span><br><span class="line">ranlib libfoo.a</span><br><span class="line">cc -o prog.o -c prog.c</span><br><span class="line">cc -o prog prog.o -L. -lfoo -lbar</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-LIBPATH关键字指明库文件的查找路径"><a href="#2-LIBPATH关键字指明库文件的查找路径" class="headerlink" title="2.LIBPATH关键字指明库文件的查找路径"></a>2.LIBPATH关键字指明库文件的查找路径</h2><p>通过指明<strong>LIBPATH</strong>变量关键字，来指定库文件的查找路径</p>
-<p>默认情况下，连接器只会在系统路径中查找库文件，SCons可以通过用户指定的LIBPATH变量，来查找用户定义路径：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(<span class="string">&#x27;prog.c&#x27;</span>, LIBS = <span class="string">&#x27;m&#x27;</span>,</span><br><span class="line">                  LIBPATH = [<span class="string">&#x27;/usr/lib&#x27;</span>, <span class="string">&#x27;usr/local/lib&#x27;</span>])</span><br></pre></td></tr></table></figure>
-
-<p>Linux 中输出如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o prog.o -c prog.c</span><br><span class="line">cc -o prog prog.o -L/usr/lib -L/usr/local/lib -lm</span><br></pre></td></tr></table></figure>
-
-<p>这里推荐使用python的列表（list），因为python是跨平台的，这要迁移起来比较方便。当然您也可以将搜索路径放到一个字符串中，采用系统指定的分割符分开，如POSIX系统中采用冒号，Windows系统中采用分号：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># POSIX</span></span><br><span class="line">LIBPATH = <span class="string">&#x27;/usr/lib:/usr/local/lib&#x27;</span></span><br><span class="line"><span class="comment"># Windows</span></span><br><span class="line">LIBPATH = <span class="string">&#x27;C:\\lib;D:\\lib&#x27;</span>  </span><br></pre></td></tr></table></figure>
-
-<p>python在Windows路径中要求采用<strong>反斜杠</strong>转义符</p>
-<p>参考资料：</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/u/ddb7903b52e4">VictorWANG1992 - 简书 (jianshu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/danshiming/article/details/122771064?ops_request_misc=%7B%22request_id%22:%22169805899416777224422665%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169805899416777224422665&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-122771064-null-null.142%5Ev96%5Epc_search_result_base2&utm_term=SCons&spm=1018.2226.3001.4187">SCons简单入门（一）-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.scons.org/doc/production/HTML/scons-user/index.html">SCons 4.5.2官方文档</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">第二章：指令系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-22 16:21:00" itemprop="dateCreated datePublished" datetime="2023-10-22T16:21:00+08:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-05 09:17:33" itemprop="dateModified" datetime="2023-11-05T09:17:33+08:00">2023-11-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《计算机体系结构》学习笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="1-指令系统结构的分类"><a href="#1-指令系统结构的分类" class="headerlink" title="1 指令系统结构的分类"></a>1 指令系统结构的分类</h1><p>CPU中用来存放操作数的存储单元主要有三种：<strong>堆栈</strong>、<strong>累加器</strong>、<strong>通用寄存器组</strong>。据此，指令系统（Instruction Set Architecture）可分为三种：</p>
-<ul>
-<li><strong>$\color[RGB]{40,120,181}{堆栈型结构}$：</strong>堆栈栈顶和次栈顶中的数据，运算后写入栈顶。两个操作数都是隐式的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>不能随机地访问堆栈，难以生成有效的代码，而且对栈顶的访问是个瓶颈。</li>
-<li><strong>$\color[RGB]{40,120,181}{累加器型结构}$：</strong>一个操作数是隐式的，即累加器；另一个是显示给出的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>只有一个中间结果暂存在累加器中，需要频繁访问存储器。</li>
-</ul>
-<p>早期计算机大多采用堆栈型结构或累加器型结构</p>
-<ul>
-<li><strong>$\color[RGB]{40,120,181}{通用寄存器型结构}$：</strong>所有操作数都是显示给出的。<strong>优点：</strong>1.寄存器的访问比存储器快得多 2. 编译器能够更加容易、有效地分配寄存器 。根据操作数显式给出的来源不同，又可以分为两类：<ul>
-<li>$\color[RGB]{248,172,140}{寄存器-存储器型结构(RM结构)}:$一个操作数来自寄存器，另一个来自存储器。</li>
-<li>$\color[RGB]{248,172,140}{寄存器-寄存器型结构(RR结构)}:$两个操作数都来自寄存器。</li>
-</ul>
-</li>
-</ul>
-<p>**显式给出:**用指令字中的操作数字段给出</p>
-<p>**隐式给出:**用事先约定好的单元</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/19/1019-1021/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/19/1019-1021/" class="post-title-link" itemprop="url">宝藏博客</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-19 23:50:11" itemprop="dateCreated datePublished" datetime="2023-10-19T23:50:11+08:00">2023-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-21 16:45:02" itemprop="dateModified" datetime="2023-11-21T16:45:02+08:00">2023-11-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%94%B6%E8%97%8F/" itemprop="url" rel="index"><span itemprop="name">收藏</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://dongshao.blog.csdn.net/?type=blog">董哥的黑板报_APUE编程,TCP&#x2F;IP卷一,C++-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://csdiy.wiki/">CS自学指南 (csdiy.wiki)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

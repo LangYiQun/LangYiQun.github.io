@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="对称式共享存储器系统支持共享数据和私有数据的缓存。  私有数据被单个处理器使用。 好处：把一个私有数据从存储器缓存到Cache之后，对该数据的访问就可以在Cache中进行，因此减少了平均访存时间和对存储器带宽的要求。 同时因为没有其他处理器使用这些数据，程序的行为与单处理器系统相同。  共享数据被多个处理器所使用。 通过读写共享数据完成处理器之间的通信。 好处：共享数据装载到Cache中时，会在多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="郎轶群的博客">
+<meta property="og:url" content="https://langyiqun.github.io/2023/11/25/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="郎轶群的博客">
+<meta property="og:description" content="对称式共享存储器系统支持共享数据和私有数据的缓存。  私有数据被单个处理器使用。 好处：把一个私有数据从存储器缓存到Cache之后，对该数据的访问就可以在Cache中进行，因此减少了平均访存时间和对存储器带宽的要求。 同时因为没有其他处理器使用这些数据，程序的行为与单处理器系统相同。  共享数据被多个处理器所使用。 通过读写共享数据完成处理器之间的通信。 好处：共享数据装载到Cache中时，会在多">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-24T16:08:20.000Z">
+<meta property="article:modified_time" content="2023-11-29T01:29:31.000Z">
+<meta property="article:author" content="Lang Yi Qun">
+<meta property="article:tag" content="Cache一致性协议">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://langyiqun.github.io/2023/11/25/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/11/25/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/","path":"2023/11/25/Cache一致性协议/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | 郎轶群的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">郎轶群的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">却道天凉好个秋</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84Cache%E4%B8%80%E8%87%B4%E6%80%A7%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、什么是多处理器的Cache一致性？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%80%E8%87%B4%E6%80%A7%E5%AE%9A%E4%B9%89%E4%B8%80"><span class="nav-number">1.1.</span> <span class="nav-text">存储器一致性定义一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%80%E8%87%B4%E6%80%A7%E5%AE%9A%E4%B9%89%E4%BA%8C"><span class="nav-number">1.2.</span> <span class="nav-text">存储器一致性定义二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E5%92%8C%E5%AE%9A%E4%B9%89%E4%BA%8C%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-number">1.3.</span> <span class="nav-text">定义一和定义二的联系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E7%8E%B0%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">二、实现一致性的方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E5%8D%8F%E8%AE%AE%E4%B8%8E%E7%9B%91%E5%90%AC%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.1.</span> <span class="nav-text">目录协议与监听协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E4%BD%9C%E5%BA%9F%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%86%99%E6%9B%B4%E6%96%B0%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.</span> <span class="nav-text">写作废协议与写更新协议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%9B%91%E5%90%AC%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">三、监听协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9B%9ECache%E6%9D%A1%E4%BB%B6%E4%B8%8B%E7%9A%84%E7%9B%91%E5%90%AC%E5%8D%8F%E8%AE%AE%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.1.</span> <span class="nav-text">写回Cache条件下的监听协议实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MSI%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.1.1.</span> <span class="nav-text">MSI协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MESI%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.1.2.</span> <span class="nav-text">MESI协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E5%8D%8F%E8%AE%AE%E5%92%8C%E9%9B%86%E4%B8%AD%E5%BC%8F%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">监听协议和集中式共享存储器体系结构的局限性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%9B%AE%E5%BD%95%E5%8D%8F%E8%AE%AE"><span class="nav-number">4.</span> <span class="nav-text">四、目录协议</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lang Yi Qun</p>
+  <div class="site-description" itemprop="description">this is a personal blog of lyq</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/yourname" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener me" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/25/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-25 00:08:20" itemprop="dateCreated datePublished" datetime="2023-11-25T00:08:20+08:00">2023-11-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-29 09:29:31" itemprop="dateModified" datetime="2023-11-29T09:29:31+08:00">2023-11-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>对称式共享存储器系统支持共享数据和私有数据的缓存。</p>
+<ul>
+<li><p><strong>私有数据被单个处理器使用。</strong></p>
+<p>好处：把一个私有数据从存储器缓存到Cache之后，对该数据的访问就可以在Cache中进行，因此减少了平均访存时间和对存储器带宽的要求。</p>
+<p>同时因为没有其他处理器使用这些数据，程序的行为与单处理器系统相同。</p>
+</li>
+<li><p><strong>共享数据被多个处理器所使用。</strong></p>
+<p>通过读写共享数据完成处理器之间的通信。</p>
+<p>好处：共享数据装载到Cache中时，会在多个Cache中形成副本，这样1. 一方面会减少访问时间并降低对存储器带宽的要求，2. 还可以减少多个处理器同时读共享数据时所产生的冲突。</p>
+<p>但是，共享数据进入Cache也产生了一个新问题——Cache的一致性问题。</p>
+</li>
+</ul>
+<h1 id="一、什么是多处理器的Cache一致性？"><a href="#一、什么是多处理器的Cache一致性？" class="headerlink" title="一、什么是多处理器的Cache一致性？"></a>一、什么是多处理器的Cache一致性？</h1><h2 id="存储器一致性定义一"><a href="#存储器一致性定义一" class="headerlink" title="存储器一致性定义一"></a>存储器一致性定义一</h2><p>一个模糊且简单的定义：如果在一个存储器系统中读取任何一个数据项的返回结果总是最近写入的数值，那么就可以认为该存储器具有一致性。（定义一）</p>
+<p>这个定义包含了两个方面：一方面是<strong>一致</strong>（coherence），它定义了读操作可以返回什么样的数值【what】；另一方面是<strong>连贯</strong>（consistency），它定义了写入的数值什么时候才能被读操作返回【when】。</p>
+<p>一致定义了对同一个存储器地址进行的读写操作行为；连贯定义了关于访问其他存储器地址的读写操作。</p>
+<h2 id="存储器一致性定义二"><a href="#存储器一致性定义二" class="headerlink" title="存储器一致性定义二"></a>存储器一致性定义二</h2><p>如果一个存储器系统满足以下条件，那么认为该存储器系统是一致的：（定义二）</p>
+<ol>
+<li><p>处理器P对地址X的写操作后面紧跟着处理器P对X的读操作，而且在这次读操作和写操作之间没有其他处理器对X进行写操作，这时读操作总是返回P写入的数值。</p>
+<blockquote>
+<p>这个性质保证了程序的顺序，即使在单处理器中也要保证这个性质。</p>
+</blockquote>
+</li>
+<li><p>在其他处理器对X的写操作后，处理器P对X执行读操作，这两个操作之间有<u>足够的间隔</u>并且没有其他处理器对X进行写操作，这是，读操作返回的是写入的数值。</p>
+<blockquote>
+<p>这个性质给出了一致性的概念，如果一个处理器对某个数据执行读操作时，总是的读入旧的数据，那么该存储器是非一致的。</p>
+</blockquote>
+</li>
+<li><p>对同一地址的写操作是串行执行的；也就是说，任何两个处理器对同一地址的两个写操作在所有处理器看来都有相同的顺序。例如，对同一地址先后写入数值1和数值2，处理器绝不会从该地址中先读出2再读出1。</p>
+</li>
+</ol>
+<blockquote>
+<p>这个性质称为<strong>写串行化</strong>，保证同一地址所写的顺序对任何处理器来说都是相同的。</p>
+</blockquote>
+<p>在三个条件之外，还又两个假设：</p>
+<p>假设：</p>
+<ol>
+<li>直到所有处理器都看到了写操作之后一个写操作才算完成，并且后续的写操作才能开始。</li>
+<li>处理器不会因为其他存储操作而改变写操作的顺序。</li>
+</ol>
+<p>这两个假设意味着如果处理器向地址A写入后又向地址B写入，所有能看到B中新值的处理器必须也能看到A的新值。</p>
+<h2 id="定义一和定义二的联系"><a href="#定义一和定义二的联系" class="headerlink" title="定义一和定义二的联系"></a>定义一和定义二的联系</h2><p>定义二的三个条件已经体现了定义一的一致方面【what】，定义一的连贯方面，即什么时候才能获得写进去的值【when】，则体现在条件2的<u>读写操作之间有足够的时间间隔</u>上面。</p>
+<p>通常不可能要求在一个处理器写入X的数值后，其他处理器就能即刻在X上读出这一值。因此，如果一个处理器对X进行写后，很短时间内另一处理器对X进行读，那么无法保证该读操作能返回写入的数值，因为这一刻写入的数据是怎知可能还没被处理器发送出去。</p>
+<p>总的来说，缓存一致性机制需要解决的问题就是 2 点：</p>
+<ul>
+<li><strong>特性 1 - 写传播（Write Propagation）：</strong> 每个 CPU 核心的写入操作，需要传播到其他 CPU 核心；</li>
+<li><strong>特性 2 - 写事务串行化（Transaction Serialization）：</strong> 各个 CPU 核心所有写入操作的顺序，在所有 CPU 核心看起来是一致。</li>
+</ul>
+<p>如果没有写串行化，举个例子：假如 CPU 有 4 个核心，Core 1 将共享数据修改为 1000，随后 Core 2 将共享数据修改为 2000。在写传播下，“修改为 1000” 和 “修改为 2000” 两个事务会同步到 Core 3 和 Core 4。但是，如果没有事务串行化，不同核心收到的事务顺序可能是不同的，最终数据还是不一致。</p>
+<h1 id="二、实现一致性的方案"><a href="#二、实现一致性的方案" class="headerlink" title="二、实现一致性的方案"></a>二、实现一致性的方案</h1><p>在一致的多处理机中，Cache提供了共享数据的迁移和复制功能。</p>
+<p>共享数据的<strong>迁移</strong>是把远程的共享数据项备份放在本处理器局部的Cache中使用，从而降低了对远程共享数据的访问延迟。</p>
+<p>共享数据的<strong>复制</strong>是把多个处理器需要同时读取的共享数据项的备份放在各自的局部Cache中使用。</p>
+<p>对多个处理器维护一致性的协议称为Cache一致性协议（Cache-coherent Protocal）</p>
+<h2 id="目录协议与监听协议"><a href="#目录协议与监听协议" class="headerlink" title="目录协议与监听协议"></a>目录协议与监听协议</h2><p>（1）监听（Snooping）——每个Cache除了包含物理存储器中块的数据备份之外，也保存着每个块的共享状态信息。Cache通常连在共享存储器的总线上，各个Cache控制器通过监听总线来判断他们是否有总线上请求的数据块。【每个数据块状态是分散在各个Cache中的】</p>
+<p>对于监听协议，常用于集中式共享存储器体系结构，因为可以利用已有的物理连接（总线）来进行广播，但因为广播带来的带宽压力大，所以监听协议的可扩展性较差。</p>
+<p>（2）目录（Directory）——物理存储器中共享数据块的状态及相关信息均被保存集中地在一个称为目录的地方。【每个数据块状态是集中在目录中的】</p>
+<p>对于目录协议，常用于分布式共享存储器体系结构，通过目录避免了广播操作，减小了带宽负担，可扩展性好。</p>
+<p>实现Cache一致性协议的关键是跟踪共享数据块的状态。目前有两类协议，采用了不同的共享数据状态跟踪技术：</p>
+<h2 id="写作废协议与写更新协议"><a href="#写作废协议与写更新协议" class="headerlink" title="写作废协议与写更新协议"></a>写作废协议与写更新协议</h2><p>可通过两种方法来维持一致性要求：</p>
+<p>（1）写作废协议（Write Invalidate）——在一个处理器写某个数据项之前保证它对该数据项有唯一的访问权，唯一的访问权保证了在进行写后不存在其他可读或可写的备份，因为别的备份都作废了。又叫写无效。</p>
+<p>（2）写更新协议（Write Update）——当一个处理器写某数据项时。通过广播使其他Cache中所有对应的该数据项备份进行更新。又叫写广播。</p>
+<p>由于写更新协议必须将所有写操作广播给共享Cache，需要更大的带宽，所以大多处理器都选择写作废协议。</p>
+<h1 id="三、监听协议"><a href="#三、监听协议" class="headerlink" title="三、监听协议"></a>三、监听协议</h1><p>由于监听协议需要广播，对总线带宽的需求大，因此仅适用于<strong>小规模的多处理机</strong>，即集中式共享存储器系统。</p>
+<p>监听协议的关键是利用总线或其他广播媒介进行作废操作。当某个处理器进行写数据时，必须先获得总线的控制权，然后将要作废的数据块的地址放在总线上。其他处理器一致监听总线，他们检测地址所对应的数据是否在它们的Cache中，若在，则作废相应数据块。</p>
+<p>当写Cache未命中时，除了作废其他处理器上相应的Cache数据块以外，还要从存储器取出该数据块。</p>
+<ul>
+<li><p>对于<strong>写直达Cache</strong>，因为所有写的数据同时被写回主存，则从主存中总可以取到最新的数据值。</p>
+</li>
+<li><p>对于<strong>写回Cache</strong>，因为最新之可能在某个处理器的Cache中，也可能在主存中，所以得到数据的最新值会困难一些。在写回Cache失效时可使用相同的监听机制：1. 当请求处理器的Cache发生写失效后，广播该数据块的地址。2. 其他处理器都监听放在总线上的地址，如果某个处理器发现它含有被请求数据块的一个已经修改过的备份（即修改过了该数据块但还未写回内存），它九江这个数据块送给发出读请求的处理器，并停止其对主存的访问请求。</p>
+</li>
+</ul>
+<p>相比于写直达Cache，写回Cache实现一致性有两个缺点：</p>
+<blockquote>
+<ol>
+<li>实现复杂度显然更高</li>
+<li>写回Cache从处理器Cache中重新找回数据块的时间通常比写直达Cache从共享存储器中找回数据块的时间长</li>
+</ol>
+</blockquote>
+<p>但写回Cache所需的<strong>存储器带宽较低</strong>的特点使得其在多处理机实现上很受欢迎。</p>
+<h2 id="写回Cache条件下的监听协议实现"><a href="#写回Cache条件下的监听协议实现" class="headerlink" title="写回Cache条件下的监听协议实现"></a>写回Cache条件下的监听协议实现</h2><p>利用总线实现写传播和写事务串行化：</p>
+<ul>
+<li><strong>写传播 - 总线嗅探：</strong> 总线除了能在一个主模块和一个从模块之间传输数据，还支持一个主模块对多个从模块写入数据，这种操作就是广播。要实现写传播，其实就是将所有的读写操作广播到所有 CPU 核心，而其它 CPU 核心时刻监听总线上的广播，再修改本地的数据；</li>
+<li><strong>事务串行化 - 总线仲裁：</strong> 总线的独占性要求同一时刻最多只有一个主模块占用总线，天然地会将所有核心对内存的读写操作串行化。如果多个核心同时发起总线事务，此时总线仲裁单元会对竞争做出仲裁，未获胜的事务只能等待获胜的事务处理完成后才能执行。</li>
+</ul>
+<p>使用的辅助结构</p>
+<ul>
+<li><p>有效位</p>
+<p>在写回Cache的数据块中，有效位被用于指示该块是否有效。利用有效位，可以使作废的处理很简单，只需要将该位置为无效即可。</p>
+</li>
+<li><p>状态位</p>
+<p>为了分辨某个数据块所处的状态，还要给每个块增加一个特殊的状态位。</p>
+</li>
+<li><p>降低冲突</p>
+<p>因为每次总线任务均要检查Cache的地址位，这可能与CPU对Cache的访问冲突，可通过以下两种技术之一降低冲突：</p>
+<ol>
+<li>复制标志位：将Cache的标志位复制一份，一份正常用于Cache访问，另一份用于监听，两个任务可以并行对标志位进行读。但代价就是修改标志位的时候也必须同时修改两份，同时如果两个任务修改标志位冲突，则非抢先者将被挂起。</li>
+<li>多级包含Cache：采用多级Cache，通常为两级，靠近CPU的第一级Cache是较远的第二级Cache的一个子集。于是，监听可针对第二级Cache进行，而处理器的大多数访问针对第一季Cache，极大地避免了冲突。但是，如果监听命中第二级Cache，它必须垄断对各级Cache的访问，更新块状态并可能写回数据，这通常要挂起处理器对Cache的访问。</li>
+</ol>
+<p>可采用将第二级Cache中的标志位复制，会更有效地减少CPU和监听之间的冲突。</p>
+</li>
+<li></li>
+<li></li>
+<li><p>判断数据块是否共享，可以帮助写操作判断是否需要发送作废操作——当对<u>共享数据块</u>进行写操作时，Cache会在总线上发送一个作废操作，并把该块标记为专有（非共享）；当对<u>专有数据块</u>进行写操作时，由于只有该Cache有数据块的唯一副本，所以不用发送作废操作到总线上了。这样避免了发送作废操作，可以节省时间和带宽。</p>
+</li>
+</ul>
+<p>一致性协议本质上是一个状态机，具有若干状态。不同的协议具有不同的状态组合和转换策略。</p>
+<p>一致性协议常见状态：</p>
+<ul>
+<li>共享状态（S）是指块是同于主存的，该块可能还在其他Cache中，也可能仅在该Cache中</li>
+<li>独占状态（E）是指块是同于主存的，仅在该Cache中</li>
+<li>修改状态（M）是指块是不同与主存的，即在Cache中已经被更新；修改状态暗示了此时的块已经被独占，即仅在该Cache中</li>
+<li>无效状态（I）是指块里的数据是旧的，已经失效了</li>
+</ul>
+<blockquote>
+<p>NB：</p>
+<p>“同于主存”是指在Cache中的块与在内存中对应的块是相同的。有时也称是“干净”的</p>
+<p>“不同于主存”是指在Cache中的块与在内存中对应的块是不同的，内存中的块是旧的、无效的。有时也称是“脏”的</p>
+</blockquote>
+<p>监听一致性协议一般通过每个节点的有效状态控制器来实现，控制器对每个来自<strong>处理器</strong>和<strong>总线</strong>的请求做出响应，然后改变响应Cache块的状态</p>
+<h3 id="MSI协议"><a href="#MSI协议" class="headerlink" title="MSI协议"></a>MSI协议</h3><p>MSI协议是最基础的监听协议实现。有<strong>无效</strong>、<strong>共享</strong>和<strong>修改</strong>三种状态</p>
+<h3 id="MESI协议"><a href="#MESI协议" class="headerlink" title="MESI协议"></a>MESI协议</h3><p>MESI是最经典的监听协议。有<strong>无效</strong>、<strong>共享</strong>、<strong>独占</strong>和<strong>修改</strong>三种状态</p>
+<p>相比于MSI协议，MESI协议增加了独占（E）状态，是一种投机性优化：如果一个CPU想修改一个处于S状态的缓存行，总线事务需要将所有该缓存行的copy变成invalid状态，而修改E状态的缓存不需要使用总线事务。</p>
+<p>演示MESI协议网页<a target="_blank" rel="noopener" href="https://www.scss.tcd.ie/Jeremy.Jones/VivioJS/caches/MESI.htm">VivioJS MESI (tcd.ie)</a></p>
+<h2 id="监听协议和集中式共享存储器体系结构的局限性"><a href="#监听协议和集中式共享存储器体系结构的局限性" class="headerlink" title="监听协议和集中式共享存储器体系结构的局限性"></a>监听协议和集中式共享存储器体系结构的局限性</h2><blockquote>
+<p>随着多处理器中处理器数目的增加，或者处理器对存储器带宽的增加，系统的任何集中式资源都会成为“瓶颈”</p>
+</blockquote>
+<p>例如在基于总线的多处理器中，总线必须同时支持由于Cache导致的存储器通信和一致性通信。如果是只有一个物理存储器的集中式共享存储器体系结构，总线的带宽（bandwidth）负担会极大。</p>
+<p>为了增加处理器和存储器之间的通信带宽，设计者使用多种总线以及各种互联网络，如交叉开关和小型点对点网络。在该设计中，存储器系统可以被配置称多个物理组，有效增加带宽。这正是<u>集中式共享存储器和分布式共享存储器的结合</u>。</p>
+<p>图</p>
+<p>由上例可知，使用监听Cache一致性协议可以不要求使用集中式总线这样的很容易造成带宽瓶颈的通信方式，但仍然要求完成广播。由于一致性通信量与处理器速度没有关系，这种一致性通信<u>限制了处理器的扩展与速度</u>。</p>
+<h1 id="四、目录协议"><a href="#四、目录协议" class="headerlink" title="四、目录协议"></a>四、目录协议</h1><p>对于监听协议，在处理每个Cache缺失时，都需要和所有的Cache进行通信，造成带宽瓶颈，限制了处理器的扩展。</p>
+<p>每个目录负责跟踪共享本地存储器的Cache，存储器的每一块在目录中对应有一项</p>
+<p>每个目录项主要有“状态”和“位向量”两种成分。状态描述该目录所对应的存储块的当前情况；位向量有处理器数量的位数，其每一位对应于一个处理器的局部Cache，用于指出该Cache中有无该存储块的备份。</p>
+<hr>
+<p>本文是对《计算机体系结构——量化研究方法（第四版）》和《计算机体系结构（第二版）》的相关章节的整理</p>
+<p>参考链接🔗</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94811032">cache之多核一致性(一) - 总线上没有秘密 - 知乎 (zhihu.com)</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" rel="tag"># Cache一致性协议</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/24/%E5%B9%B6%E8%A1%8C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" rel="prev" title="并行体系结构">
+                  <i class="fa fa-angle-left"></i> 并行体系结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/25/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/" rel="next" title="Gem5模拟器学习（八）">
+                  Gem5模拟器学习（八） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Lang Yi Qun</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

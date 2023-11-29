@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,7 +134,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -180,6 +180,660 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/29/%E4%BA%92%E8%81%94%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/29/%E4%BA%92%E8%81%94%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">互联网络</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-11-29 10:45:26 / 修改时间：13:20:41" itemprop="dateCreated datePublished" datetime="2023-11-29T10:45:26+08:00">2023-11-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>p</p>
+<h1 id="片上网络（NoC）"><a href="#片上网络（NoC）" class="headerlink" title="片上网络（NoC）"></a>片上网络（NoC）</h1><p>单芯片多处理器系统（Chip Multiprocessor，CMP）通过在单款芯片上集成多个处理器和以挖掘线程级并行和任务级并行。</p>
+<p>然而，传统的总线和交叉开关等片上互联结构的<strong>可扩展性较差</strong>，它们只能满足较少量的计算核的通信需求。因此，人们将“报文交换”的思想引入片上互联结构中，提出了“片上网络”（Network on Chip，NoC）的概念。</p>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>网络的每个节点包含一个处理器核和一个路由器。处理器核通过网络接口将报文注入网络，或者从网络接收报文，路由器通过物理链路在网络节点间转发报文。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>与传统的总线和交叉开关等片上互联结构相比，片上网络具有以下特点和优势:</p>
+<ol>
+<li><strong>更高的可扩展性和可重用性</strong>。当增加处理器核数时，只需要在片上网络中增加相应数量的路由器和网络接口，不需要重新设计整个网络。片上网络的开销与网络节点数目成线性关系，易于扩展。新增路由器与现有路由器的结构基本相同，可以复用路由器设计。</li>
+<li>通过路由器<strong>将芯片长连线切分成多条短连线</strong>，从而可以控制通信延迟和功耗。</li>
+<li><strong>采用分布式控制策略</strong>，比采用集中式控制策略的总线支持更高的事务并发性。</li>
+<li>由于片上网络时相互独立的，它可以采用全局异步局部同步（Global Asynchronous Local Synchronous，GALS）的时钟策略，<strong>将网络划分成多个细粒度时钟域</strong>，独立控制每个时钟域的电压和频率，灵活管理功耗。</li>
+</ol>
+<h2 id="片上网络与片外网络的差异"><a href="#片上网络与片外网络的差异" class="headerlink" title="片上网络与片外网络的差异"></a>片上网络与片外网络的差异</h2><p>片上网络与片外网络都采用了“报文交换”的思想，但有许多差异：</p>
+<ol>
+<li>片上网络互联的是单个芯片上的多个处理器；而片外网络是用于超级计算机和集群系统的。</li>
+<li><strong>链路资源差异</strong>。现代集成电路的多层互联金属层为片上网络提供了丰富的连线资源，允许相邻路由器间的链路带宽达到<u>数百位</u>；然而对于片外网络，受限于芯片引脚数目限制，片外网络的链路带宽仅为数十位。</li>
+<li><strong>延迟构成差异</strong>。片上网络相邻路由器之间距离较短，一般可以在一个时钟周期内完成链路传输；片外网络相邻路由器之间距离较大，链路传输需要多个时钟周期。然而较小的片上网络链路延迟增加了路由器延迟对新能的影响。</li>
+<li><strong>串行总线Vs并行总线</strong>。片上网络主要采用并行总线，但由于片外并行总线的串扰难以控制，片外网路大多采用串行总线。</li>
+<li><strong>面积和功耗资源</strong>。片上网络与处理器核竞争芯片有限的面积和功耗资源，与采用独立芯片实现的片外网络路由器相比，片上网络路由器面临着更为严格的面积和功耗限制。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/25/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/25/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（八）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-11-25 15:19:53 / 修改时间：15:45:30" itemprop="dateCreated datePublished" datetime="2023-11-25T15:19:53+08:00">2023-11-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Ruby是一个详细的内存子系统的模拟模型。可以通过各种替换策略、一致性协议实现、互连网络、DMA和内存控制器、发起内存请求和处理响应的各种定序器来建模包含（inclusive）&#x2F;独占（exclusive）缓存层次结构。这些模型是模块化的、灵活的和高度可配置的。</p>
+<p>Ruby有以下三个特点：</p>
+<ul>
+<li><strong>关注点分离</strong>。将内存系统的各个模型模块化，例如，一致性协议规范与替换策略和缓存索引映射是分开的，网络拓扑结构与实现也是分开指定的。</li>
+<li><strong>丰富的可配置性</strong>。几乎所有影响内存层次结构的功能和时序都可以控制。</li>
+<li><strong>快速的原型设计</strong>。使用一种高级规范语言SLICC来指定各种控制器的功能。</li>
+</ul>
+<h2 id="SLICC-一致性协议"><a href="#SLICC-一致性协议" class="headerlink" title="SLICC + 一致性协议"></a>SLICC + 一致性协议</h2><p>SLICC：Specification Language for Implementing Cache Coherence，是一种特定领域的语言，用于指定缓存一致性协议。</p>
+<p>缓存一致性协议以状态机的方式工作，而SLICC用于指定状态机的行为。SLICC文件以“.sm”结尾，因为它们是状态机文件。每个文件描述状态、某些事件从开始状态到结束状态的转换，以及在转换过程中要采取的操作。</p>
+<p>每个一致性协议都由多个SLICC状态机文件组成。这些文件是用SLCC编译器编译的，该编译器是用Python编写的，也是gem5源代码的一部分。SLIC编译器<u>获取状态机文件</u>并<u>输出一组C++文件</u>，这些文件与gem5的所有其他文件一起编译。这些文件包括SimObject声明文件以及SimObjects和其他C++对象的实现文件。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/25/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/25/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-25 00:08:20" itemprop="dateCreated datePublished" datetime="2023-11-25T00:08:20+08:00">2023-11-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-29 09:29:31" itemprop="dateModified" datetime="2023-11-29T09:29:31+08:00">2023-11-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>对称式共享存储器系统支持共享数据和私有数据的缓存。</p>
+<ul>
+<li><p><strong>私有数据被单个处理器使用。</strong></p>
+<p>好处：把一个私有数据从存储器缓存到Cache之后，对该数据的访问就可以在Cache中进行，因此减少了平均访存时间和对存储器带宽的要求。</p>
+<p>同时因为没有其他处理器使用这些数据，程序的行为与单处理器系统相同。</p>
+</li>
+<li><p><strong>共享数据被多个处理器所使用。</strong></p>
+<p>通过读写共享数据完成处理器之间的通信。</p>
+<p>好处：共享数据装载到Cache中时，会在多个Cache中形成副本，这样1. 一方面会减少访问时间并降低对存储器带宽的要求，2. 还可以减少多个处理器同时读共享数据时所产生的冲突。</p>
+<p>但是，共享数据进入Cache也产生了一个新问题——Cache的一致性问题。</p>
+</li>
+</ul>
+<h1 id="一、什么是多处理器的Cache一致性？"><a href="#一、什么是多处理器的Cache一致性？" class="headerlink" title="一、什么是多处理器的Cache一致性？"></a>一、什么是多处理器的Cache一致性？</h1><h2 id="存储器一致性定义一"><a href="#存储器一致性定义一" class="headerlink" title="存储器一致性定义一"></a>存储器一致性定义一</h2><p>一个模糊且简单的定义：如果在一个存储器系统中读取任何一个数据项的返回结果总是最近写入的数值，那么就可以认为该存储器具有一致性。（定义一）</p>
+<p>这个定义包含了两个方面：一方面是<strong>一致</strong>（coherence），它定义了读操作可以返回什么样的数值【what】；另一方面是<strong>连贯</strong>（consistency），它定义了写入的数值什么时候才能被读操作返回【when】。</p>
+<p>一致定义了对同一个存储器地址进行的读写操作行为；连贯定义了关于访问其他存储器地址的读写操作。</p>
+<h2 id="存储器一致性定义二"><a href="#存储器一致性定义二" class="headerlink" title="存储器一致性定义二"></a>存储器一致性定义二</h2><p>如果一个存储器系统满足以下条件，那么认为该存储器系统是一致的：（定义二）</p>
+<ol>
+<li><p>处理器P对地址X的写操作后面紧跟着处理器P对X的读操作，而且在这次读操作和写操作之间没有其他处理器对X进行写操作，这时读操作总是返回P写入的数值。</p>
+<blockquote>
+<p>这个性质保证了程序的顺序，即使在单处理器中也要保证这个性质。</p>
+</blockquote>
+</li>
+<li><p>在其他处理器对X的写操作后，处理器P对X执行读操作，这两个操作之间有<u>足够的间隔</u>并且没有其他处理器对X进行写操作，这是，读操作返回的是写入的数值。</p>
+<blockquote>
+<p>这个性质给出了一致性的概念，如果一个处理器对某个数据执行读操作时，总是的读入旧的数据，那么该存储器是非一致的。</p>
+</blockquote>
+</li>
+<li><p>对同一地址的写操作是串行执行的；也就是说，任何两个处理器对同一地址的两个写操作在所有处理器看来都有相同的顺序。例如，对同一地址先后写入数值1和数值2，处理器绝不会从该地址中先读出2再读出1。</p>
+</li>
+</ol>
+<blockquote>
+<p>这个性质称为<strong>写串行化</strong>，保证同一地址所写的顺序对任何处理器来说都是相同的。</p>
+</blockquote>
+<p>在三个条件之外，还又两个假设：</p>
+<p>假设：</p>
+<ol>
+<li>直到所有处理器都看到了写操作之后一个写操作才算完成，并且后续的写操作才能开始。</li>
+<li>处理器不会因为其他存储操作而改变写操作的顺序。</li>
+</ol>
+<p>这两个假设意味着如果处理器向地址A写入后又向地址B写入，所有能看到B中新值的处理器必须也能看到A的新值。</p>
+<h2 id="定义一和定义二的联系"><a href="#定义一和定义二的联系" class="headerlink" title="定义一和定义二的联系"></a>定义一和定义二的联系</h2><p>定义二的三个条件已经体现了定义一的一致方面【what】，定义一的连贯方面，即什么时候才能获得写进去的值【when】，则体现在条件2的<u>读写操作之间有足够的时间间隔</u>上面。</p>
+<p>通常不可能要求在一个处理器写入X的数值后，其他处理器就能即刻在X上读出这一值。因此，如果一个处理器对X进行写后，很短时间内另一处理器对X进行读，那么无法保证该读操作能返回写入的数值，因为这一刻写入的数据是怎知可能还没被处理器发送出去。</p>
+<p>总的来说，缓存一致性机制需要解决的问题就是 2 点：</p>
+<ul>
+<li><strong>特性 1 - 写传播（Write Propagation）：</strong> 每个 CPU 核心的写入操作，需要传播到其他 CPU 核心；</li>
+<li><strong>特性 2 - 写事务串行化（Transaction Serialization）：</strong> 各个 CPU 核心所有写入操作的顺序，在所有 CPU 核心看起来是一致。</li>
+</ul>
+<p>如果没有写串行化，举个例子：假如 CPU 有 4 个核心，Core 1 将共享数据修改为 1000，随后 Core 2 将共享数据修改为 2000。在写传播下，“修改为 1000” 和 “修改为 2000” 两个事务会同步到 Core 3 和 Core 4。但是，如果没有事务串行化，不同核心收到的事务顺序可能是不同的，最终数据还是不一致。</p>
+<h1 id="二、实现一致性的方案"><a href="#二、实现一致性的方案" class="headerlink" title="二、实现一致性的方案"></a>二、实现一致性的方案</h1><p>在一致的多处理机中，Cache提供了共享数据的迁移和复制功能。</p>
+<p>共享数据的<strong>迁移</strong>是把远程的共享数据项备份放在本处理器局部的Cache中使用，从而降低了对远程共享数据的访问延迟。</p>
+<p>共享数据的<strong>复制</strong>是把多个处理器需要同时读取的共享数据项的备份放在各自的局部Cache中使用。</p>
+<p>对多个处理器维护一致性的协议称为Cache一致性协议（Cache-coherent Protocal）</p>
+<h2 id="目录协议与监听协议"><a href="#目录协议与监听协议" class="headerlink" title="目录协议与监听协议"></a>目录协议与监听协议</h2><p>（1）监听（Snooping）——每个Cache除了包含物理存储器中块的数据备份之外，也保存着每个块的共享状态信息。Cache通常连在共享存储器的总线上，各个Cache控制器通过监听总线来判断他们是否有总线上请求的数据块。【每个数据块状态是分散在各个Cache中的】</p>
+<p>对于监听协议，常用于集中式共享存储器体系结构，因为可以利用已有的物理连接（总线）来进行广播，但因为广播带来的带宽压力大，所以监听协议的可扩展性较差。</p>
+<p>（2）目录（Directory）——物理存储器中共享数据块的状态及相关信息均被保存集中地在一个称为目录的地方。【每个数据块状态是集中在目录中的】</p>
+<p>对于目录协议，常用于分布式共享存储器体系结构，通过目录避免了广播操作，减小了带宽负担，可扩展性好。</p>
+<p>实现Cache一致性协议的关键是跟踪共享数据块的状态。目前有两类协议，采用了不同的共享数据状态跟踪技术：</p>
+<h2 id="写作废协议与写更新协议"><a href="#写作废协议与写更新协议" class="headerlink" title="写作废协议与写更新协议"></a>写作废协议与写更新协议</h2><p>可通过两种方法来维持一致性要求：</p>
+<p>（1）写作废协议（Write Invalidate）——在一个处理器写某个数据项之前保证它对该数据项有唯一的访问权，唯一的访问权保证了在进行写后不存在其他可读或可写的备份，因为别的备份都作废了。又叫写无效。</p>
+<p>（2）写更新协议（Write Update）——当一个处理器写某数据项时。通过广播使其他Cache中所有对应的该数据项备份进行更新。又叫写广播。</p>
+<p>由于写更新协议必须将所有写操作广播给共享Cache，需要更大的带宽，所以大多处理器都选择写作废协议。</p>
+<h1 id="三、监听协议"><a href="#三、监听协议" class="headerlink" title="三、监听协议"></a>三、监听协议</h1><p>由于监听协议需要广播，对总线带宽的需求大，因此仅适用于<strong>小规模的多处理机</strong>，即集中式共享存储器系统。</p>
+<p>监听协议的关键是利用总线或其他广播媒介进行作废操作。当某个处理器进行写数据时，必须先获得总线的控制权，然后将要作废的数据块的地址放在总线上。其他处理器一致监听总线，他们检测地址所对应的数据是否在它们的Cache中，若在，则作废相应数据块。</p>
+<p>当写Cache未命中时，除了作废其他处理器上相应的Cache数据块以外，还要从存储器取出该数据块。</p>
+<ul>
+<li><p>对于<strong>写直达Cache</strong>，因为所有写的数据同时被写回主存，则从主存中总可以取到最新的数据值。</p>
+</li>
+<li><p>对于<strong>写回Cache</strong>，因为最新之可能在某个处理器的Cache中，也可能在主存中，所以得到数据的最新值会困难一些。在写回Cache失效时可使用相同的监听机制：1. 当请求处理器的Cache发生写失效后，广播该数据块的地址。2. 其他处理器都监听放在总线上的地址，如果某个处理器发现它含有被请求数据块的一个已经修改过的备份（即修改过了该数据块但还未写回内存），它九江这个数据块送给发出读请求的处理器，并停止其对主存的访问请求。</p>
+</li>
+</ul>
+<p>相比于写直达Cache，写回Cache实现一致性有两个缺点：</p>
+<blockquote>
+<ol>
+<li>实现复杂度显然更高</li>
+<li>写回Cache从处理器Cache中重新找回数据块的时间通常比写直达Cache从共享存储器中找回数据块的时间长</li>
+</ol>
+</blockquote>
+<p>但写回Cache所需的<strong>存储器带宽较低</strong>的特点使得其在多处理机实现上很受欢迎。</p>
+<h2 id="写回Cache条件下的监听协议实现"><a href="#写回Cache条件下的监听协议实现" class="headerlink" title="写回Cache条件下的监听协议实现"></a>写回Cache条件下的监听协议实现</h2><p>利用总线实现写传播和写事务串行化：</p>
+<ul>
+<li><strong>写传播 - 总线嗅探：</strong> 总线除了能在一个主模块和一个从模块之间传输数据，还支持一个主模块对多个从模块写入数据，这种操作就是广播。要实现写传播，其实就是将所有的读写操作广播到所有 CPU 核心，而其它 CPU 核心时刻监听总线上的广播，再修改本地的数据；</li>
+<li><strong>事务串行化 - 总线仲裁：</strong> 总线的独占性要求同一时刻最多只有一个主模块占用总线，天然地会将所有核心对内存的读写操作串行化。如果多个核心同时发起总线事务，此时总线仲裁单元会对竞争做出仲裁，未获胜的事务只能等待获胜的事务处理完成后才能执行。</li>
+</ul>
+<p>使用的辅助结构</p>
+<ul>
+<li><p>有效位</p>
+<p>在写回Cache的数据块中，有效位被用于指示该块是否有效。利用有效位，可以使作废的处理很简单，只需要将该位置为无效即可。</p>
+</li>
+<li><p>状态位</p>
+<p>为了分辨某个数据块所处的状态，还要给每个块增加一个特殊的状态位。</p>
+</li>
+<li><p>降低冲突</p>
+<p>因为每次总线任务均要检查Cache的地址位，这可能与CPU对Cache的访问冲突，可通过以下两种技术之一降低冲突：</p>
+<ol>
+<li>复制标志位：将Cache的标志位复制一份，一份正常用于Cache访问，另一份用于监听，两个任务可以并行对标志位进行读。但代价就是修改标志位的时候也必须同时修改两份，同时如果两个任务修改标志位冲突，则非抢先者将被挂起。</li>
+<li>多级包含Cache：采用多级Cache，通常为两级，靠近CPU的第一级Cache是较远的第二级Cache的一个子集。于是，监听可针对第二级Cache进行，而处理器的大多数访问针对第一季Cache，极大地避免了冲突。但是，如果监听命中第二级Cache，它必须垄断对各级Cache的访问，更新块状态并可能写回数据，这通常要挂起处理器对Cache的访问。</li>
+</ol>
+<p>可采用将第二级Cache中的标志位复制，会更有效地减少CPU和监听之间的冲突。</p>
+</li>
+<li></li>
+<li></li>
+<li><p>判断数据块是否共享，可以帮助写操作判断是否需要发送作废操作——当对<u>共享数据块</u>进行写操作时，Cache会在总线上发送一个作废操作，并把该块标记为专有（非共享）；当对<u>专有数据块</u>进行写操作时，由于只有该Cache有数据块的唯一副本，所以不用发送作废操作到总线上了。这样避免了发送作废操作，可以节省时间和带宽。</p>
+</li>
+</ul>
+<p>一致性协议本质上是一个状态机，具有若干状态。不同的协议具有不同的状态组合和转换策略。</p>
+<p>一致性协议常见状态：</p>
+<ul>
+<li>共享状态（S）是指块是同于主存的，该块可能还在其他Cache中，也可能仅在该Cache中</li>
+<li>独占状态（E）是指块是同于主存的，仅在该Cache中</li>
+<li>修改状态（M）是指块是不同与主存的，即在Cache中已经被更新；修改状态暗示了此时的块已经被独占，即仅在该Cache中</li>
+<li>无效状态（I）是指块里的数据是旧的，已经失效了</li>
+</ul>
+<blockquote>
+<p>NB：</p>
+<p>“同于主存”是指在Cache中的块与在内存中对应的块是相同的。有时也称是“干净”的</p>
+<p>“不同于主存”是指在Cache中的块与在内存中对应的块是不同的，内存中的块是旧的、无效的。有时也称是“脏”的</p>
+</blockquote>
+<p>监听一致性协议一般通过每个节点的有效状态控制器来实现，控制器对每个来自<strong>处理器</strong>和<strong>总线</strong>的请求做出响应，然后改变响应Cache块的状态</p>
+<h3 id="MSI协议"><a href="#MSI协议" class="headerlink" title="MSI协议"></a>MSI协议</h3><p>MSI协议是最基础的监听协议实现。有<strong>无效</strong>、<strong>共享</strong>和<strong>修改</strong>三种状态</p>
+<h3 id="MESI协议"><a href="#MESI协议" class="headerlink" title="MESI协议"></a>MESI协议</h3><p>MESI是最经典的监听协议。有<strong>无效</strong>、<strong>共享</strong>、<strong>独占</strong>和<strong>修改</strong>三种状态</p>
+<p>相比于MSI协议，MESI协议增加了独占（E）状态，是一种投机性优化：如果一个CPU想修改一个处于S状态的缓存行，总线事务需要将所有该缓存行的copy变成invalid状态，而修改E状态的缓存不需要使用总线事务。</p>
+<p>演示MESI协议网页<a target="_blank" rel="noopener" href="https://www.scss.tcd.ie/Jeremy.Jones/VivioJS/caches/MESI.htm">VivioJS MESI (tcd.ie)</a></p>
+<h2 id="监听协议和集中式共享存储器体系结构的局限性"><a href="#监听协议和集中式共享存储器体系结构的局限性" class="headerlink" title="监听协议和集中式共享存储器体系结构的局限性"></a>监听协议和集中式共享存储器体系结构的局限性</h2><blockquote>
+<p>随着多处理器中处理器数目的增加，或者处理器对存储器带宽的增加，系统的任何集中式资源都会成为“瓶颈”</p>
+</blockquote>
+<p>例如在基于总线的多处理器中，总线必须同时支持由于Cache导致的存储器通信和一致性通信。如果是只有一个物理存储器的集中式共享存储器体系结构，总线的带宽（bandwidth）负担会极大。</p>
+<p>为了增加处理器和存储器之间的通信带宽，设计者使用多种总线以及各种互联网络，如交叉开关和小型点对点网络。在该设计中，存储器系统可以被配置称多个物理组，有效增加带宽。这正是<u>集中式共享存储器和分布式共享存储器的结合</u>。</p>
+<p>图</p>
+<p>由上例可知，使用监听Cache一致性协议可以不要求使用集中式总线这样的很容易造成带宽瓶颈的通信方式，但仍然要求完成广播。由于一致性通信量与处理器速度没有关系，这种一致性通信<u>限制了处理器的扩展与速度</u>。</p>
+<h1 id="四、目录协议"><a href="#四、目录协议" class="headerlink" title="四、目录协议"></a>四、目录协议</h1><p>对于监听协议，在处理每个Cache缺失时，都需要和所有的Cache进行通信，造成带宽瓶颈，限制了处理器的扩展。</p>
+<p>每个目录负责跟踪共享本地存储器的Cache，存储器的每一块在目录中对应有一项</p>
+<p>每个目录项主要有“状态”和“位向量”两种成分。状态描述该目录所对应的存储块的当前情况；位向量有处理器数量的位数，其每一位对应于一个处理器的局部Cache，用于指出该Cache中有无该存储块的备份。</p>
+<hr>
+<p>本文是对《计算机体系结构——量化研究方法（第四版）》和《计算机体系结构（第二版）》的相关章节的整理</p>
+<p>参考链接🔗</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94811032">cache之多核一致性(一) - 总线上没有秘密 - 知乎 (zhihu.com)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/24/%E5%B9%B6%E8%A1%8C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/24/%E5%B9%B6%E8%A1%8C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">并行体系结构</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-24 11:02:54" itemprop="dateCreated datePublished" datetime="2023-11-24T11:02:54+08:00">2023-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-25 16:12:20" itemprop="dateModified" datetime="2023-11-25T16:12:20+08:00">2023-11-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一、并行体系结构的Flynn分类法"><a href="#一、并行体系结构的Flynn分类法" class="headerlink" title="一、并行体系结构的Flynn分类法"></a>一、并行体系结构的Flynn分类法</h1><h2 id="1-单指令流，单数据流（SISD）"><a href="#1-单指令流，单数据流（SISD）" class="headerlink" title="1. 单指令流，单数据流（SISD）"></a>1. 单指令流，单数据流（SISD）</h2><p>单处理器，即传统的、串行的冯·诺伊曼计算机</p>
+<h2 id="2-单指令流，多数据流（SIMD）"><a href="#2-单指令流，多数据流（SIMD）" class="headerlink" title="2. 单指令流，多数据流（SIMD）"></a>2. 单指令流，多数据流（SIMD）</h2><p>同一条指令被多个使用不同数据流的多处理器执行，实现<strong>数据级并行</strong></p>
+<p>例如：向量计算机、阵列计算机</p>
+<h2 id="3-多指令流，单数据流（MISD）"><a href="#3-多指令流，单数据流（MISD）" class="headerlink" title="3. 多指令流，单数据流（MISD）"></a>3. 多指令流，单数据流（MISD）</h2><p>奇葩没有研究价值</p>
+<h2 id="4-多指令流，多数据流（MIMD）"><a href="#4-多指令流，多数据流（MIMD）" class="headerlink" title="4. 多指令流，多数据流（MIMD）"></a>4. 多指令流，多数据流（MIMD）</h2><p>每个处理器取自己的指令并对自己的数据进行操作，实现<strong>线程级并行</strong></p>
+<p>例如：集群、片内多处理器（多核）</p>
+<ul>
+<li><p>其中，MIMD计算机更加受到学术和商业上的关注，这是因为以下两点：</p>
+<ul>
+<li><p><strong>灵活性强：</strong>MIMD可以实现线程级并行机制，因此</p>
+<p>（1）支持数据级并行：既可以作为单用户多处理器为单一应用程序提供高性能（为一个高负载程序提供高性能）</p>
+<p>（2）支持任务级并行：也可以作为同时运行多个任务的多道程序多处理器系统使用（同时运行多个程序）</p>
+<p>（3）甚至可以支持数据级和任务级两种并行的应用。</p>
+</li>
+<li><p><strong>性价比高：</strong>能充分利用现有微处理器的性价比优势，多核芯片可以通过复制的方式，有效降低单处理器内核的设计成本。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="二、MIMD分类"><a href="#二、MIMD分类" class="headerlink" title="二、MIMD分类"></a>二、MIMD分类</h1><p>根据处理器间通信机制（传递数据所用的方法），MIMD还可以分为<strong>多处理器系统</strong>和<strong>多计算机系统</strong></p>
+<h2 id="多处理器系统"><a href="#多处理器系统" class="headerlink" title="多处理器系统"></a>多处理器系统</h2><p>多处理器系统是<strong>共享内存</strong>的计算机。多个处理器通过逻辑上共享的地址空间进行通信，换言之，CPU上运行的操作系统可以直接通过LOAD指令或者STORE指令访问其他远程CPU的内存字。</p>
+<h2 id="多计算机系统"><a href="#多计算机系统" class="headerlink" title="多计算机系统"></a>多计算机系统</h2><p>多计算机系统是<strong>消息传递</strong>的计算机，多个处理器在逻辑上没有共享的地址空间，而是有多个私有的地址空间组成，这些地址空间在逻辑上是独立分散的，换言之，CPU只能通过显示发送消息并等待响应的方式与其他远程CPU进行通信。</p>
+<p>多处理器和多计算机两种体系结构的差别</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>多处理器</th>
+<th>多计算机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CPU间通信方式</td>
+<td>共享内存（隐式地，通过load、store指令）</td>
+<td>消息传递（显式地，通过发送、接收消息的函数）</td>
+</tr>
+<tr>
+<td>地址空间</td>
+<td>所有CPU共享一个单一的物理地址空间</td>
+<td>每个CPU都有自己独立的物理地址空间</td>
+</tr>
+<tr>
+<td>常见编程模型</td>
+<td>OpenMP编程模型</td>
+<td>MPI编程模型</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="三、多处理器系统"><a href="#三、多处理器系统" class="headerlink" title="三、多处理器系统"></a>三、多处理器系统</h1><p>根据<strong>存储器组织方式</strong>或者说<strong>共享内存的实现方式</strong>，可以进一步把多处理器系统分为两类：集中式共享存储器系统结构和分布式存储器系统结构。</p>
+<h2 id="集中式共享存储器系统（Centralized-Shared-Memory-CSM）"><a href="#集中式共享存储器系统（Centralized-Shared-Memory-CSM）" class="headerlink" title="集中式共享存储器系统（Centralized Shared-Memory, CSM）"></a>集中式共享存储器系统（Centralized Shared-Memory, CSM）</h2><p>对于处理机数目较少的多处理机，各个处理机可以共享单个集中式存储器。当处理机数量很大时，由于访问冲突以及总线带宽的限制，访问延迟就会很大。</p>
+<ul>
+<li><p><strong>结构</strong>：多个处理器-Cache子系统共享同一个较大的物理存储器。</p>
+</li>
+<li><p><strong>如何实现共享内存？</strong>因为多处理机物理上共享单个存储器，因此逻辑上的共享是自然而然的。</p>
+</li>
+</ul>
+<p>别称：因为只用一个单独的主存，而且这个主存对于各处理器的关系是对称的，所以各处理器访问这个主存的时间相同，所以这种结构有时被称为<u>对称式共享存储器结构</u>（Symmetric shared-memory MultiProcessor, SMP），或者<u>一致性内存访问计算</u>机（Uniform Memory Access, UMA）</p>
+<blockquote>
+<p>ps：使用大容量Cache</p>
+<p>对于共享存储器结构，存储器和总线的带宽往往是瓶颈，而大容量、多级Cache可以很大程度地降低对存储器和总线的带宽要求。所以共享存储器结构往往采用大容量Cache。</p>
+</blockquote>
+<h2 id="分布式共享存储器系统（Distributed-Shared-Memory-DSM）"><a href="#分布式共享存储器系统（Distributed-Shared-Memory-DSM）" class="headerlink" title="分布式共享存储器系统（Distributed Shared-Memory, DSM）"></a>分布式共享存储器系统（Distributed Shared-Memory, DSM）</h2><p>为了支持更多的处理机，存储器不能按照集中共享方式组织，而必须分布于各个处理机。</p>
+<ul>
+<li><p><strong>结构</strong>：由多个独立结构构成（称为<code>节点</code>），每个节点包含处理器、存储器、IO系统，各个节点通过互联网络连接。</p>
+</li>
+<li><p><strong>如何实现共享内存？</strong>物理上分开的多个存储器的地址空间组织成逻辑上共享的地址空间，即在这种机器中，两个不同处理器中相同的物理地址指向一个存储器中的相同位置。实现这一效果需要硬件支持复杂的处理器间数据通信，同时时延也更大。</p>
+</li>
+</ul>
+<p>别称：由于CPU对内存字的访问时间依赖于该内存字在存储器中的存放位置，所以也被称为<u>非一致性内存访问计算机</u>（NonUniform Memory Access, NUMA）</p>
+<blockquote>
+<p>Aside：超节点</p>
+<p>每个节点还可能包含较少数目（2~8）的处理器，这些处理器之间可采用另一种技术（如总线）互联形成簇，这样的节点叫做超节点。这可以视为分布式共享存储和集中式共享存储的混合。</p>
+</blockquote>
+<p>这种将存储器分散到各个节点的结构有两个好处：</p>
+<ol>
+<li>如果大多数的访问是针对本节点的局部存储器，可降低对存储器和互联网络的带宽要求。</li>
+<li>对局部存储器的访问延迟低</li>
+</ol>
+<p>但也有缺点：</p>
+<ol>
+<li>处理器之间的通信较复杂</li>
+<li>各处理器之间访问延迟较大</li>
+</ol>
+<h1 id="四、多计算机系统"><a href="#四、多计算机系统" class="headerlink" title="四、多计算机系统"></a>四、多计算机系统</h1><p>多计算机系统类似于多处理器系统中的分布式共享存储器系统，只不过多处理器的地址空间并没有组织成逻辑上共享的地址空间，或许可以称为<u>分布式非共享存储器系统</u>，这些私有地址空间在逻辑上是分散的。即在这种机器中，两个不同处理器中相同的物理地址分别指向两个不同存储器中的不同位置。</p>
+<p>每个节点本质上是一台独立的计算机</p>
+<h1 id="五、两种通信机制"><a href="#五、两种通信机制" class="headerlink" title="五、两种通信机制"></a>五、两种通信机制</h1><p>前面提到，多处理器和多计算机的最主要区别就是通信机制的不同，多处理器采用共享内存通信机制，多计算机采用消息传递通信机制。</p>
+<h2 id="共享内存通信机制"><a href="#共享内存通信机制" class="headerlink" title="共享内存通信机制"></a>共享内存通信机制</h2><p>由于共享地址空间，可利用Load和Store指令中的地址隐含地进行数据通信。</p>
+<h2 id="消息传递通信机制"><a href="#消息传递通信机制" class="headerlink" title="消息传递通信机制"></a>消息传递通信机制</h2><p>由于有多个地址空间，数据通信要通处理器间显式地传递消息完成。</p>
+<p>同步</p>
+<p>异步</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/23/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/23/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（七）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-23 21:18:59" itemprop="dateCreated datePublished" datetime="2023-11-23T21:18:59+08:00">2023-11-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-24 09:10:33" itemprop="dateModified" datetime="2023-11-24T09:10:33+08:00">2023-11-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="gem5附带的默认配置脚本"><a href="#gem5附带的默认配置脚本" class="headerlink" title="gem5附带的默认配置脚本"></a>gem5附带的默认配置脚本</h1><p>本文是对官网教程<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part1/example_configs/">gem5: Using the default configuration scripts</a>的整理，主要介绍了</p>
+<p>gem5附带了许多配置脚本，允许用户非常快速地使用gem5。</p>
+<h2 id="1-configs文件夹"><a href="#1-configs文件夹" class="headerlink" title="1. configs文件夹"></a>1. configs文件夹</h2><p>gem5中的全部配置脚本都在<code>configs</code>文件夹中，该文件夹的结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">configs/boot:</span><br><span class="line">bbench-gb.rcS  bbench-ics.rcS  hack_back_ckpt.rcS  halt.sh</span><br><span class="line"></span><br><span class="line">configs/common:</span><br><span class="line">Benchmarks.py   Caches.py  cpu2000.py    FileSystemConfig.py  GPUTLBConfig.py   HMC.py       MemConfig.py   Options.py     Simulation.py</span><br><span class="line">CacheConfig.py  cores      CpuConfig.py  FSConfig.py          GPUTLBOptions.py  __init__.py  ObjectList.py  SimpleOpts.py  SysPaths.py</span><br><span class="line"></span><br><span class="line">configs/dist:</span><br><span class="line">sw.py</span><br><span class="line"></span><br><span class="line">configs/dram:</span><br><span class="line">lat_mem_rd.py  low_power_sweep.py  sweep.py</span><br><span class="line"></span><br><span class="line">configs/example:</span><br><span class="line">apu_se.py  etrace_replay.py  garnet_synth_traffic.py  hmctest.py    hsaTopology.py  memtest.py  read_config.py  ruby_direct_test.py      ruby_mem_test.py     sc_main.py</span><br><span class="line">arm        fs.py             hmc_hello.py             hmc_tgen.cfg  memcheck.py     noc_config  riscv           ruby_gpu_random_test.py  ruby_random_test.py  se.py</span><br><span class="line"></span><br><span class="line">configs/learning_gem5:</span><br><span class="line">part1  part2  part3  README</span><br><span class="line"></span><br><span class="line">configs/network:</span><br><span class="line">__init__.py  Network.py</span><br><span class="line"></span><br><span class="line">configs/nvm:</span><br><span class="line">sweep_hybrid.py  sweep.py</span><br><span class="line"></span><br><span class="line">configs/ruby:</span><br><span class="line">AMD_Base_Constructor.py  CHI.py        Garnet_standalone.py  __init__.py              MESI_Three_Level.py  MI_example.py      MOESI_CMP_directory.py  MOESI_hammer.py</span><br><span class="line">CHI_config.py            CntrlBase.py  GPU_VIPER.py          MESI_Three_Level_HTM.py  MESI_Two_Level.py    MOESI_AMD_Base.py  MOESI_CMP_token.py      Ruby.py</span><br><span class="line"></span><br><span class="line">configs/splash2:</span><br><span class="line">cluster.py  run.py</span><br><span class="line"></span><br><span class="line">configs/topologies:</span><br><span class="line">BaseTopology.py  Cluster.py  CrossbarGarnet.py  Crossbar.py  CustomMesh.py  __init__.py  MeshDirCorners_XY.py  Mesh_westfirst.py  Mesh_XY.py  Pt2Pt.py</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="boot"><a href="#boot" class="headerlink" title="boot&#x2F;"></a>boot&#x2F;</h3><p>这些是在全系统模式下使用的rcS文件。这些文件在Linux引导后由模拟器加载，并由shell执行。其中大多数用于在全系统模式下运行时控制基准测试。有些是实用函数，如hack_back_ckpt.rcS。在全系统模拟一章中，将更深入地介绍这些文件。</p>
+<h3 id="common"><a href="#common" class="headerlink" title="common&#x2F;"></a>common&#x2F;</h3><p>common目录包含许多用于创建模拟系统的辅助脚本和函数。例如，</p>
+<p><code>Caches.py</code>类似于前几章中创建的Caches.py和Caches_opts.py文件。</p>
+<p><code>Options.py</code>包含可以在命令行上设置的各种选项。比如CPU的数量、系统时钟等等。这是查看要更改的选项是否已经有命令行参数的好地方。</p>
+<p><code>CacheConfig.py</code>包含用于为经典内存系统设置缓存参数的选项和函数。</p>
+<p><code>MemConfig.py</code>提供了一些帮助函数，用于设置内存系统。</p>
+<p><code>FSConfig.py</code>包含为许多不同类型的系统设置全系统仿真所需的功能。全系统仿真将在本章中进一步讨论。</p>
+<p><code>Simulation.py</code>包含许多用于设置和运行gem5的辅助函数。该文件中包含的许多代码管理保存和恢复检查点。下面示例中的示例配置文件使用该文件中的函数来执行gem5模拟。该文件相当复杂，但它也允许在模拟运行方式上有很大的灵活性。</p>
+<h3 id="dram"><a href="#dram" class="headerlink" title="dram&#x2F;"></a>dram&#x2F;</h3><p>包含测试DRAM的脚本。</p>
+<h3 id="example"><a href="#example" class="headerlink" title="example&#x2F;"></a>example&#x2F;</h3><p>此目录包含一些示例 gem5配置脚本，可以使用这些脚本即开即用地运行 gem5。具体来说，se.py 和 fs.py 非常有用。有关这些文件的更多信息可以在下一节中找到。此目录中还有一些其他实用程序配置脚本。</p>
+<h3 id="learning-gem5"><a href="#learning-gem5" class="headerlink" title="learning_gem5&#x2F;"></a>learning_gem5&#x2F;</h3><p>该目录包含learning_gem5书中的所有gem5配置脚本。</p>
+<h3 id="network"><a href="#network" class="headerlink" title="network&#x2F;"></a>network&#x2F;</h3><p>此目录包含HeteroGarnet网络的配置脚本。</p>
+<h3 id="nvm"><a href="#nvm" class="headerlink" title="nvm&#x2F;"></a>nvm&#x2F;</h3><p>此目录包含使用NVM接口的示例脚本。</p>
+<h3 id="ruby"><a href="#ruby" class="headerlink" title="ruby&#x2F;"></a>ruby&#x2F;</h3><p>该目录包含Ruby的配置脚本及其包含的缓存一致性协议。</p>
+<h3 id="splash2"><a href="#splash2" class="headerlink" title="splash2&#x2F;"></a>splash2&#x2F;</h3><p>该目录包含用于运行splash2基准测试套件的脚本，以及用于配置模拟系统的一些选项。</p>
+<h3 id="topologies"><a href="#topologies" class="headerlink" title="topologies&#x2F;"></a>topologies&#x2F;</h3><p>该目录包含在创建Ruby缓存层次结构时可以使用的拓扑的实现。</p>
+<h2 id="2-se-py-fs-py"><a href="#2-se-py-fs-py" class="headerlink" title="2. se.py fs.py"></a>2. se.py fs.py</h2><p>SE模式默认配置脚本se.py和FS模式默认配置脚本fs.py均位于目录configs&#x2F;example&#x2F;，下面以se.py为例介绍它们通用的命令行选项：</p>
+<ul>
+<li><p>通过<code>--cmd=</code>选项指定二进制文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认情况下，两个配置脚本均使用 atomic CPU和 atomic memory accesses，因此没有时间统计数据产生</p>
+<p>可通过<code>--cpu-type=CPU_TYPE</code>指定CPU类型，通过<code>--mem-type=MEM_TYPE</code>指定内存类型。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -368,7 +1022,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-22 19:45:52" itemprop="dateModified" datetime="2023-11-22T19:45:52+08:00">2023-11-22</time>
+      <time title="修改时间：2023-11-27 16:34:45" itemprop="dateModified" datetime="2023-11-27T16:34:45+08:00">2023-11-27</time>
     </span>
 
   
@@ -391,12 +1045,12 @@
 <ul>
 <li>包（package）：含有Python模块的文件夹</li>
 </ul>
-<h3 id="用法一："><a href="#用法一：" class="headerlink" title="用法一："></a>用法一：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import [module_name\package_name]</span><br></pre></td></tr></table></figure>
+<h3 id="用法一：import"><a href="#用法一：import" class="headerlink" title="用法一：import []"></a>用法一：import []</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import [module_name\package_name]</span><br></pre></td></tr></table></figure>
 
 <p>Python会在两个地方寻找这个模块，</p>
 <p>第一是<strong>sys.path</strong>（通过运行代码<code>import sys; print(sys.path)</code>查看），os这个模块所在的目录就在列表sys.path中，一般安装的Python库的目录都可以在sys.path中找到，所以对于安装好的库，我们直接import即可。</p>
 <p>第二个地方就是<strong>运行文件所在的目录</strong>。</p>
-<h3 id="用法二："><a href="#用法二：" class="headerlink" title="用法二："></a>用法二：</h3><p>从包中引入模块的import语句如下：</p>
+<h3 id="用法二：from-import"><a href="#用法二：from-import" class="headerlink" title="用法二：from [] import []"></a>用法二：from [] import []</h3><p>从包中引入模块的import语句如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from [module_name\package_name] import [module_name\package_name\method]</span><br></pre></td></tr></table></figure>
 
 
@@ -425,7 +1079,8 @@
 </ol>
 <p>如果以上步骤都找不到这个模块，python会报错ModuleNotFoundError</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87238735">详解 Python import 机制 (一):import 中的基本概念 - 知乎 (zhihu.com)</a></p>
-
+<h1 id="all-变量暴漏接口"><a href="#all-变量暴漏接口" class="headerlink" title="__all__变量暴漏接口"></a>__all__变量暴漏接口</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zylooooooooong/article/details/115564782">python _<em>all__用法</em>-徐徐图之-的博客-CSDN博客</a></p>
+<h1 id="init-文件"><a href="#init-文件" class="headerlink" title="__init__文件"></a>__init__文件</h1>
       
     </div>
 
@@ -597,560 +1252,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/" class="post-title-link" itemprop="url">Chiplet论文阅读—— Methodology for Simulating Multi-chiplet Systems UsingOpen-source Simulators</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-07 20:24:05" itemprop="dateCreated datePublished" datetime="2023-11-07T20:24:05+08:00">2023-11-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-21 15:16:22" itemprop="dateModified" datetime="2023-11-21T15:16:22+08:00">2023-11-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Chiplet%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">Chiplet论文阅读</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="一、论文总结"><a href="#一、论文总结" class="headerlink" title="一、论文总结"></a>一、论文总结</h1><h1 id="二、摘要"><a href="#二、摘要" class="headerlink" title="二、摘要"></a>二、摘要</h1><p>为了支持早期的Chiplets系统的设计空间探索，提出了一种基于gem5、snipe、gpgpu-sim等开源模拟器的Chiplets架构模拟方法。</p>
-<p>并开源在Github上 <a target="_blank" rel="noopener" href="https://github.com/FCAS-SCUT/chiplet_simulators">https://github.com/FCAS-SCUT/chiplet_simulators</a></p>
-<h1 id="三、背景-目前待解决的问题"><a href="#三、背景-目前待解决的问题" class="headerlink" title="三、背景&amp;目前待解决的问题"></a>三、背景&amp;目前待解决的问题</h1><p>Chiplet是后摩尔时代一种很有前途的设计模式，但针对Chiplet的体系结构研究缺乏可靠的模拟器。</p>
-<h2 id="1-Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多"><a href="#1-Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多" class="headerlink" title="1. Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多"></a>1. Chiplets微架构的设计空间比SoC要大得多，因此需要探索的设计更多</h2><p>主要包括<strong>核的组织方式</strong>（128核系统可以分为32cores * 4 chiplets、16cores * 8 chiplets等）、<strong>互联的拓扑结构</strong>、<strong>内存模型</strong></p>
-<h2 id="2-现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因："><a href="#2-现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因：" class="headerlink" title="2. 现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因："></a>2. 现有开源的模拟器无法直接用于chiplets系统的模拟，因为以下两个原因：</h2><ul>
-<li><p>没有精确的Chiplet间互联模型。现有开源模拟器（如gem5、sniper、Graphite、gpgpu-sim）都是纯网络模拟器（network-only simulator），缺乏详细准确的中介层互连延迟和功率模型{❓意思是仅能够精确模拟chiplet内部多核的互联，对chiplet间的互联模拟不精确吗❓}。</p>
-</li>
-<li><p>无法进行大规模并行模拟。Multi-Chiplets系统一般具有大量的核，这样的系统模拟起来会很耗时，因此需要通过大规模的并行来加速模拟。虽然Graphite和sniper支持并行模拟，但并不支持精确的互联建模。</p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/07/gcc%E7%BC%96%E8%AF%91%E5%99%A8%E5%8F%82%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/07/gcc%E7%BC%96%E8%AF%91%E5%99%A8%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">gcc编译器参数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-07 15:41:18" itemprop="dateCreated datePublished" datetime="2023-11-07T15:41:18+08:00">2023-11-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-15 20:48:16" itemprop="dateModified" datetime="2023-11-15T20:48:16+08:00">2023-11-15</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="一、什么是GCC？"><a href="#一、什么是GCC？" class="headerlink" title="一、什么是GCC？"></a>一、什么是GCC？</h1><p>GCC(GNU Compiler Collection)即GNU编译器套件，属于一种编程语言编译器。其原名也为GCC（GNU C Compiler），虽然缩写一样但是仅可编译C语言，后来经过发展才变成支持编译多语言。GCC的初衷是为GNU操作系统专门编写的一款编译器，原本的GNU是专用于编译C代码，现如今已扩展为可以编译C、C++、Java、Objective-C等多种编程语言的编译器集合了。</p>
-<h1 id="二、GCC、gcc、g-三者有何关系？"><a href="#二、GCC、gcc、g-三者有何关系？" class="headerlink" title="二、GCC、gcc、g++三者有何关系？"></a>二、GCC、gcc、g++三者有何关系？</h1><p><strong>gcc</strong>（GUN C Compiler）是GCC中的c编译器，而**g++**（GUN C++ Compiler）是GCC中的c++编译器。<br>gcc和g++两者都可以编译c和cpp文件，但存在差异。</p>
-<ul>
-<li><p>gcc在编译cpp时语法按照c来编译但默认不能链接到c++的库（gcc默认链接c库，g++默认链接c++库）。</p>
-</li>
-<li><p>g++编译.c和.cpp文件都统一按cpp的语法规则来编译。</p>
-<p>  一般<strong>编译c用gcc</strong>，**编译c++用g++**。</p>
-</li>
-</ul>
-<h1 id="三、GCC编译步骤"><a href="#三、GCC编译步骤" class="headerlink" title="三、GCC编译步骤"></a>三、GCC编译步骤</h1><p>GCC广义上的编译流程可分为以下四个部分：</p>
-<ul>
-<li>预处理（Pre-Processing）</li>
-<li>编译（Compiling）</li>
-<li>汇编（Assembling）</li>
-<li>链接（Linking）</li>
-</ul>
-<h1 id="gcc-参数"><a href="#gcc-参数" class="headerlink" title="gcc 参数"></a>gcc 参数</h1><img src="/2023/11/07/gcc%E7%BC%96%E8%AF%91%E5%99%A8%E5%8F%82%E6%95%B0/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQmFsYWFhbQ==,size_20,color_FFFFFF,t_70,g_se,x_16.png" class="" title="请添加图片描述">
-
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42475711/article/details/85224010">浅显易懂的GCC使用教程——初级篇_gcc -ddebug-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_50697073/article/details/123759516?app_version=6.2.2&csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22123759516%22,%22source%22:%22m0_52631482%22%7D&utm_source=app">【精选】gcc的基本使用-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wohu1104/article/details/110789570">GCC 编译 C(C++)静态链接库（gcc -L、gcc -l）和动态链接库（gcc -fPIC -shared）的创建和使用_c++ 链接 -l-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/alan666/p/8311984.html">gcc -I -L -l区别 - 隔壁王叔叔a - 博客园 (cnblogs.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/06/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/06/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（六）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-06 14:57:54" itemprop="dateCreated datePublished" datetime="2023-11-06T14:57:54+08:00">2023-11-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-15 16:07:44" itemprop="dateModified" datetime="2023-11-15T16:07:44+08:00">2023-11-15</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Checkpoints"><a href="#Checkpoints" class="headerlink" title="Checkpoints"></a>Checkpoints</h1><p>官网介绍<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/general_docs/checkpoints/">gem5: Checkpoints</a></p>
-<p>检查点相当于gem5模拟系统的快照。通常来说，创建一个全系统模拟需要大量的时间，但为这个模拟系统创建了检查点之后，可以在下次启动时将模拟系统快速回复至检查点状态，从而节省系统启动时间。</p>
-<p>一旦创建了checkpoint，gem5会在输出目录中增加一个cpt目录（cpt.TICKNUMBER，其中TICKNUMBER为创建此检查点时的Tick值），该目录存储checkpoint相关信息。</p>
-<h2 id="1-创建检查点"><a href="#1-创建检查点" class="headerlink" title="1. 创建检查点"></a>1. 创建检查点</h2><p>有三种创建检查点的方式：</p>
-<ul>
-<li>启动模拟器环境后，在模拟器终端执行<strong>m5 checkpoint命令</strong>，也可以将其包含在运行脚本中。</li>
-<li>专门有一个<strong>伪指令</strong>用于创建检查点，例如可以在应用中创建检查点（还不熟悉）</li>
-<li>python配置脚本（fs.py、ruby_fs.py）中通过<strong>命令行参数</strong>设置检查点。–take-checkpoints选项可以定期储存检查点，–checkpoint-at-end可以在模拟结束创建检查点</li>
-</ul>
-<h2 id="2-恢复检查点"><a href="#2-恢复检查点" class="headerlink" title="2. 恢复检查点"></a>2. 恢复检查点</h2><p>检查点恢复需要在启动系统模拟时设置几个命令行参数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">build/X86/gem5.opt -d 指定输出目录 configs/example/fs.py --num-cpus=2 -r 1 --checkpoint-dir=checkpoint目录在指定的输出目录 --restore-with-cpu=O3CPU --cpu-type=O3CPU</span><br><span class="line"></span><br><span class="line">build/X86/gem5.opt  configs/example/fs.py --num-cpus=2 -r 1 --checkpoint-dir=m5out</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>–checkpoint-dir</strong>：用于指定使用的checkpoint的cpt文件夹所在路径</li>
-<li><strong>-r</strong>：用于指定使用的checkpoint的序号</li>
-<li><strong>–restore-with-cpu</strong>用于指定恢复时CPU的类型</li>
-</ul>
-<p>启动系统模拟后，再通过m5term接入模拟系统，然后很快就会进入到命令行了。</p>
-<h1 id="m5"><a href="#m5" class="headerlink" title="m5"></a>m5</h1><p>在使用m5时首先要用Scons编译</p>
-<h1 id="修改镜像文件"><a href="#修改镜像文件" class="headerlink" title="修改镜像文件"></a>修改镜像文件</h1><p>在全系统模拟中，运行程序一般比较慢，特别是一些比较大的benchmark，如果在全系统模拟中编译会极慢，因此需要将benchmark在宿主机编译完之后，直接放在镜像文件中，这样就可以开启模拟后直接运行benchmark了。</p>
-<p>然而，镜像文件不可以像文件一样直接操作，必须进行磁盘挂载。在 Linux 中，挂载磁盘是将新的磁盘设备连接到文件系统的过程，使得该磁盘可用于存储和访问文件。简单来说，就是将镜像文件挂载到一个文件夹中，再像文件一样直接操作。</p>
-<p>首先，创建一个文件夹作为挂载点。在disks文件夹中新建文件夹.&#x2F;mnt</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ./mnt</span><br></pre></td></tr></table></figure>
-
-<p>然后，使用mount命令挂载镜像文件到指定挂载点。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -o loop,offset=1048576 镜像文件 ./mnt</span><br></pre></td></tr></table></figure>
-
-<p>此时，可以通过df -h命令查看磁盘设备列表，并打开.&#x2F;mnt文件夹可以看到镜像文件的内容。</p>
-<img src="/2023/11/06/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/image-20231107111710727.png" class="" title="image-20231107111710727">
-
-<img src="/2023/11/06/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/image-20231107111521636.png" class="" title="image-20231107111521636">
-
-<p>将测试文件放入挂载点</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp 测试文件 ./mnt</span><br></pre></td></tr></table></figure>
-
-<p>最后，取消挂载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo umount ./mnt</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-title-link" itemprop="url">MobaXterm通过SSH连接虚拟机</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-04 10:00:26" itemprop="dateCreated datePublished" datetime="2023-11-04T10:00:26+08:00">2023-11-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-05 09:13:15" itemprop="dateModified" datetime="2023-11-05T09:13:15+08:00">2023-11-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1-在Ubuntu下安装SSH服务"><a href="#1-在Ubuntu下安装SSH服务" class="headerlink" title="1. 在Ubuntu下安装SSH服务"></a>1. 在Ubuntu下安装SSH服务</h2><p>查看SSH是否启动：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service sshd status</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/11/04/MobaXterm%E9%80%9A%E8%BF%87SSH%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（五）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-02 08:39:25" itemprop="dateCreated datePublished" datetime="2023-11-02T08:39:25+08:00">2023-11-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-21 15:36:42" itemprop="dateModified" datetime="2023-11-21T15:36:42+08:00">2023-11-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="FS全系统模拟"><a href="#FS全系统模拟" class="headerlink" title="FS全系统模拟"></a>FS全系统模拟</h1><h2 id="一、构建X86系统"><a href="#一、构建X86系统" class="headerlink" title="一、构建X86系统"></a>一、构建X86系统</h2><p>切换到gem目录下，使用Scons进行构建</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scons ./build/X86/gem5.opt -j [NumberOfThread]</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、获取镜像文件和Linux内核文件"><a href="#二、获取镜像文件和Linux内核文件" class="headerlink" title="二、获取镜像文件和Linux内核文件"></a>二、获取镜像文件和Linux内核文件</h2><p> FS模拟会启动Linux操作系统，会模拟系统的所有组件。因此需要给系统配置相应的Linux内核以及磁盘镜像</p>
-<p>img 文件和 vmlinux 文件是 gem5 中启动操作系统所需的两个重要文件。</p>
-<ul>
-<li><strong>磁盘镜像（img 文件）</strong>储存了操作系统的文件系统和应用程序，这些文件是操作系统运行所必需的。操作系统需要文件系统来存储和组织文件，需要应用程序来实现特定功能。</li>
-<li><strong>Linux内核文件（vmlinux 文件）</strong>储存了操作系统的内核代码。内核是操作系统的核心部分，负责管理系统资源和提供基本的服务。如果没有内核，操作系统就无法正常启动和运行。</li>
-</ul>
-<h3 id="1-自动获取脚本"><a href="#1-自动获取脚本" class="headerlink" title="1. 自动获取脚本"></a>1. 自动获取脚本</h3><p>官方教程中使用的img和vmlinux直接来自于gem5资源库（resource repository），直接利用Resource类（<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/general_docs/gem5_resources/">gem5: gem5-resources</a>）下载到本地。Gem5官网提供了通过Resource自动获取img文件和vmlinux文件，并运行全系统模拟的示例脚本，脚本代码在<code>configs/example/gem5_library/</code>目录中。以configs&#x2F;example&#x2F;gem5_library&#x2F;x86-parsec-benchmarks.py为例</p>
-<p>gem5可以通过KVM对仿真进行加速，但有的CPU不支持KVM，查看你的处理器是否支持KVM。可以通过安装sudo apt install qemu-kvm并通过kvm-ok来查看</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 安装qemu-kvm</span><br><span class="line">sudo apt install qemu-kvm</span><br><span class="line"># 查看KVM是否安装</span><br><span class="line">kvm-ok</span><br></pre></td></tr></table></figure>
-
-<p>我的处理器并不支持KVM</p>
-<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114123822874.png" class="" title="image-20231114123822874">
-
-<p>因此只能关闭KVM</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># Step1 使用requires进行检查时将kvm_required置为False</span><br><span class="line">requires(</span><br><span class="line">    isa_required=ISA.X86,</span><br><span class="line">    coherence_protocol_required=CoherenceProtocol.MESI_TWO_LEVEL,</span><br><span class="line">    # kvm_required=True,</span><br><span class="line">    kvm_required=False,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Step2 设置处理器时，均使用TIMING处理器</span><br><span class="line">processor = SimpleSwitchableProcessor(</span><br><span class="line">    # starting_core_type=CPUTypes.KVM,</span><br><span class="line">    starting_core_type=CPUTypes.TIMING,</span><br><span class="line">    switch_core_type=CPUTypes.TIMING,</span><br><span class="line">    isa=ISA.X86,</span><br><span class="line">    num_cores=2,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>这样就可以运行模拟了，使用的benchmark和size可以在该脚本的注释中查看</p>
-<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114093504398.png" class="" title="image-20231114093504398">
-
-
-
-
-
-
-
-
-
-<img src="/2023/11/02/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/image-20231114093427885.png" class="" title="image-20231114093427885">
-
-
-
-<h3 id="2-自己制作img文件"><a href="#2-自己制作img文件" class="headerlink" title="2.自己制作img文件"></a>2.自己制作img文件</h3><h2 id="三、设置环境变量"><a href="#三、设置环境变量" class="headerlink" title="三、设置环境变量"></a>三、设置环境变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 修改bashrc文件以添加环境变量</span><br><span class="line">vim ~/.bashrc</span><br><span class="line"># 在打开的文件的尾部加入环境变量</span><br><span class="line">export M5_PATH=gem5绝对路径/full-system-image</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="四、通过配置文件启动模拟系统"><a href="#四、通过配置文件启动模拟系统" class="headerlink" title="四、通过配置文件启动模拟系统"></a>四、通过配置文件启动模拟系统</h2><p>gem5提供了许多配置文件来配置不同的系统，其中可以由fs.py与命令行参数搭配快速实现不同配置的全系统模拟</p>
-<p>fs.py的各种命令行参数可以通过<code>fs.py -h</code>查看</p>
-<h1 id="m5端"><a href="#m5端" class="headerlink" title="m5端"></a>m5端</h1><h3 id="1-m5介绍"><a href="#1-m5介绍" class="headerlink" title="1. m5介绍"></a>1. m5介绍</h3><h3 id="2-启动m5端"><a href="#2-启动m5端" class="headerlink" title="2. 启动m5端"></a>2. 启动m5端</h3><p>启动m5有两种方法，一种是通过系统自带的telnet或者gem5中提供的m5term工具，推荐m5term。</p>
-<h4 id="（1）telnet"><a href="#（1）telnet" class="headerlink" title="（1）telnet"></a>（1）telnet</h4><p>使用不需要额外安装或配置，直接</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telent &lt;host&gt; &lt;post&gt;</span><br></pre></td></tr></table></figure>
-
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">telnet localhost 3456</span><br><span class="line">// 3456表示用于连接模拟系统的端口号，再gem5模拟中，默认的起始端口号为3456，</span><br><span class="line">// 当后续需要模拟多个系统，端口号需要每次增加1</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="（2）m5term"><a href="#（2）m5term" class="headerlink" title="（2）m5term"></a>（2）m5term</h4><p>使用m5前，必须先根据源码构建该工具</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Step 1 切换到gem5/util/term目录</span><br><span class="line"> cd util/term</span><br><span class="line"># Step 2 编译</span><br><span class="line"> gcc  -o m5term term.c</span><br><span class="line"># Step 3 安装</span><br><span class="line"> sudo install -o root -m 555 m5term /usr/local/bin</span><br></pre></td></tr></table></figure>
-
-<p>之后，就可以通过与telnet类似的方式启动m5了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m5term &lt;host&gt; &lt;post&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h3 id="3-生成m5以及对应的libm5-a库"><a href="#3-生成m5以及对应的libm5-a库" class="headerlink" title="3. 生成m5以及对应的libm5.a库"></a>3. 生成m5以及对应的libm5.a库</h3><p>要在应用程序中使用m5提供的指令，首先需要生成m5以及对应的libm5.a库</p>
-<p>ps: 编译之前好像要确保安装clang，并保证其版本为6-10</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Step 1 切换到gem5/util/m5目录</span><br><span class="line"> cd util/m5</span><br><span class="line"># Step 2 编译</span><br><span class="line"> scons build/x86/out/m5</span><br></pre></td></tr></table></figure>
-
-<p> 利用libm5.a库，即可在应用程序中使用libm5.a库中的函数</p>
-<p>编写如下测试程序</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">########hello_m5.cpp##########</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &quot;gem5/m5ops.h&quot;  //引入m5ops.h库</span><br><span class="line"> </span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">    m5_reset_stats(0,0);  //重置模拟统计数据，m5库中实现的函数</span><br><span class="line"> </span><br><span class="line">    printf(&quot;Hello world!\n&quot;);</span><br><span class="line">    </span><br><span class="line">    m5_dump_stats(0,0);  //将模拟统计数据保存，m5库中实现的函数</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>利用g++和库进行编译</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-Igem5绝对路径/include \</span><br><span class="line">-Lgem5绝对路径/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/include -lm5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后将编译出的可执行文件通过文件挂载的方式存储到img镜像文件中。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

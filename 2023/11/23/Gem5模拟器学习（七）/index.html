@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="gem5附带的默认配置脚本本文是对官网教程gem5: Using the default configuration scripts的整理，主要介绍了 gem5附带了许多配置脚本，允许用户非常快速地使用gem5。 1. configs文件夹gem5中的全部配置脚本都在configs文件夹中，该文件夹的结构如下： 1234567891011121314151617181920212223242526">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gem5模拟器学习（七）">
+<meta property="og:url" content="https://langyiqun.github.io/2023/11/23/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/index.html">
+<meta property="og:site_name" content="郎轶群的博客">
+<meta property="og:description" content="gem5附带的默认配置脚本本文是对官网教程gem5: Using the default configuration scripts的整理，主要介绍了 gem5附带了许多配置脚本，允许用户非常快速地使用gem5。 1. configs文件夹gem5中的全部配置脚本都在configs文件夹中，该文件夹的结构如下： 1234567891011121314151617181920212223242526">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-23T13:18:59.000Z">
+<meta property="article:modified_time" content="2023-11-24T01:10:33.171Z">
+<meta property="article:author" content="Lang Yi Qun">
+<meta property="article:tag" content="默认配置脚本">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://langyiqun.github.io/2023/11/23/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/11/23/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/","path":"2023/11/23/Gem5模拟器学习（七）/","title":"Gem5模拟器学习（七）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Gem5模拟器学习（七） | 郎轶群的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">郎轶群的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">却道天凉好个秋</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gem5%E9%99%84%E5%B8%A6%E7%9A%84%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E8%84%9A%E6%9C%AC"><span class="nav-number">1.</span> <span class="nav-text">gem5附带的默认配置脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-configs%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.1.</span> <span class="nav-text">1. configs文件夹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#boot"><span class="nav-number">1.1.1.</span> <span class="nav-text">boot&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#common"><span class="nav-number">1.1.2.</span> <span class="nav-text">common&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dram"><span class="nav-number">1.1.3.</span> <span class="nav-text">dram&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#example"><span class="nav-number">1.1.4.</span> <span class="nav-text">example&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#learning-gem5"><span class="nav-number">1.1.5.</span> <span class="nav-text">learning_gem5&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#network"><span class="nav-number">1.1.6.</span> <span class="nav-text">network&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nvm"><span class="nav-number">1.1.7.</span> <span class="nav-text">nvm&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ruby"><span class="nav-number">1.1.8.</span> <span class="nav-text">ruby&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#splash2"><span class="nav-number">1.1.9.</span> <span class="nav-text">splash2&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#topologies"><span class="nav-number">1.1.10.</span> <span class="nav-text">topologies&#x2F;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-se-py-fs-py"><span class="nav-number">1.2.</span> <span class="nav-text">2. se.py fs.py</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lang Yi Qun</p>
+  <div class="site-description" itemprop="description">this is a personal blog of lyq</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/yourname" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener me" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/23/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Gem5模拟器学习（七） | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gem5模拟器学习（七）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-23 21:18:59" itemprop="dateCreated datePublished" datetime="2023-11-23T21:18:59+08:00">2023-11-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-24 09:10:33" itemprop="dateModified" datetime="2023-11-24T09:10:33+08:00">2023-11-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="gem5附带的默认配置脚本"><a href="#gem5附带的默认配置脚本" class="headerlink" title="gem5附带的默认配置脚本"></a>gem5附带的默认配置脚本</h1><p>本文是对官网教程<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part1/example_configs/">gem5: Using the default configuration scripts</a>的整理，主要介绍了</p>
+<p>gem5附带了许多配置脚本，允许用户非常快速地使用gem5。</p>
+<h2 id="1-configs文件夹"><a href="#1-configs文件夹" class="headerlink" title="1. configs文件夹"></a>1. configs文件夹</h2><p>gem5中的全部配置脚本都在<code>configs</code>文件夹中，该文件夹的结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">configs/boot:</span><br><span class="line">bbench-gb.rcS  bbench-ics.rcS  hack_back_ckpt.rcS  halt.sh</span><br><span class="line"></span><br><span class="line">configs/common:</span><br><span class="line">Benchmarks.py   Caches.py  cpu2000.py    FileSystemConfig.py  GPUTLBConfig.py   HMC.py       MemConfig.py   Options.py     Simulation.py</span><br><span class="line">CacheConfig.py  cores      CpuConfig.py  FSConfig.py          GPUTLBOptions.py  __init__.py  ObjectList.py  SimpleOpts.py  SysPaths.py</span><br><span class="line"></span><br><span class="line">configs/dist:</span><br><span class="line">sw.py</span><br><span class="line"></span><br><span class="line">configs/dram:</span><br><span class="line">lat_mem_rd.py  low_power_sweep.py  sweep.py</span><br><span class="line"></span><br><span class="line">configs/example:</span><br><span class="line">apu_se.py  etrace_replay.py  garnet_synth_traffic.py  hmctest.py    hsaTopology.py  memtest.py  read_config.py  ruby_direct_test.py      ruby_mem_test.py     sc_main.py</span><br><span class="line">arm        fs.py             hmc_hello.py             hmc_tgen.cfg  memcheck.py     noc_config  riscv           ruby_gpu_random_test.py  ruby_random_test.py  se.py</span><br><span class="line"></span><br><span class="line">configs/learning_gem5:</span><br><span class="line">part1  part2  part3  README</span><br><span class="line"></span><br><span class="line">configs/network:</span><br><span class="line">__init__.py  Network.py</span><br><span class="line"></span><br><span class="line">configs/nvm:</span><br><span class="line">sweep_hybrid.py  sweep.py</span><br><span class="line"></span><br><span class="line">configs/ruby:</span><br><span class="line">AMD_Base_Constructor.py  CHI.py        Garnet_standalone.py  __init__.py              MESI_Three_Level.py  MI_example.py      MOESI_CMP_directory.py  MOESI_hammer.py</span><br><span class="line">CHI_config.py            CntrlBase.py  GPU_VIPER.py          MESI_Three_Level_HTM.py  MESI_Two_Level.py    MOESI_AMD_Base.py  MOESI_CMP_token.py      Ruby.py</span><br><span class="line"></span><br><span class="line">configs/splash2:</span><br><span class="line">cluster.py  run.py</span><br><span class="line"></span><br><span class="line">configs/topologies:</span><br><span class="line">BaseTopology.py  Cluster.py  CrossbarGarnet.py  Crossbar.py  CustomMesh.py  __init__.py  MeshDirCorners_XY.py  Mesh_westfirst.py  Mesh_XY.py  Pt2Pt.py</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="boot"><a href="#boot" class="headerlink" title="boot&#x2F;"></a>boot&#x2F;</h3><p>这些是在全系统模式下使用的rcS文件。这些文件在Linux引导后由模拟器加载，并由shell执行。其中大多数用于在全系统模式下运行时控制基准测试。有些是实用函数，如hack_back_ckpt.rcS。在全系统模拟一章中，将更深入地介绍这些文件。</p>
+<h3 id="common"><a href="#common" class="headerlink" title="common&#x2F;"></a>common&#x2F;</h3><p>common目录包含许多用于创建模拟系统的辅助脚本和函数。例如，</p>
+<p><code>Caches.py</code>类似于前几章中创建的Caches.py和Caches_opts.py文件。</p>
+<p><code>Options.py</code>包含可以在命令行上设置的各种选项。比如CPU的数量、系统时钟等等。这是查看要更改的选项是否已经有命令行参数的好地方。</p>
+<p><code>CacheConfig.py</code>包含用于为经典内存系统设置缓存参数的选项和函数。</p>
+<p><code>MemConfig.py</code>提供了一些帮助函数，用于设置内存系统。</p>
+<p><code>FSConfig.py</code>包含为许多不同类型的系统设置全系统仿真所需的功能。全系统仿真将在本章中进一步讨论。</p>
+<p><code>Simulation.py</code>包含许多用于设置和运行gem5的辅助函数。该文件中包含的许多代码管理保存和恢复检查点。下面示例中的示例配置文件使用该文件中的函数来执行gem5模拟。该文件相当复杂，但它也允许在模拟运行方式上有很大的灵活性。</p>
+<h3 id="dram"><a href="#dram" class="headerlink" title="dram&#x2F;"></a>dram&#x2F;</h3><p>包含测试DRAM的脚本。</p>
+<h3 id="example"><a href="#example" class="headerlink" title="example&#x2F;"></a>example&#x2F;</h3><p>此目录包含一些示例 gem5配置脚本，可以使用这些脚本即开即用地运行 gem5。具体来说，se.py 和 fs.py 非常有用。有关这些文件的更多信息可以在下一节中找到。此目录中还有一些其他实用程序配置脚本。</p>
+<h3 id="learning-gem5"><a href="#learning-gem5" class="headerlink" title="learning_gem5&#x2F;"></a>learning_gem5&#x2F;</h3><p>该目录包含learning_gem5书中的所有gem5配置脚本。</p>
+<h3 id="network"><a href="#network" class="headerlink" title="network&#x2F;"></a>network&#x2F;</h3><p>此目录包含HeteroGarnet网络的配置脚本。</p>
+<h3 id="nvm"><a href="#nvm" class="headerlink" title="nvm&#x2F;"></a>nvm&#x2F;</h3><p>此目录包含使用NVM接口的示例脚本。</p>
+<h3 id="ruby"><a href="#ruby" class="headerlink" title="ruby&#x2F;"></a>ruby&#x2F;</h3><p>该目录包含Ruby的配置脚本及其包含的缓存一致性协议。</p>
+<h3 id="splash2"><a href="#splash2" class="headerlink" title="splash2&#x2F;"></a>splash2&#x2F;</h3><p>该目录包含用于运行splash2基准测试套件的脚本，以及用于配置模拟系统的一些选项。</p>
+<h3 id="topologies"><a href="#topologies" class="headerlink" title="topologies&#x2F;"></a>topologies&#x2F;</h3><p>该目录包含在创建Ruby缓存层次结构时可以使用的拓扑的实现。</p>
+<h2 id="2-se-py-fs-py"><a href="#2-se-py-fs-py" class="headerlink" title="2. se.py fs.py"></a>2. se.py fs.py</h2><p>SE模式默认配置脚本se.py和FS模式默认配置脚本fs.py均位于目录configs&#x2F;example&#x2F;，下面以se.py为例介绍它们通用的命令行选项：</p>
+<ul>
+<li><p>通过<code>--cmd=</code>选项指定二进制文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认情况下，两个配置脚本均使用 atomic CPU和 atomic memory accesses，因此没有时间统计数据产生</p>
+<p>可通过<code>--cpu-type=CPU_TYPE</code>指定CPU类型，通过<code>--mem-type=MEM_TYPE</code>指定内存类型。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E8%84%9A%E6%9C%AC/" rel="tag"># 默认配置脚本</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/20/pthread%E5%AD%A6%E4%B9%A0/" rel="prev" title="pthread学习">
+                  <i class="fa fa-angle-left"></i> pthread学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/24/%E5%B9%B6%E8%A1%8C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" rel="next" title="并行体系结构">
+                  并行体系结构 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Lang Yi Qun</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
