@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,6 +189,280 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/10/Python-import/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/10/Python-import/" class="post-title-link" itemprop="url">Python import</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-10 09:50:47" itemprop="dateCreated datePublished" datetime="2023-11-10T09:50:47+08:00">2023-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-27 16:34:45" itemprop="dateModified" datetime="2023-11-27T16:34:45+08:00">2023-11-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>总结下python import的零碎知识</p>
+<h1 id="import的作用"><a href="#import的作用" class="headerlink" title="import的作用"></a>import的作用</h1><p>import语句用来导入其他python文件（称为模块module），使用该模块里定义的类、方法或者变量，从而达到代码复用的目的。</p>
+<h1 id="import-的基本用法："><a href="#import-的基本用法：" class="headerlink" title="import 的基本用法："></a>import 的基本用法：</h1><p><strong>基本概念：</strong></p>
+<ul>
+<li>模块（module）：一般是以.py结尾的python文件，也可以是”.pyo”、”.pyc”、”.pyd”、”.so”、”.dll”结尾的文件。</li>
+</ul>
+<p>模块可以定义函数、类、变量，也能包含可执行的代码。module来源有3种：<br>①Python内置的模块（标准库）；<br>②第三方模块；<br>③自定义模块。</p>
+<ul>
+<li>包（package）：含有Python模块的文件夹</li>
+</ul>
+<h3 id="用法一：import"><a href="#用法一：import" class="headerlink" title="用法一：import []"></a>用法一：import []</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import [module_name\package_name]</span><br></pre></td></tr></table></figure>
+
+<p>Python会在两个地方寻找这个模块，</p>
+<p>第一是<strong>sys.path</strong>（通过运行代码<code>import sys; print(sys.path)</code>查看），os这个模块所在的目录就在列表sys.path中，一般安装的Python库的目录都可以在sys.path中找到，所以对于安装好的库，我们直接import即可。</p>
+<p>第二个地方就是<strong>运行文件所在的目录</strong>。</p>
+<h3 id="用法二：from-import"><a href="#用法二：from-import" class="headerlink" title="用法二：from [] import []"></a>用法二：from [] import []</h3><p>从包中引入模块的import语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from [module_name\package_name] import [module_name\package_name\method]</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>导入一个包的时候，实际上就是导入包里面的<code>__init__.py</code>作为模块</p>
+<h1 id="import的工作原理"><a href="#import的工作原理" class="headerlink" title="import的工作原理"></a>import的工作原理</h1><p>下面解析一下python的导入是如何工作的。假设你导入了一个abc模块。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import abc</span><br></pre></td></tr></table></figure>
+
+<p>python 是如何找到这个模块的呢？</p>
+<ol>
+<li><p>首先，python会在<code>sys.modules</code>中查找这个模块名，<code>sys.modules</code>是先前曾被导入过的所有模块的缓存。简单来说，就是之前被导入过的模块，都被暂时保存在里面。</p>
+</li>
+<li><p>如果在缓存中找不到这个模块，python接下来会在<strong>内置的模块（标准库）</strong>中寻找</p>
+</li>
+<li><p>如果内置模块也找不到，Python将会去<code>sys.path</code> 定义的文件夹列表中搜索，sys.path 中默认的路径为：</p>
+<ul>
+<li>当前目录的路径，自定义的模块就是在这里被找到的。</li>
+<li>环境变量 PYTHONPATH 中指定的路径列表</li>
+<li>Python 安装路径的 lib 目录所在路径</li>
+</ul>
+</li>
+</ol>
+<p>如果以上步骤都找不到这个模块，python会报错ModuleNotFoundError</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87238735">详解 Python import 机制 (一):import 中的基本概念 - 知乎 (zhihu.com)</a></p>
+<h1 id="all-变量暴漏接口"><a href="#all-变量暴漏接口" class="headerlink" title="__all__变量暴漏接口"></a>__all__变量暴漏接口</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zylooooooooong/article/details/115564782">python _<em>all__用法</em>-徐徐图之-的博客-CSDN博客</a></p>
+<h1 id="init-文件"><a href="#init-文件" class="headerlink" title="__init__文件"></a>__init__文件</h1>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/08/%E5%9B%BE%E5%83%8F%E6%8B%BC%E6%8E%A5%E5%92%8C%E5%85%A8%E6%99%AF%E6%9E%84%E9%80%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/08/%E5%9B%BE%E5%83%8F%E6%8B%BC%E6%8E%A5%E5%92%8C%E5%85%A8%E6%99%AF%E6%9E%84%E9%80%A0/" class="post-title-link" itemprop="url">图像拼接和全景构造</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-08 15:42:38" itemprop="dateCreated datePublished" datetime="2023-11-08T15:42:38+08:00">2023-11-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 14:58:24" itemprop="dateModified" datetime="2023-11-11T14:58:24+08:00">2023-11-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/learning_tortosie/article/details/85083825">使用OpenCV和Python拼接图像_opencv python 合并图片-CSDN博客</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/08/RISCV%E5%B7%A5%E5%85%B7%E9%93%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/08/RISCV%E5%B7%A5%E5%85%B7%E9%93%BE/" class="post-title-link" itemprop="url">RISCV工具链</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-08 09:56:55" itemprop="dateCreated datePublished" datetime="2023-11-08T09:56:55+08:00">2023-11-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-20 21:18:24" itemprop="dateModified" datetime="2023-11-20T21:18:24+08:00">2023-11-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="什么是工具链？"><a href="#什么是工具链？" class="headerlink" title="什么是工具链？"></a>什么是工具链？</h1><p><strong>github项目：</strong><a target="_blank" rel="noopener" href="https://github.com/riscv-collab/riscv-gnu-toolchain">riscv-collab&#x2F;riscv-gnu-toolchain: GNU toolchain for RISC-V, including GCC (github.com)</a></p>
+<p>**gitee项目:**git clone <a target="_blank" rel="noopener" href="https://gitee.com/mirrors/riscv-dejagnu">https://gitee.com/mirrors/riscv-dejagnu</a></p>
+<p>ps：最好用github，它是最新的</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/07/A-Methodology-for-Simulating-Multi-chiplet-Systems-Using-Open-source-Simulators/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -225,7 +499,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-21 15:16:22" itemprop="dateModified" datetime="2023-11-21T15:16:22+08:00">2023-11-21</time>
+      <time title="修改时间：2023-12-12 13:08:46" itemprop="dateModified" datetime="2023-12-12T13:08:46+08:00">2023-12-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -620,7 +894,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-21 15:36:42" itemprop="dateModified" datetime="2023-11-21T15:36:42+08:00">2023-11-21</time>
+      <time title="修改时间：2023-12-11 20:50:56" itemprop="dateModified" datetime="2023-12-11T20:50:56+08:00">2023-12-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -684,7 +958,19 @@
 
 <h2 id="四、通过配置文件启动模拟系统"><a href="#四、通过配置文件启动模拟系统" class="headerlink" title="四、通过配置文件启动模拟系统"></a>四、通过配置文件启动模拟系统</h2><p>gem5提供了许多配置文件来配置不同的系统，其中可以由fs.py与命令行参数搭配快速实现不同配置的全系统模拟</p>
 <p>fs.py的各种命令行参数可以通过<code>fs.py -h</code>查看</p>
-<h1 id="m5端"><a href="#m5端" class="headerlink" title="m5端"></a>m5端</h1><h3 id="1-m5介绍"><a href="#1-m5介绍" class="headerlink" title="1. m5介绍"></a>1. m5介绍</h3><h3 id="2-启动m5端"><a href="#2-启动m5端" class="headerlink" title="2. 启动m5端"></a>2. 启动m5端</h3><p>启动m5有两种方法，一种是通过系统自带的telnet或者gem5中提供的m5term工具，推荐m5term。</p>
+<h1 id="m5端"><a href="#m5端" class="headerlink" title="m5端"></a>m5端</h1><h3 id="1-m5介绍"><a href="#1-m5介绍" class="headerlink" title="1. m5介绍"></a>1. m5介绍</h3><h3 id="2-生成m5以及对应的libm5-a库"><a href="#2-生成m5以及对应的libm5-a库" class="headerlink" title="2. 生成m5以及对应的libm5.a库"></a>2. 生成m5以及对应的libm5.a库</h3><p>要在应用程序中使用m5提供的指令，首先需要生成m5以及对应的libm5.a库</p>
+<p>ps: 编译之前好像要确保安装clang，并保证其版本为6-10</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Step 1 切换到gem5/util/m5目录</span><br><span class="line"> cd util/m5</span><br><span class="line"># Step 2 编译</span><br><span class="line"> scons build/x86/out/m5</span><br></pre></td></tr></table></figure>
+
+<p> 利用libm5.a库，即可在应用程序中使用libm5.a库中的函数</p>
+<p>编写如下测试程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">########hello_m5.cpp##########</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &quot;gem5/m5ops.h&quot;  //引入m5ops.h库</span><br><span class="line"> </span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">    m5_reset_stats(0,0);  //重置模拟统计数据，m5库中实现的函数</span><br><span class="line"> </span><br><span class="line">    printf(&quot;Hello world!\n&quot;);</span><br><span class="line">    </span><br><span class="line">    m5_dump_stats(0,0);  //将模拟统计数据保存，m5库中实现的函数</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用g++和库进行编译</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-Igem5绝对路径/include \</span><br><span class="line">-Lgem5绝对路径/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/include -lm5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后将编译出的可执行文件通过文件挂载的方式存储到img镜像文件中。</p>
+<h3 id="3-启动m5端"><a href="#3-启动m5端" class="headerlink" title="3. 启动m5端"></a>3. 启动m5端</h3><p>启动m5有两种方法，一种是通过系统自带的telnet或者gem5中提供的m5term工具，推荐m5term。</p>
 <h4 id="（1）telnet"><a href="#（1）telnet" class="headerlink" title="（1）telnet"></a>（1）telnet</h4><p>使用不需要额外安装或配置，直接</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telent &lt;host&gt; &lt;post&gt;</span><br></pre></td></tr></table></figure>
 
@@ -699,22 +985,6 @@
 <p>之后，就可以通过与telnet类似的方式启动m5了</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m5term &lt;host&gt; &lt;post&gt;</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-<h3 id="3-生成m5以及对应的libm5-a库"><a href="#3-生成m5以及对应的libm5-a库" class="headerlink" title="3. 生成m5以及对应的libm5.a库"></a>3. 生成m5以及对应的libm5.a库</h3><p>要在应用程序中使用m5提供的指令，首先需要生成m5以及对应的libm5.a库</p>
-<p>ps: 编译之前好像要确保安装clang，并保证其版本为6-10</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Step 1 切换到gem5/util/m5目录</span><br><span class="line"> cd util/m5</span><br><span class="line"># Step 2 编译</span><br><span class="line"> scons build/x86/out/m5</span><br></pre></td></tr></table></figure>
-
-<p> 利用libm5.a库，即可在应用程序中使用libm5.a库中的函数</p>
-<p>编写如下测试程序</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">########hello_m5.cpp##########</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &quot;gem5/m5ops.h&quot;  //引入m5ops.h库</span><br><span class="line"> </span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">    m5_reset_stats(0,0);  //重置模拟统计数据，m5库中实现的函数</span><br><span class="line"> </span><br><span class="line">    printf(&quot;Hello world!\n&quot;);</span><br><span class="line">    </span><br><span class="line">    m5_dump_stats(0,0);  //将模拟统计数据保存，m5库中实现的函数</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>利用g++和库进行编译</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-Igem5绝对路径/include \</span><br><span class="line">-Lgem5绝对路径/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/util/m5/build/x86/out -lm5</span><br><span class="line"></span><br><span class="line">g++ -o hello_m5 hello_m5.cpp -std=c++11 \</span><br><span class="line">-I$GEM5/include \</span><br><span class="line">-L$GEM5/include -lm5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后将编译出的可执行文件通过文件挂载的方式存储到img镜像文件中。</p>
 
       
     </div>
@@ -849,7 +1119,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-27 16:39:18" itemprop="dateModified" datetime="2023-11-27T16:39:18+08:00">2023-11-27</time>
+      <time title="修改时间：2023-12-04 20:23:49" itemprop="dateModified" datetime="2023-12-04T20:23:49+08:00">2023-12-04</time>
     </span>
 
   
@@ -872,286 +1142,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（四）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-30 08:39:24" itemprop="dateCreated datePublished" datetime="2023-10-30T08:39:24+08:00">2023-10-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-24 09:37:16" itemprop="dateModified" datetime="2023-11-24T09:37:16+08:00">2023-11-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文是官网教程<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part2/memoryobject/">gem5: Creating SimObjects in the memory system</a>的学习笔记。</p>
-<p>本节教程是创建一个位于CPU和内存总线之间的阻塞式简单内存对象，主要实现了基本请求的传递。在下一节教程中，会在本节创建的简单内存对象之上增加部分逻辑，使其成为一个非常简单的阻塞单处理器缓存。下图是整个系统的示意图，其中，我们创建的内存对象有两个CPU侧的从端口（slave port）和一个内存总线侧的主端口（master port）。它将实现将请求从CPU传递到内存总线，并将响应从内存总线传递到CPU。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/30/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/25/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E2%80%94%E2%80%94%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/25/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E2%80%94%E2%80%94%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/" class="post-title-link" itemprop="url">数字图像处理——图片拼接</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-10-25 14:32:02 / 修改时间：15:16:44" itemprop="dateCreated datePublished" datetime="2023-10-25T14:32:02+08:00">2023-10-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">数字图像处理</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="问题导入"><a href="#问题导入" class="headerlink" title="问题导入"></a>问题导入</h1><p>图片全景拼接</p>
-<p>观察者在同一个点，不是简单的平移旋转，需要运用投射关系（近大远小）</p>
-<h1 id="图像全局变换"><a href="#图像全局变换" class="headerlink" title="图像全局变换"></a>图像全局变换</h1><p>研究对象为二维图像</p>
-<h2 id="1-线性变换"><a href="#1-线性变换" class="headerlink" title="1. 线性变换"></a>1. 线性变换</h2><p>缩放 Scale</p>
-<p>旋转 Rotation</p>
-<p>剪切 Shear</p>
-<p>镜像 mirror</p>
-<p>S &#x3D; 2 * 2矩阵<br>$$<br>S &#x3D; \begin{bmatrix}<br> a &amp; b\<br> c &amp; d<br>\end{bmatrix}<br>$$</p>
-<h2 id="2-仿射变换"><a href="#2-仿射变换" class="headerlink" title="2. 仿射变换"></a>2. 仿射变换</h2><p>仿射变换 &#x3D; 线性变换+平移</p>
-<p>S &#x3D; 3 * 3矩阵<br>$$<br> S &#x3D; \begin{bmatrix} a &amp; b &amp; c\ d &amp; e &amp; f\ 0 &amp; 0 &amp; 1\end{bmatrix}<br>$$<br>6个未知数</p>
-<h2 id="3-投影变换"><a href="#3-投影变换" class="headerlink" title="3. 投影变换"></a>3. 投影变换</h2><p>S &#x3D; 3 * 3矩阵<br>$$<br>S &#x3D; \begin{bmatrix}<br> a &amp; b &amp; c\<br> d &amp; e &amp; f\<br> g &amp; h &amp; 1<br>\end{bmatrix}<br>$$<br>8个未知数，即8个自由度，表示能力最强</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（三）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-24 21:02:46" itemprop="dateCreated datePublished" datetime="2023-10-24T21:02:46+08:00">2023-10-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-30 08:40:46" itemprop="dateModified" datetime="2023-10-30T08:40:46+08:00">2023-10-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Gem5学习——创建一个简单的SimObject"><a href="#Gem5学习——创建一个简单的SimObject" class="headerlink" title="Gem5学习——创建一个简单的SimObject"></a>Gem5学习——创建一个简单的SimObject</h1><h2 id="一、名词解释"><a href="#一、名词解释" class="headerlink" title="一、名词解释"></a>一、名词解释</h2><ul>
-<li><p>$\textcolor[RGB]{200,50,50}{SimObject}$</p>
-<p>在gem5中，SimObject是一个基础类，用于<strong>创建和管理模拟对象</strong>。</p>
-</li>
-<li><p>$\textcolor[RGB]{200,50,50}{SimObjects}$</p>
-<p>SimObjects是gem5中用于管理模拟对象的组件。通常，gem5中的模拟对象都会继承自SimpleObject类，并且通过SimObjects组件来进行管理。</p>
-</li>
-<li><p>$\textcolor[RGB]{200,50,50}{SimpleObject}$</p>
-<p>SimpleObject是SimObject类的一个派生类，它在SimObject类的基础上增加了一些额外的功能，通常，在gem5中创建新的模拟对象时，都会从SimpleObject类进行派生，以便获得这些基本的功能。</p>
-</li>
-</ul>
-<h2 id="二、创建一个简单的SimObject"><a href="#二、创建一个简单的SimObject" class="headerlink" title="二、创建一个简单的SimObject"></a>二、创建一个简单的SimObject</h2><p>即官网教程创建helloobject<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part2/helloobject/">gem5: Creating a very simple SimObject</a></p>
-<p><strong>$\textcolor[RGB]{100,200,50}{Gem5使用了Python和C++两种编程语言混合编程}$</strong></p>
-<p>gem5一方面通过python语言配置模拟器运行的参数和控制模拟过程的脚本，优势在于便于快速阅读和编写配置脚本；另一方面通过C++实现gem5中的各种模型（SimObjects），优势在于C++是一种高性能的编程语言，能够保证其模拟性能。混合编程充分发挥了两种语言的优势。</p>
-
       
     </div>
 
