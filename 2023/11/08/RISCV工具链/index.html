@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="什么是工具链？github项目：riscv-collab&#x2F;riscv-gnu-toolchain: GNU toolchain for RISC-V, including GCC (github.com) **gitee项目:**git clone https:&#x2F;&#x2F;gitee.com&#x2F;mirrors&#x2F;riscv-dejagnu ps：最好用github，它是最新的">
+    <meta name="description" content="一、GNU 工具链内容工具链包含以下内容：  gcc（GNU C Compiler）：编译器 C运行库：包括glibc、newlib、musl三种运行库，为C标准库提供函数实现支持，可以根据需求进行自定义修改。 Binutils：二进制程序处理工具，包括ar（静态库处理）、as（汇编器）、ld（链接器）等。 GDB：用于项目调试。 DeJaGNU：程序测试框架，为所有测试提供一个前端支持。  二、">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RISCV工具链">
+<meta property="og:title" content="RISC-V GNU Toolchain工具链">
 <meta property="og:url" content="https://langyiqun.github.io/2023/11/08/RISCV%E5%B7%A5%E5%85%B7%E9%93%BE/index.html">
 <meta property="og:site_name" content="郎轶群的博客">
-<meta property="og:description" content="什么是工具链？github项目：riscv-collab&#x2F;riscv-gnu-toolchain: GNU toolchain for RISC-V, including GCC (github.com) **gitee项目:**git clone https:&#x2F;&#x2F;gitee.com&#x2F;mirrors&#x2F;riscv-dejagnu ps：最好用github，它是最新的">
+<meta property="og:description" content="一、GNU 工具链内容工具链包含以下内容：  gcc（GNU C Compiler）：编译器 C运行库：包括glibc、newlib、musl三种运行库，为C标准库提供函数实现支持，可以根据需求进行自定义修改。 Binutils：二进制程序处理工具，包括ar（静态库处理）、as（汇编器）、ld（链接器）等。 GDB：用于项目调试。 DeJaGNU：程序测试框架，为所有测试提供一个前端支持。  二、">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-08T01:56:55.000Z">
-<meta property="article:modified_time" content="2023-11-20T13:18:24.733Z">
+<meta property="article:modified_time" content="2024-01-05T15:52:41.139Z">
 <meta property="article:author" content="Lang Yi Qun">
 <meta property="article:tag" content="RISCV 工具链sh">
 <meta name="twitter:card" content="summary">
@@ -37,10 +37,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/11/08/RISCV%E5%B7%A5%E5%85%B7%E9%93%BE/","path":"2023/11/08/RISCV工具链/","title":"RISCV工具链"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2023/11/08/RISCV%E5%B7%A5%E5%85%B7%E9%93%BE/","path":"2023/11/08/RISCV工具链/","title":"RISC-V GNU Toolchain工具链"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>RISCV工具链 | 郎轶群的博客</title>
+<title>RISC-V GNU Toolchain工具链 | 郎轶群的博客</title>
   
 
 
@@ -113,7 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%B7%A5%E5%85%B7%E9%93%BE%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是工具链？</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81GNU-%E5%B7%A5%E5%85%B7%E9%93%BE%E5%86%85%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text">一、GNU 工具链内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">二、运行时库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#newlib"><span class="nav-number">2.1.</span> <span class="nav-text">newlib</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glibc"><span class="nav-number">2.2.</span> <span class="nav-text">glibc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#musl"><span class="nav-number">2.3.</span> <span class="nav-text">musl</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Binutils%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">三、Binutils工具介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9E%84%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">四、构建方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1%EF%BC%9A%E4%BD%BF%E7%94%A8-configure%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.</span> <span class="nav-text">Step 1：使用.&#x2F;configure进行配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E2%80%93march-%EF%BC%89%E9%80%89%E9%A1%B9"><span class="nav-number">4.1.1.</span> <span class="nav-text">（–march&#x3D;）选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E2%80%93mabi-%EF%BC%89%E9%80%89%E9%A1%B9"><span class="nav-number">4.1.2.</span> <span class="nav-text">（–mabi&#x3D;）选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2%EF%BC%9A%E4%BD%BF%E7%94%A8make%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E6%9E%84%E5%BB%BA"><span class="nav-number">4.2.</span> <span class="nav-text">Step 2：使用make命令进行构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">4.3.</span> <span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE"><span class="nav-number">4.4.</span> <span class="nav-text">检查配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E4%B8%8BRISCV%E5%B7%A5%E5%85%B7%E9%93%BE%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%BC%96%E8%AF%91"><span class="nav-number">4.5.</span> <span class="nav-text">常用配置下RISCV工具链配置与编译</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,7 +137,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -206,12 +206,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="RISCV工具链 | 郎轶群的博客">
+      <meta itemprop="name" content="RISC-V GNU Toolchain工具链 | 郎轶群的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          RISCV工具链
+          RISC-V GNU Toolchain工具链
         </h1>
 
         <div class="post-meta-container">
@@ -229,7 +229,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-20 21:18:24" itemprop="dateModified" datetime="2023-11-20T21:18:24+08:00">2023-11-20</time>
+      <time title="修改时间：2024-01-05 23:52:41" itemprop="dateModified" datetime="2024-01-05T23:52:41+08:00">2024-01-05</time>
     </span>
 
   
@@ -241,9 +241,98 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="什么是工具链？"><a href="#什么是工具链？" class="headerlink" title="什么是工具链？"></a>什么是工具链？</h1><p><strong>github项目：</strong><a target="_blank" rel="noopener" href="https://github.com/riscv-collab/riscv-gnu-toolchain">riscv-collab&#x2F;riscv-gnu-toolchain: GNU toolchain for RISC-V, including GCC (github.com)</a></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="一、GNU-工具链内容"><a href="#一、GNU-工具链内容" class="headerlink" title="一、GNU 工具链内容"></a>一、GNU 工具链内容</h1><p>工具链包含以下内容：</p>
+<ul>
+<li><strong>gcc（GNU C Compiler）</strong>：编译器</li>
+<li><strong>C运行库</strong>：包括glibc、newlib、musl三种运行库，为C标准库提供函数实现支持，可以根据需求进行自定义修改。</li>
+<li><strong>Binutils</strong>：二进制程序处理工具，包括ar（静态库处理）、as（汇编器）、ld（链接器）等。</li>
+<li><strong>GDB</strong>：用于项目调试。</li>
+<li><strong>DeJaGNU</strong>：程序测试框架，为所有测试提供一个前端支持。</li>
+</ul>
+<h1 id="二、运行时库"><a href="#二、运行时库" class="headerlink" title="二、运行时库"></a>二、运行时库</h1><p>riscv-gnu-toolchain 工具链分为<strong>elf-gcc</strong>和<strong>linux-gnu-gcc</strong>两个版本，以及他们对应的32位和64位版本。两个的主要区别在于：</p>
+<ul>
+<li><strong>elf-gcc</strong>：（riscv32-unknown-elf-*，riscv64-unknown-elf-*）使用的<strong>newlib库(面向嵌入式的C库)<strong>，而且</strong>只支持静态链接</strong>，不支持动态链接。</li>
+<li><strong>linux-gnu-gcc</strong>：（riscv32-unknown-linux-gnu-*，riscv64-unknown-linux-gnu-*）使用的是<strong>glibc标准库</strong>，<strong>支持动态链接</strong>。</li>
+</ul>
+<p>从名字上便可以区分两者的使用场景，如果是编译简单，较小的elf程序，使用elf-gcc版本即可，如果编译比较大的程序或者需要动态库（比如编译linux，或opencv库等），推荐使用linux-gnu-gcc版本。</p>
+<h2 id="newlib"><a href="#newlib" class="headerlink" title="newlib"></a>newlib</h2><p>newlib是redhat社区维护的一个C运行时库，与glibc相比，其最大的特点是代码体积小、可移植性强，特别<strong>适合嵌入式开发环境</strong>。</p>
+<p>例如，newlib重写了printf、scanf、malloc函数，减少调用开销；并默认开启-Os编译开关，对代码体积进行压缩。</p>
+<h2 id="glibc"><a href="#glibc" class="headerlink" title="glibc"></a>glibc</h2><h2 id="musl"><a href="#musl" class="headerlink" title="musl"></a>musl</h2><h1 id="三、Binutils工具介绍"><a href="#三、Binutils工具介绍" class="headerlink" title="三、Binutils工具介绍"></a>三、Binutils工具介绍</h1><ul>
+<li>as：汇编器</li>
+<li>ld：链接器</li>
+<li>ar：生成静态链接库</li>
+<li>ldd：查看一个可执行程序所需要的依赖库</li>
+<li>size：查看一个可执行程序各部分的大小（数据段、代码段等）</li>
+</ul>
+<h1 id="四、构建方式"><a href="#四、构建方式" class="headerlink" title="四、构建方式"></a>四、构建方式</h1><h2 id="Step-1：使用-configure进行配置"><a href="#Step-1：使用-configure进行配置" class="headerlink" title="Step 1：使用.&#x2F;configure进行配置"></a>Step 1：使用.&#x2F;configure进行配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=xxx --with-arch=xxx --with-abi=xxx</span><br></pre></td></tr></table></figure>
+
+<h3 id="（–march-）选项"><a href="#（–march-）选项" class="headerlink" title="（–march&#x3D;）选项"></a>（–march&#x3D;）选项</h3><p>由于RISC-V的指令集是模块化的指令集，因此在为目标RISC-V平台进行交叉编译之时，需要通过选项指定目标RISC-V平台所支持的模块化指令集组合，该选项为（-march&#x3D;），有效的选项值如下：</p>
+<ul>
+<li>rv32i[m][a][f[d]][c]</li>
+<li>rv32g[c]</li>
+<li>rv64i[m][a][f[d]][c]</li>
+<li>rv64g[c]</li>
+</ul>
+<p>注意：在上述选项中rv32表示目标平台是32位架构，rv64表示目标平台是64位架构，其他i&#x2F;m&#x2F;a&#x2F;f&#x2F;d&#x2F;c&#x2F;g分别代表了RISC-V模块化指令子集的字母简称。</p>
+<h3 id="（–mabi-）选项"><a href="#（–mabi-）选项" class="headerlink" title="（–mabi&#x3D;）选项"></a>（–mabi&#x3D;）选项</h3><p>由于RISC-V的指令集是模块化的指令集，因此在为目标RISC-V平台进行交叉编译之时，需要通过选项指定嵌入式RISC-V目标平台所支持的ABI函数调用规则</p>
+<p>RISC-V定义了两种整数的ABI调用规则和三种浮点ABI调用规则，通过选项（-abi&#x3D;）指明，有效的选项值如下：</p>
+<ul>
+<li>ilp32</li>
+<li>ilp32f</li>
+<li>ilp32d</li>
+<li>lp64</li>
+<li>lp64f</li>
+<li>lp64d</li>
+</ul>
+<p>在上述选项中<strong>两种前缀（ilp32和lp64）</strong>表示的含义如下：</p>
+<ul>
+<li>前缀ilp32表示目标平台是32位架构，在此架构下，C语言的“int”和“long”变量长度为32比特，“long long”变量为64位；</li>
+<li>前缀lp64表示目标平台是64位架构，C语言的“int”变量长度为32比特，而“long”变量长度为64比特。</li>
+</ul>
+<p>上述选项中的<strong>三种后缀类型（无后缀、后缀f、后缀d）</strong>表示的含义如下：</p>
+<ul>
+<li>无后缀：在此架构下，如果使用了浮点类型的操作，直接使用RISC-V浮点指令进行支持。但是当浮点数作为函数参数进行传递之时，无论单精度浮点数还是双精度浮点数均需要通过存储器中的堆栈进行传递。</li>
+<li>f：表示目标平台支持硬件单精度浮点指令。在此架构下，如果使用了浮点类型的操作，直接使用RISC-V浮点指令进行支持。但是当浮点数作为函数参数进行传递之时，单精度浮点数可以直接通过寄存器传递，而双精度浮点数需要通过存储器中的堆栈进行传递。</li>
+<li>d：表示目标平台支持硬件双精度浮点指令。在此架构下，如果使用了浮点类型的操作，直接使用RISC-V浮点指令进行支持。当浮点数作为函数参数进行传递之时，无论单精度还是双精度浮点数都可以直接通过寄存器传递。</li>
+</ul>
+<h2 id="Step-2：使用make命令进行构建"><a href="#Step-2：使用make命令进行构建" class="headerlink" title="Step 2：使用make命令进行构建"></a>Step 2：使用make命令进行构建</h2><p><code>make</code>、<code>make all</code>、<code>make newlib</code> 命令构建使用newlib的elf-gcc</p>
+<p><code>make linux</code> 命令构建使用glibc的linux-gnu-gcc</p>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h2 id="检查配置"><a href="#检查配置" class="headerlink" title="检查配置"></a>检查配置</h2><p>通过相应gcc的-v命令，可以得到该工具链的配置信息，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ riscv32-unknown-elf-gcc -v</span><br><span class="line">Using built-in specs.</span><br><span class="line">COLLECT_GCC=./riscv32-unknown-elf-gcc</span><br><span class="line">COLLECT_LTO_WRAPPER=/opt/riscv/libexec/gcc/riscv32-unknown-elf/8.2.0/lto-wrapper</span><br><span class="line">Target: riscv32-unknown-elf</span><br><span class="line">Configured with: /tools/riscv-gnu-toolchain-1/build/../riscv-gcc/configure --target=riscv32-unknown-elf --prefix=/opt/riscv --disable-shared --disable-threads --enable-languages=c,c++ --with-system-zlib --enable-tls --with-newlib --with-sysroot=/opt/riscv/riscv32-unknown-elf --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --src=../../riscv-gcc --enable-checking=yes --disable-multilib --with-abi=ilp32 --with-arch=rv32imc &#x27;CFLAGS_FOR_TARGET=-Os  -mcmodel=medlow&#x27; &#x27;CXXFLAGS_FOR_TARGET=-Os  -mcmodel=medlow&#x27;</span><br><span class="line">Thread model: single</span><br><span class="line">gcc version 8.2.0 (GCC)</span><br></pre></td></tr></table></figure>
+
+<p>可以看出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--target=riscv32-unknown-elf： 指定工具为riscv32-unknow-elf</span><br><span class="line">--prefix=/opt/riscv32:  指定工具生成的目录</span><br><span class="line">--enable-languages=c,c++：  支持c，c++语言</span><br><span class="line">--with-newlib:  c运行库使用newlib</span><br><span class="line">--with-abi=ilp32： 工具链支持的abi方式是ilp64</span><br><span class="line">--with-arch=rv32imc:  工具链支持的riscv架构是 rv64imc</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用配置下RISCV工具链配置与编译"><a href="#常用配置下RISCV工具链配置与编译" class="headerlink" title="常用配置下RISCV工具链配置与编译"></a>常用配置下RISCV工具链配置与编译</h2><ol>
+<li><p><strong>riscv32-unknown-elf-gcc</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/opt/riscv32 --with-arch=rv32imc --with-abi=lp32</span><br><span class="line">make </span><br></pre></td></tr></table></figure>
+
+<p>编译完成后，在&#x2F;opt&#x2F;riscv32&#x2F;bin目录下，有riscv32-unknown-elf-gcc的所有工具。</p>
+</li>
+<li><p><strong>riscv64-unknown-elf-gcc</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/opt/riscv64 --with-arch=rv64imc --with-abi=lp64</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>编译完成后，在&#x2F;opt&#x2F;riscv64&#x2F;bin目录下，有riscv64-unknown-elf-gcc的所有工具。</p>
+</li>
+<li><p><strong>riscv32-unknown-linux-gnu-gcc</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/opt/riscv32-linux --with-arch=rv32imc --with-abi=lp32 --enable-linux</span><br><span class="line">make linux</span><br></pre></td></tr></table></figure>
+
+<p>编译完成后，在&#x2F;opt&#x2F;riscv32-linux&#x2F;bin目录下，有riscv32-unknown-linux-gnu-gcc的所有工具。</p>
+</li>
+<li><p><strong>riscv64-unknown-linux-gnu-gcc</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/opt/riscv64-linux --with-arch=rv64imafdc --with-abi=lp64 --enable-linux</span><br><span class="line">make linux</span><br></pre></td></tr></table></figure>
+
+<p>编译完成后，在&#x2F;opt&#x2F;riscv64-linux&#x2F;bin目录下，有riscv64-unknown-linux-gnu-*的所有工具。</p>
+</li>
+</ol>
+<p><strong>github项目：</strong><a target="_blank" rel="noopener" href="https://github.com/riscv-collab/riscv-gnu-toolchain">riscv-collab&#x2F;riscv-gnu-toolchain: GNU toolchain for RISC-V, including GCC (github.com)</a></p>
 <p>**gitee项目:**git clone <a target="_blank" rel="noopener" href="https://gitee.com/mirrors/riscv-dejagnu">https://gitee.com/mirrors/riscv-dejagnu</a></p>
 <p>ps：最好用github，它是最新的</p>
+<p>参考博客</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weiqi7777/article/details/88045720">riscv各种版本gcc工具链编译与安装_riscv gcc最新版本-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://huaweicloud.csdn.net/635640d0d3efff3090b5c4b6.html">RISC-V GCC工具链介绍_linux_耐心的小黑-华为云开发者联盟 (csdn.net)</a></p>
+<p>参考视频</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Vr4y1w7km/?spm_id_from=333.337.search-card.all.click&vd_source=9ac9d125229be9965209fc1d4b24ba46">20201019_RISCV-GNU-Toolchain_陈嘉炜_哔哩哔哩_bilibili</a></p>
 
     </div>
 
@@ -287,7 +376,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2023</span>
+    <span itemprop="copyrightYear">2024</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
