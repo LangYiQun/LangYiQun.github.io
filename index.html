@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,7 +134,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,7 +189,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/12/29/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B9%9D%EF%BC%89-1/">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/02/25/C%E8%AF%AD%E8%A8%80-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -207,7 +207,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/12/29/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B9%9D%EF%BC%89-1/" class="post-title-link" itemprop="url">Gem5模拟器学习（九）</a>
+          <a href="/2024/02/25/C%E8%AF%AD%E8%A8%80-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="post-title-link" itemprop="url">C语言-类型转换</a>
         </h2>
 
         <div class="post-meta-container">
@@ -217,8 +217,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-12-29 21:35:40" itemprop="dateCreated datePublished" datetime="2023-12-29T21:35:40+08:00">2023-12-29</time>
+      <time title="创建时间：2024-02-25 21:06:44 / 修改时间：23:51:06" itemprop="dateCreated datePublished" datetime="2024-02-25T21:06:44+08:00">2024-02-25</time>
     </span>
 
   
@@ -231,7 +232,720 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <p>类型转换是指把一种类型的数据（变量、数值、表达式的结果等）转换成另一种类型的数据</p>
+<p>由于各种数据类型在<strong>表示范围</strong>和<strong>精度</strong>上是不同的，所以可能会造成精度损失。</p>
+<p>各种数据类型的级别如下：（由高到低）</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>意义</th>
+<th>字节大小</th>
+<th>级别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>long double</td>
+<td><strong>长</strong>双精度浮点</td>
+<td>8 B</td>
+<td>最高</td>
+</tr>
+<tr>
+<td>double</td>
+<td>双精度浮点</td>
+<td>8 B</td>
+<td></td>
+</tr>
+<tr>
+<td>float</td>
+<td>单精度浮点</td>
+<td>4 B</td>
+<td></td>
+</tr>
+<tr>
+<td>unsigned long int（unsigned long）</td>
+<td>无符号<strong>长整型</strong></td>
+<td>4 B</td>
+<td></td>
+</tr>
+<tr>
+<td>signed long int（long）</td>
+<td>有符号<strong>长整型</strong></td>
+<td>4 B</td>
+<td></td>
+</tr>
+<tr>
+<td>unsigned int（unsigned）</td>
+<td>无符号<strong>整型</strong></td>
+<td>4 B</td>
+<td></td>
+</tr>
+<tr>
+<td>signed int（int）</td>
+<td>有符号<strong>整型</strong></td>
+<td>4 B</td>
+<td></td>
+</tr>
+<tr>
+<td>unsigned short int（unsigned short）</td>
+<td>无符号<strong>短整型</strong></td>
+<td>2 B</td>
+<td></td>
+</tr>
+<tr>
+<td>signed short（short）</td>
+<td>有符号<strong>短整型</strong></td>
+<td>2 B</td>
+<td></td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td>无符号字符</td>
+<td>1 B</td>
+<td></td>
+</tr>
+<tr>
+<td>signed char（char）</td>
+<td>有符号字符</td>
+<td>1 B</td>
+<td>最低</td>
+</tr>
+</tbody></table>
+<p>助记规律：</p>
+<ul>
+<li>浮点类型 &gt; 整型 &gt; 字符类型</li>
+<li>长 &gt; ‘ ‘ &gt; 短</li>
+<li>无符号 &gt; 有符号</li>
+</ul>
+<p>类型转换分为两类：隐式类型转换和显示类型转换</p>
+<h1 id="隐式（自动）类型转换"><a href="#隐式（自动）类型转换" class="headerlink" title="隐式（自动）类型转换"></a>隐式（自动）类型转换</h1><p>隐式类型转换是在编译时由编译器按照一定规则自动完成的类型转换。</p>
+<p>需要注意的是，隐式类型转换并不一定是安全的。对于不安全的类型转换，编译器一般会给出警告（长类型转换为短类型时发生的截断）。</p>
+<p>C语言会在以下四种情况下进行隐式类型转换：</p>
+<h3 id="（1）赋值表达式"><a href="#（1）赋值表达式" class="headerlink" title="（1）赋值表达式"></a>（1）赋值表达式</h3><p>将一种类型的数据赋值给另外一种类型的变量时就会发生隐式类型转换</p>
+<p><strong>转换规则</strong>：在赋值运算中，赋值号两边的数据类型不同时，需要把右边表达式的类型转换为左边变量的类型。这可能会导致数据失真，或者精度降低。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> f = <span class="number">100</span>; <span class="comment">// 100是int类型的数据，需要先转换为 float 类型才能赋值给变量 f</span></span><br><span class="line"><span class="type">int</span> n = f; <span class="comment">// f 是 float 类型的数据，需要先转换为 int 类型才能赋值给变量 n</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）算术表达式"><a href="#（2）算术表达式" class="headerlink" title="（2）算术表达式"></a>（2）算术表达式</h3><p><strong>转换规则</strong>：</p>
+<ul>
+<li>把表达式中不同类型的数据转换成精度最高、占用内存最多的那个数据类型。</li>
+<li>表达式中如果有char、short和enum类型的数据时，自动转换为int类型。（其实是因为运算最终还是要放到通用寄存器中）</li>
+<li>float类型在运算时一律转换为double类型，以提高运算精度。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">short</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="type">int</span> c = <span class="number">3</span>;</span><br><span class="line"><span class="type">float</span> d = <span class="number">1.1</span>;</span><br><span class="line"><span class="type">int</span> result = a + b + c + d;</span><br><span class="line"><span class="comment">// 运算时会将a, b, c, d都转换为double类型再相加</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="（3）函数调用中参数传递"><a href="#（3）函数调用中参数传递" class="headerlink" title="（3）函数调用中参数传递"></a>（3）函数调用中参数传递</h3><p>隐式地将实参转换为形参的类型，然后赋值给形参</p>
+<h3 id="（4）函数返回值"><a href="#（4）函数返回值" class="headerlink" title="（4）函数返回值"></a>（4）函数返回值</h3><p>隐式地将返回表达式的结果转换为返回值类型，然后赋值给caller函数</p>
+<h1 id="显示（强制）类型转换"><a href="#显示（强制）类型转换" class="headerlink" title="显示（强制）类型转换"></a>显示（强制）类型转换</h1><h3 id="显示类型转换语法"><a href="#显示类型转换语法" class="headerlink" title="显示类型转换语法"></a>显示类型转换语法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(&lt;目标数据类型&gt;)&lt;原数据类型的数据&gt;</span><br><span class="line">e.g.</span><br><span class="line">(int) 3.14		将浮点数3.14转换成整数3</span><br><span class="line">(double) 4		将4转换成双精度浮点数4.0</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="数据类型的扩充与截断"><a href="#数据类型的扩充与截断" class="headerlink" title="数据类型的扩充与截断"></a>数据类型的扩充与截断</h1><h3 id="一、小数据类型-大数据类型"><a href="#一、小数据类型-大数据类型" class="headerlink" title="一、小数据类型 -&gt; 大数据类型"></a>一、小数据类型 -&gt; 大数据类型</h3><p>数据类型扩充：发生在占用内存空间小的整型变量赋值给占用内存空间大的整型变量的情况。</p>
+<p>这种情况下，较小的数据类型的值、正负均不变，<strong>数据不失真</strong>。</p>
+<p>转换规则：</p>
+<ul>
+<li>如果原数据类型为无符号整型，进行零扩展</li>
+<li>如果原数据类型为有符号整型，进行符号扩展</li>
+</ul>
+<p>注意：与目标数据类型无关！！！</p>
+<h3 id="二、大数据类型-小数据类型"><a href="#二、大数据类型-小数据类型" class="headerlink" title="二、大数据类型 -&gt; 小数据类型"></a>二、大数据类型 -&gt; 小数据类型</h3><p>数据类型截断：发生在占用内存空间小的整型变量赋值给占用内存空间大的整型变量的情况。</p>
+<p>这种情况下，<strong>数据可能会失真</strong></p>
+<p>转换规则：</p>
+<ul>
+<li>无论原数据类型有无符号，丢弃高位数据。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例子</span></span><br><span class="line"><span class="type">char</span> c = <span class="number">128</span>;		<span class="comment">// 存储空间：0b1000_0000 char的角度看是-1</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> uc = <span class="number">128</span>;	<span class="comment">// 0b1000_0000 unsigned char的角度看是128</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> ushort;</span><br><span class="line"></span><br><span class="line">ushort = (<span class="type">unsigned</span> <span class="type">short</span>)c + uc;</span><br><span class="line"><span class="comment">//翻译成汇编后，这一条语句做的事情如下</span></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">* Step 1</span></span><br><span class="line"><span class="comment">将c从char强制类型转换为unsigned short，需要进行扩展，原数据类型是有符号的，所以进行符号扩展</span></span><br><span class="line"><span class="comment">0b 1000_0000 =&gt; 0b 1111_1111_1000_0000 unsigned short的角度看是一个很大的数</span></span><br><span class="line"><span class="comment">* Step 2</span></span><br><span class="line"><span class="comment">将c从unsigned short隐式转换为int，需要进行扩展，原数据类型是无符号的，所以进行零扩展</span></span><br><span class="line"><span class="comment">0b 1111_1111_1000_0000 =&gt; 0b 0000_0000_0000_0000_1111_1111_1000_0000</span></span><br><span class="line"><span class="comment">将uc从unsigned char隐式转换为int，需要进行扩展，原数据类型是无符号的，所以进行零扩展</span></span><br><span class="line"><span class="comment">0b1000_0000 =&gt; 0b 0000_0000_0000_0000_0000_0000_1000_0000</span></span><br><span class="line"><span class="comment">* Step 3</span></span><br><span class="line"><span class="comment">进行加法</span></span><br><span class="line"><span class="comment"> 0b 0000_0000_0000_0000_1111_1111_1000_0000</span></span><br><span class="line"><span class="comment">+0b 0000_0000_0000_0000_0000_0000_1000_0000</span></span><br><span class="line"><span class="comment">=0b 0000_0000_0000_0001_0000_0000_0000_0000</span></span><br><span class="line"><span class="comment">* Step 4</span></span><br><span class="line"><span class="comment">由于左值是unsigned short，空间为2B，所以取最低的2B，即 0b 0000_0000_0000_0000，unsigned short的角度看是0</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>参考链接🔗：</p>
+<p>一些数据类型转换的例子：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaoxiaoguailou/article/details/121692317">【C语言】数据类型的扩充和截断_以数据内部存储格式说明计算机中不同数据类型之间转换截断的概念-CSDN博客</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/02/15/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/02/15/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">正则表达式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-02-15 09:14:41 / 修改时间：09:22:29" itemprop="dateCreated datePublished" datetime="2024-02-15T09:14:41+08:00">2024-02-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>正则表达式语法</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903845227659271">正则表达式不要背 - 掘金 (juejin.cn)</a></p>
+<p>正则表达式本质上是一个状态机（词法分析）</p>
+<p>演示网站：<a target="_blank" rel="noopener" href="https://regexper.com/">Regexper</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/02/04/%E8%9C%82%E9%B8%9FE203-Soc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/02/04/%E8%9C%82%E9%B8%9FE203-Soc/" class="post-title-link" itemprop="url">蜂鸟E203 Soc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-02-04 21:11:11 / 修改时间：21:35:51" itemprop="dateCreated datePublished" datetime="2024-02-04T21:11:11+08:00">2024-02-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一、项目流程"><a href="#一、项目流程" class="headerlink" title="一、项目流程"></a>一、项目流程</h1><p>下面以DDR200T的板子为例，搭建蜂鸟E203 SoC的Vivado工程</p>
+<p>环境：Win11</p>
+<h2 id="0-项目准备"><a href="#0-项目准备" class="headerlink" title="0. 项目准备"></a>0. 项目准备</h2><ul>
+<li><p>下载Vivado</p>
+</li>
+<li><p>从<a target="_blank" rel="noopener" href="https://github.com/SI-RISCV/e200_opensource">github</a>或<a target="_blank" rel="noopener" href="https://gitee.com/riscv-mcu/e203_hbirdv2.git">gitee</a>下载蜂鸟E203项目源码</p>
+</li>
+</ul>
+<h2 id="1-新建工程"><a href="#1-新建工程" class="headerlink" title="1. 新建工程"></a>1. 新建工程</h2><p>选择DDR200T的FPGA芯片 <code>xc7a200tfbg484-2</code></p>
+<p><img src="/%E8%9C%82%E9%B8%9FE203-Soc/image-20240204211919180.png" alt="image-20240204211919180"></p>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43858116/article/details/123648746">Vivado 蜂鸟 e203 MCU200T&#x2F;DDR200T 逻辑综合 RISC-V 详细教程_蜂鸟e203 dc综合-CSDN博客</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/01/24/%E2%80%9C%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF%E2%80%9D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2-%E3%80%90Verilator%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/24/%E2%80%9C%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF%E2%80%9D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2-%E3%80%90Verilator%E3%80%91/" class="post-title-link" itemprop="url">“一生一芯”学习笔记 2 【Verilator】</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-01-24 09:55:22 / 修改时间：20:05:34" itemprop="dateCreated datePublished" datetime="2024-01-24T09:55:22+08:00">2024-01-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="什么是Verilator"><a href="#什么是Verilator" class="headerlink" title="什么是Verilator?"></a>什么是Verilator?</h1><p>Verilator 将 Verilog 和 SystemVerilog 硬件描述语言(HDL)设计转换为 C + + 或 SystemC 模型，编译后可以执行该模型。<strong>Verilator 不是传统的模拟器，而是编译器。</strong></p>
+<p>Verilator 的主要功能就是<strong>将 Verilog 代码转化为 SystemC 或 C++ 代码</strong></p>
+<h1 id="Verilator-具体工作原理"><a href="#Verilator-具体工作原理" class="headerlink" title="Verilator 具体工作原理"></a>Verilator 具体工作原理</h1><p><img src="/%E2%80%9C%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF%E2%80%9D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2-%E3%80%90Verilator%E3%80%91/verilator.png" alt="verilator"></p>
+<h1 id="Verilator-命令行参数配置"><a href="#Verilator-命令行参数配置" class="headerlink" title="Verilator 命令行参数配置"></a>Verilator 命令行参数配置</h1><ul>
+<li><p><code>--cc</code>表示将根据HDL生成C++文件，<code>--sc</code>表示将生成System C文件</p>
+<blockquote>
+<p>{prefix}.cpp为模型的C文件</p>
+<p>{prefix}.h为模型的头文件</p>
+<p>{prefix}.mk为模型编译时的makefile</p>
+</blockquote>
+</li>
+<li><p><code>--build</code>表示直接根据{prefix}.mk生成模拟时模型的库。</p>
+<blockquote>
+<p>{prefix}__ALL.a 包含所有必须对象的库</p>
+<p>既可以直接buil得到库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">verilator -cc --exe --build -j top.v sim_main.cpp</span><br><span class="line">obj_dir/Vtop</span><br></pre></td></tr></table></figure>
+
+<p>也可以不直接build</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">verilator -cc --exe sim_main.cpp top.v</span><br><span class="line">make -j -C obj_dir -f Vtop.mk Vtop</span><br><span class="line">./obj_dir/Vtop</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p><code>--exe</code>表示生成模型的二进制文件，在Vtop.mk中体现</p>
+</li>
+<li><p><code>--main</code>表示将会自动生成一个含main函数的cpp文件，即wrapper file，这个文件将会读取命令行参数、实例化模型，并驱动模拟</p>
+<blockquote>
+<p>{prefix}__main.cpp</p>
+</blockquote>
+</li>
+<li><p>前缀{prefix}可以通过<code>--prefix</code>指定。</p>
+</li>
+<li><p>生成的所有文件都在目标文件夹中，可以由<code>--Mdir</code>指定，默认为“obj_dir”</p>
+</li>
+<li><p><code>--top-module</code>or <code>--top</code>指定顶层模块</p>
+</li>
+<li><p><code>-j &#123;&#125;</code>指定编译线程数</p>
+</li>
+<li><p><code>-o &#123;file abspath&#125;</code>指定生成目标文件的路径和名称</p>
+</li>
+</ul>
+<p>命令行参数：<a target="_blank" rel="noopener" href="https://verilator.org/guide/latest/exe_verilator.html#cmdoption-top-module">verilator Arguments — Verilator Devel 5.021 documentation</a></p>
+<p>生成的文件：<a target="_blank" rel="noopener" href="https://verilator.org/guide/latest/files.html#files-read-written">Files — Verilator Devel 5.021 documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://verilator.org/guide/latest/overview.html">Overview — Verilator Devel 5.021 documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://soc.ustc.edu.cn/CECS/lab2/verilator/">Verilator 使用指南 - USTC CECS 2023</a></p>
+<h1 id="wrapper-驱动"><a href="#wrapper-驱动" class="headerlink" title="wrapper 驱动"></a>wrapper 驱动</h1><p>需要使用&lt;verilated.h&gt;中的VerilatedContext类构建一个环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;verilated.h&gt;</span><br><span class="line"></span><br><span class="line">//创建仿真环境</span><br><span class="line">VerilatedContext* contextp = new VerilatedContext;</span><br><span class="line"></span><br><span class="line">//接收命令行参数</span><br><span class="line">contextp-&gt;commandArgs(argc, argv);</span><br><span class="line"></span><br><span class="line">//推动仿真时间</span><br><span class="line">contextp-&gt;timeInc(n)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Verilator-GTKwave-查看仿真波形"><a href="#Verilator-GTKwave-查看仿真波形" class="headerlink" title="Verilator + GTKwave 查看仿真波形"></a>Verilator + GTKwave 查看仿真波形</h1><p>在 C++ wrapper中，控制产生波形</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;verilated_vcd_c.h&quot;</span></span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">    VerilatedVcdC* tfp = <span class="keyword">new</span> VerilatedVcdC; <span class="comment">//初始化VCD对象指针</span></span><br><span class="line">  	contextp-&gt;<span class="built_in">traceEverOn</span>(<span class="literal">true</span>); <span class="comment">//打开追踪功能</span></span><br><span class="line">  	top-&gt;<span class="built_in">trace</span>(tfp, <span class="number">0</span>); <span class="comment">//</span></span><br><span class="line">  	tfp-&gt;<span class="built_in">open</span>(<span class="string">&quot;wave.vcd&quot;</span>); <span class="comment">//设置输出的文件wave.vcd</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>()&#123;</span><br><span class="line">        ...</span><br><span class="line">        tfp-&gt;<span class="built_in">dump</span>(contextp-&gt;<span class="built_in">time</span>()); <span class="comment">//dump wave</span></span><br><span class="line">    	contextp-&gt;<span class="built_in">timeInc</span>(<span class="number">1</span>); <span class="comment">//推动仿真时间</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tfp-&gt;<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">delete</span> tfp;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在verilator的编译命令行中开启<code>--trace</code>选项，然后运行程序，会生成wave.vcd波形文件</p>
+<p>用GTKwave打开波形文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gtkwave wave.vcd</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="/%E2%80%9C%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF%E2%80%9D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2-%E3%80%90Verilator%E3%80%91/image-20240124094646036.png" alt="image-20240124094646036"></p>
+<p>GTKwave波形 <a target="_blank" rel="noopener" href="https://gtkwave.sourceforge.net/">GTKWave (sourceforge.net)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27148893/article/details/124621380">Verilator+gtkwave-CSDN博客</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/01/24/%E2%80%9C%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF%E2%80%9D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-%E3%80%90%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/24/%E2%80%9C%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF%E2%80%9D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-%E3%80%90%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E3%80%91/" class="post-title-link" itemprop="url">“一生一芯”学习笔记 1 【搭建环境】</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-01-24 09:53:54 / 修改时间：09:55:40" itemprop="dateCreated datePublished" datetime="2024-01-24T09:53:54+08:00">2024-01-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>有时间再补吧</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/01/16/Makefile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/16/Makefile/" class="post-title-link" itemprop="url">Makefile</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-01-16 21:01:55 / 修改时间：21:03:33" itemprop="dateCreated datePublished" datetime="2024-01-16T21:01:55+08:00">2024-01-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://soc.ustc.edu.cn/CECS/lab1/makefile/">Makefile 常用语法 - USTC CECS 2023</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/01/11/Git%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/11/Git%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Git学习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-11 19:54:08" itemprop="dateCreated datePublished" datetime="2024-01-11T19:54:08+08:00">2024-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-19 00:01:27" itemprop="dateModified" datetime="2024-01-19T00:01:27+08:00">2024-01-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="103-x69-116-64-x67-x69-x74-x68-117-98-x2e-x63-x6f-x6d-Permission-denied-publickey"><a href="#103-x69-116-64-x67-x69-x74-x68-117-98-x2e-x63-x6f-x6d-Permission-denied-publickey" class="headerlink" title="&#103;&#x69;&#116;&#64;&#x67;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;: Permission denied (publickey)."></a><a href="mailto:&#103;&#x69;&#116;&#64;&#x67;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;">&#103;&#x69;&#116;&#64;&#x67;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;</a>: Permission denied (publickey).</h2><p>需要在本机生成公钥，并公钥添加到github网页上</p>
+<p><a target="_blank" rel="noopener" href="https://geek-docs.com/git/git-questions/549_git_git_permission_denied_publickey.html">Git 权限被拒绝（publickey）|极客教程 (geek-docs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://missing-semester-cn.github.io/2020/version-control/">版本控制(Git) · the missing semester of your cs education (missing-semester-cn.github.io)</a></p>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2">https://git-scm.com/book/en/v2</a></p>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2">Git - Book (git-scm.com)</a></p>
+<p>git游戏 <a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">Learn Git Branching</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/01/11/%E8%B5%84%E6%BA%90%E5%A4%A7%E5%9C%B0%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/11/%E8%B5%84%E6%BA%90%E5%A4%A7%E5%9C%B0%E5%9B%BE/" class="post-title-link" itemprop="url">资源大地图</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-11 09:58:32" itemprop="dateCreated datePublished" datetime="2024-01-11T09:58:32+08:00">2024-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-16 23:35:37" itemprop="dateModified" datetime="2024-01-16T23:35:37+08:00">2024-01-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="课程资源"><a href="#课程资源" class="headerlink" title="课程资源"></a>课程资源</h1><h2 id="MIT-Linux工具使用系列课程"><a href="#MIT-Linux工具使用系列课程" class="headerlink" title="MIT Linux工具使用系列课程"></a>MIT Linux工具使用系列课程</h2><p>MIT的Linux工具使用系列课程: <a target="_blank" rel="noopener" href="https://missing-semester-cn.github.io/">The Missing Semester of Your CS Education</a>中文版. 通过学习这些课程, 你将会了解到如何使用Linux中的工具来方便地完成各种任务, 这将大大提升你的工作效率.</p>
+<p>B站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1x7411H7wa">https://www.bilibili.com/video/BV1x7411H7wa</a></p>
+<h2 id="中科院”一生一芯“计划"><a href="#中科院”一生一芯“计划" class="headerlink" title="中科院”一生一芯“计划"></a>中科院”一生一芯“计划</h2><p>官网：<a target="_blank" rel="noopener" href="https://ysyx.oscc.cc/">一生一芯 (oscc.cc)</a></p>
+<p>B站视频：</p>
+
       
     </div>
 
@@ -460,961 +1174,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/12/11/Garnet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/12/11/Garnet/" class="post-title-link" itemprop="url">Garnet</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-12-11 16:13:34 / 修改时间：16:21:42" itemprop="dateCreated datePublished" datetime="2023-12-11T16:13:34+08:00">2023-12-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>GEM5 Garnet官方教程：乔治亚理工课程<a target="_blank" rel="noopener" href="https://tusharkrishna.ece.gatech.edu/teaching/icn_s17/">https://tusharkrishna.ece.gatech.edu/teaching/icn_s17/</a></p>
-<p>配套实验网站<a target="_blank" rel="noopener" href="https://tusharkrishna.ece.gatech.edu/teaching/garnet_gt/">https://tusharkrishna.ece.gatech.edu/teaching/garnet_gt/</a></p>
-<p><a target="_blank" rel="noopener" href="https://synergy.ece.gatech.edu/tools/garnet/">https://synergy.ece.gatech.edu/tools/garnet/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/30/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/30/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" class="post-title-link" itemprop="url">文献阅读</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-11-30 08:38:54 / 修改时间：08:50:25" itemprop="dateCreated datePublished" datetime="2023-11-30T08:38:54+08:00">2023-11-30</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="拉丁文缩写"><a href="#拉丁文缩写" class="headerlink" title="拉丁文缩写"></a>拉丁文缩写</h1><h2 id="i-e-也就是说"><a href="#i-e-也就是说" class="headerlink" title="i.e. 也就是说"></a>i.e. 也就是说</h2><p><strong>id est</strong>（“that is” , “in other words”。进一步解释用，意为：也就是）的缩写。目的是用来进一步解释前面所说的观点（不像后文的e.g.那样引入实例来形象化），意思是“那就是说，换句话说”。</p>
-<blockquote>
-<p>例句1：Each of these items are actionable, <strong>i.e</strong>. you can actually do them.</p>
-</blockquote>
-<h2 id="e-g-例如"><a href="#e-g-例如" class="headerlink" title="e.g. 例如"></a>e.g. 例如</h2><p><strong>e.g.<strong>是</strong>exempli gratia</strong>（”for example; for instance;such as”。举例用，意为：例如）的缩写，其目的用若干例子来让前面说法更具体，更易感知。</p>
-<blockquote>
-<p>例句1: I like sports, <strong>e.g.</strong>, football.</p>
-</blockquote>
-<h2 id="etc-等等"><a href="#etc-等等" class="headerlink" title="etc. 等等"></a>etc. 等等</h2><p><strong>etc.<strong>是</strong>et cetera</strong>(“and so forth; and the others; and other things; and the rest; and so on”。举例用，意为：等等)的缩写。它放在列表的最后，表示前面的例子还没列举完，最后加个词“等等”。</p>
-<blockquote>
-<p>例句1: I need to go to the store and buy some pie, milk, cheese, <strong>etc.</strong></p>
-</blockquote>
-<blockquote>
-<p>例句1：I like to eat boardwalk food, <strong>i.e.</strong>, funnel cake and french fries.<br>例句2：I like to eat boardwalk food, <strong>e.g.</strong>, funnel cake and french fries.</p>
-</blockquote>
-<p>例句1表示只有 funnel cake and french fries这两种boardwalk食物，而且这两种我都喜欢。例句2表示我喜欢boardwalk食物，比如 funnel cake and french fries；但是诸如snow cones and corn dogs等其他类型，我也可能喜欢。</p>
-<h2 id="viz-即"><a href="#viz-即" class="headerlink" title="viz. 即"></a>viz. 即</h2><p><strong>viz.<strong>是</strong>videlicet</strong>（ “namely”, “towit”, “precisely”, “that is to say”。进一步解释用，意为：即）的缩写，与e.g.不同，<strong>viz位于同位列表之前，要把它前面单词所包含的项目全部列出。</strong>（不常用，渐渐被i.e.取代）</p>
-<blockquote>
-<p>例句1：The school offers two modules in Teaching English as a Foreign Language, <strong>viz.</strong> Principles and Methods of Language Teaching and Applied Linguistics.（该校提供两个模块用于英语作为外语的教学，即语言教学的原理方法和应用语言学。）<br>例句2: In this paper, a new TDNN architecture with two input variable, <strong>viz.</strong> wave form and its phase difference, is developed to reduce the grain noise.（本文提出了一种新的TDNN结构用于降低粗晶材料结构噪声，该结构具有波形及其相位差组成的双变量输入。）</p>
-</blockquote>
-<h2 id="et-al-等其他人"><a href="#et-al-等其他人" class="headerlink" title="et al. 等其他人"></a>et al. 等其他人</h2><p><strong>et al.<strong>是</strong>et alia</strong>（”and others; and co-workers”。在引用文献作者时用，意为:等其他人）的缩写。它几乎都是在列文献作者时使用，即把主要作者列出后，其它作者全放在et al. 里面。</p>
-<p><strong>人的场合用et al，而无生命的场合用etc.(et cetera)。</strong></p>
-<blockquote>
-<p>例句1: These results agree with the ones published by Pelon <strong>et al</strong>. (2002).<br>例句2: Clegg <strong>et al.</strong> (1995) explain that in the electronics industry linear-programming models can be used to analyse the viability of the recovered parts in remanufacturing.（克莱格等人（1995）解释说，电子行业的线性规划模型可以用来分析在再制造过程中回收零部件的可行性。）</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/29/%E4%BA%92%E8%81%94%E7%BD%91%E7%BB%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/29/%E4%BA%92%E8%81%94%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">互联网络</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-29 10:45:26" itemprop="dateCreated datePublished" datetime="2023-11-29T10:45:26+08:00">2023-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-30 10:56:11" itemprop="dateModified" datetime="2023-11-30T10:56:11+08:00">2023-11-30</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="片上网络（NoC）"><a href="#片上网络（NoC）" class="headerlink" title="片上网络（NoC）"></a>片上网络（NoC）</h1><p>单芯片多处理器系统（Chip Multiprocessor，CMP）通过在单款芯片上集成多个处理器和以挖掘线程级并行和任务级并行。</p>
-<p>然而，传统的总线和交叉开关等片上互联结构的<strong>可扩展性较差</strong>，它们只能满足较少量的计算核的通信需求。因此，人们将“报文交换”的思想引入片上互联结构中，提出了“片上网络”（Network on Chip，NoC）的概念。</p>
-<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>网络的每个节点包含一个处理器核和一个路由器。处理器核通过网络接口将报文注入网络，或者从网络接收报文，路由器通过物理链路在网络节点间转发报文。</p>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>与传统的总线和交叉开关等片上互联结构相比，片上网络具有以下特点和优势:</p>
-<ol>
-<li><strong>更高的可扩展性和可重用性</strong>。当增加处理器核数时，只需要在片上网络中增加相应数量的路由器和网络接口，不需要重新设计整个网络。片上网络的开销与网络节点数目成线性关系，易于扩展。新增路由器与现有路由器的结构基本相同，可以复用路由器设计。</li>
-<li>通过路由器<strong>将芯片长连线切分成多条短连线</strong>，从而可以控制通信延迟和功耗。</li>
-<li><strong>采用分布式控制策略</strong>，比采用集中式控制策略的总线支持更高的事务并发性。</li>
-<li>由于片上网络时相互独立的，它可以采用全局异步局部同步（Global Asynchronous Local Synchronous，GALS）的时钟策略，<strong>将网络划分成多个细粒度时钟域</strong>，独立控制每个时钟域的电压和频率，灵活管理功耗。</li>
-</ol>
-<h2 id="片上网络与片外网络的差异"><a href="#片上网络与片外网络的差异" class="headerlink" title="片上网络与片外网络的差异"></a>片上网络与片外网络的差异</h2><p>片上网络与片外网络都采用了“报文交换”的思想，但有许多差异：</p>
-<ol>
-<li>片上网络互联的是单个芯片上的多个处理器；而片外网络是用于超级计算机和集群系统的。</li>
-<li><strong>链路资源差异</strong>。现代集成电路的多层互联金属层为片上网络提供了丰富的连线资源，允许相邻路由器间的链路带宽达到<u>数百位</u>；然而对于片外网络，受限于芯片引脚数目限制，片外网络的链路带宽仅为数十位。</li>
-<li><strong>延迟构成差异</strong>。片上网络相邻路由器之间距离较短，一般可以在一个时钟周期内完成链路传输；片外网络相邻路由器之间距离较大，链路传输需要多个时钟周期。然而较小的片上网络链路延迟增加了路由器延迟对新能的影响。</li>
-<li><strong>串行总线Vs并行总线</strong>。片上网络主要采用并行总线，但由于片外并行总线的串扰难以控制，片外网路大多采用串行总线。</li>
-<li><strong>面积和功耗资源</strong>。片上网络与处理器核竞争芯片有限的面积和功耗资源，与采用独立芯片实现的片外网络路由器相比，片上网络路由器面临着更为严格的面积和功耗限制。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/25/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/25/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（八）————通过Ruby实现缓存一致性协议</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-25 15:19:53" itemprop="dateCreated datePublished" datetime="2023-11-25T15:19:53+08:00">2023-11-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-12-09 15:13:23" itemprop="dateModified" datetime="2023-12-09T15:13:23+08:00">2023-12-09</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h1><p>Ruby是一个详细的内存子系统的模拟模型。可以通过各种替换策略、一致性协议实现、互连网络、DMA和内存控制器、发起内存请求和处理响应的各种定序器来建模包含（inclusive）&#x2F;独占（exclusive）缓存层次结构。这些模型是模块化的、灵活的和高度可配置的。</p>
-<p>Ruby有以下三个特点：</p>
-<ul>
-<li><strong>关注点分离</strong>。将内存系统的各个模型模块化，例如，一致性协议规范与替换策略和缓存索引映射是分开的，网络拓扑结构与实现也是分开指定的。</li>
-<li><strong>丰富的可配置性</strong>。几乎所有影响内存层次结构的功能和时序都可以控制。</li>
-<li><strong>快速的原型设计</strong>。使用一种高级规范语言SLICC来指定各种控制器的功能。</li>
-</ul>
-<p><strong>SLICC + 一致性协议</strong></p>
-<p>SLICC：Specification Language for Implementing Cache Coherence，是一种特定领域的语言，用于指定缓存一致性协议。</p>
-<p>缓存一致性协议以状态机的方式工作，而SLICC用于指定状态机的行为。SLICC文件以“.sm”结尾，它们是状态机文件。每个文件描述状态、某些事件从开始状态到结束状态的转换，以及在转换过程中要采取的操作。</p>
-<p>每个一致性协议都由多个SLICC状态机文件组成。这些文件是用SLCC编译器编译的，该编译器是用Python编写的，也是gem5源代码的一部分。SLIC编译器<u>获取状态机文件</u>并<u>输出一组C++文件</u>，这些文件与gem5的所有其他文件一起编译。这些文件包括SimObject声明文件以及SimObjects和其他C++对象的实现文件。</p>
-<h1 id="实现一致性协议的步骤"><a href="#实现一致性协议的步骤" class="headerlink" title="实现一致性协议的步骤"></a>实现一致性协议的步骤</h1><p>以下是对官网教程<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part3/MSIintro/">gem5: Introduction to Ruby</a>的内容整理，教程的目标是实现MSI协议，协议的具体内容可以在《A Primer on Memory Consistency and Cache Coherence》书的第8.2节找到 (pages 141-149)</p>
-<h2 id="1-注册状态机"><a href="#1-注册状态机" class="headerlink" title="1. 注册状态机"></a>1. 注册状态机</h2><p>MSI协议是通过SLICC语言编写的状态机文件实现的，这些状态机文件是用SLCC编译器编译的，会通过scons与gem5其他文件一起编译，因此需要为SCons创建一个文件，以便知道要编译什么。这里我们创建一个<code>Sconsopts</code>文件，而不是<code>Sconscript</code>文件，这是因为<code>Sconsopts</code>会在<code>Sconscript</code>之前执行，而我们也需要在编译gem5之前编译状态机文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Import(&#x27;*&#x27;)</span><br><span class="line"># 注册协议名‘MSI’，Scons将假定一个名为MSI.slicc的文件</span><br><span class="line">main.Append(ALL_PROTOCOLS=[&#x27;MSI&#x27;])</span><br><span class="line"># 告诉SCons在当前目录中查找要传递给SLCC编译器的文件。</span><br><span class="line">main.Append(PROTOCOL_DIRS=[Dir(&#x27;.&#x27;)])</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-编写状态机文件"><a href="#2-编写状态机文件" class="headerlink" title="2.编写状态机文件"></a>2.编写状态机文件</h2><p>编写状态机文件是实现一致性协议的最主要工作，状态机文件通常包含以下几个部分：</p>
-<ul>
-<li><p>Parameters</p>
-<p>These are the parameters for the SimObject that will be generated from the SLICC code.</p>
-</li>
-<li><p>Declaring required structures and functions</p>
-<p>This section declares the states, events, and many other required structures for the state machine.</p>
-</li>
-<li><p>In port code blocks</p>
-<p>Contain code that looks at incoming messages from the (<code>in_port</code>) message buffers and determines what events to trigger.</p>
-</li>
-<li><p>Actions</p>
-<p>These are simple one-effect code blocks (e.g., send a message) that are executed when going through a transition.</p>
-</li>
-<li><p>Transitions</p>
-<p>Specify actions to execute given a starting state and an event and the final state. This is the meat of the state machine definition.</p>
-</li>
-</ul>
-<p>Over the next few sections we will go over how to write each of these components of the protocol.</p>
-<h3 id="2-1-状态机声明"><a href="#2-1-状态机声明" class="headerlink" title="2.1 状态机声明"></a>2.1 状态机声明</h3><p>创建一个名为<code>MSI-call.sm</code>的文件，并按以下格式声明状态机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">machine(MachineType:L1Cache, &quot;MSI cache&quot;)</span><br><span class="line">    : &lt;parameters&gt;</span><br><span class="line">&#123;</span><br><span class="line">    &lt;All state machine code&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>MachineType:L1Cache</code>将状态机命名为<code>L1Cache</code>，SLICC 将使用该名称为我们生成许多不同的对象。例如，一旦编译了这个文件，就会有一个新的 SimObject: <code>L1Cache_Controller</code> 作为缓存控制器。这个声明中还包括对这个状态机的描述: “ MSI cache”。</p>
-<h3 id="2-2-状态机参数声明"><a href="#2-2-状态机参数声明" class="headerlink" title="2.2 状态机参数声明"></a>2.2 状态机参数声明</h3><p>状态机参数的声明在冒号（：）之后</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">machine(MachineType:L1Cache, &quot;MSI cache&quot;)</span><br><span class="line">: Sequencer *sequencer;</span><br><span class="line">  CacheMemory *cacheMemory;</span><br><span class="line">  bool send_evictions;</span><br><span class="line">  # “To” buffer</span><br><span class="line">  MessageBuffer * requestToDir, network=&quot;To&quot;, virtual_network=&quot;0&quot;, vnet_type=&quot;request&quot;;</span><br><span class="line">  MessageBuffer * responseToDirOrSibling, network=&quot;To&quot;, virtual_network=&quot;2&quot;, vnet_type=&quot;response&quot;;</span><br><span class="line">  # “From” buffer</span><br><span class="line">  MessageBuffer * forwardFromDir, network=&quot;From&quot;, virtual_network=&quot;1&quot;, vnet_type=&quot;forward&quot;;</span><br><span class="line">  MessageBuffer * responseFromDirOrSibling, network=&quot;From&quot;, virtual_network=&quot;2&quot;, vnet_type=&quot;response&quot;;</span><br><span class="line">  # “To” buffer</span><br><span class="line">  MessageBuffer * mandatoryQueue;</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>排序器（Sequencer）</p>
-<p>Sequencer是一个带有从端口的gem5 MemObject，因此它可以接受来自其他对象的内存请求。Swquencer接受来自CPU（或其他主端口）的请求，并将gem5数据包转换为RubyRequest。最后，RubyRequest被推送到状态机的强制队列（commandoryQueue）中。</p>
-</li>
-<li><p>缓存数据（Cache Memory）</p>
-<p>用于保存缓存数据（即缓存条目）的内容。</p>
-</li>
-<li><p>消息缓冲区（MessageBuffer）</p>
-<p>消息缓冲区是状态机和Ruby网络之间的接口。通过消息缓冲区发送和接收消息。因此，对于我们协议中的每个虚拟通道，我们都需要一个单独的消息缓冲区。</p>
-<p>虚拟网络的作用是防止死锁。MSI协议需要三个不同的虚拟网络。在该协议中，最高优先级是响应Response（虚拟网络2），其次是转发的请求Forwarded Requests（虚拟网络1），然后请求Requests具有最低优先级（虚拟网络0）。</p>
-<p>代码中有两个”To” buffer，两个”From” buffer和一个Special buffer。其中，”To” buffer类似于gem5中的主端口，是此控制器用来向系统中的其他控制器发送消息的消息缓冲区；”From” buffer类似于gem5中的从端口，是此控制器用来接收系统中其他控制器发送的消息的消息缓冲区；对于Special buffer，Sequencer使用此消息缓冲区将gem5数据包转换为Ruby请求。与其他消息缓冲区不同，commandoryQueue不连接到Ruby网络，并且，此消息缓冲区的名称是硬编码的，必须为“commandoryQueue”</p>
-<p>两个”To” buffer一个用于低优先级请求，另一个用于高优先级响应。优先级基于其他控制器查看消息缓冲区的顺序。类似地，两个”From” buffer使该缓存可以通过两种不同的方式接收消息，要么作为来自目录的转发请求，要么作为对该控制器发出的请求的响应。响应的优先级高于转发的请求。</p>
-</li>
-</ul>
-<p>如前所述，状态机文件在经过SLICC编译后会成为Simobject文件，以上代码编译后产生的文件为<code>L1Cache_Controller.py</code>，内容如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from m5.params import *</span><br><span class="line">from m5.SimObject import SimObject</span><br><span class="line">from Controller import RubyController</span><br><span class="line"></span><br><span class="line">class L1Cache_Controller(RubyController):</span><br><span class="line">    type = &#x27;L1Cache_Controller&#x27;</span><br><span class="line">    cxx_header = &#x27;mem/protocol/L1Cache_Controller.hh&#x27;</span><br><span class="line">    sequencer = Param.RubySequencer(&quot;&quot;)</span><br><span class="line">    cacheMemory = Param.RubyCache(&quot;&quot;)</span><br><span class="line">    send_evictions = Param.Bool(&quot;&quot;)</span><br><span class="line">    requestToDir = Param.MessageBuffer(&quot;&quot;)</span><br><span class="line">    responseToDirOrSibling = Param.MessageBuffer(&quot;&quot;)</span><br><span class="line">    forwardFromDir = Param.MessageBuffer(&quot;&quot;)</span><br><span class="line">    responseFromDirOrSibling = Param.MessageBuffer(&quot;&quot;)</span><br><span class="line">    mandatoryQueue = Param.MessageBuffer(&quot;&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>对这个文件，<strong>不能做任何修改！</strong></p>
-<h3 id="2-3-状态声明"><a href="#2-3-状态声明" class="headerlink" title="2.3 状态声明"></a>2.3 状态声明</h3><p>通过<code>state_declaration</code>声明状态机的所有稳定和瞬态。对瞬态的命名遵循Sorin等人的命名约定。例如，瞬态“IM_AD”对应于在等待确认（A）和数据（D）时从无效（I）移动到已修改（M）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">state_declaration(State, desc=&quot;Cache states&quot;) &#123;</span><br><span class="line">    I,      AccessPermission:Invalid,</span><br><span class="line">                desc=&quot;Not present/Invalid&quot;;</span><br><span class="line"></span><br><span class="line">    // States moving out of I</span><br><span class="line">    IS_D,   AccessPermission:Invalid,</span><br><span class="line">                desc=&quot;Invalid, moving to S, waiting for data&quot;;</span><br><span class="line">    IM_AD,  AccessPermission:Invalid,</span><br><span class="line">                desc=&quot;Invalid, moving to M, waiting for acks and data&quot;;</span><br><span class="line">    IM_A,   AccessPermission:Busy,</span><br><span class="line">                desc=&quot;Invalid, moving to M, waiting for acks&quot;;</span><br><span class="line"></span><br><span class="line">    S,      AccessPermission:Read_Only,</span><br><span class="line">                desc=&quot;Shared. Read-only, other caches may have the block&quot;;</span><br><span class="line"></span><br><span class="line">    // States moving out of S</span><br><span class="line">    SM_AD,  AccessPermission:Read_Only,</span><br><span class="line">                desc=&quot;Shared, moving to M, waiting for acks and &#x27;data&#x27;&quot;;</span><br><span class="line">    SM_A,   AccessPermission:Read_Only,</span><br><span class="line">                desc=&quot;Shared, moving to M, waiting for acks&quot;;</span><br><span class="line"></span><br><span class="line">    M,      AccessPermission:Read_Write,</span><br><span class="line">                desc=&quot;Modified. Read &amp; write permissions. Owner of block&quot;;</span><br><span class="line"></span><br><span class="line">    // States moving to Invalid</span><br><span class="line">    MI_A,   AccessPermission:Busy,</span><br><span class="line">                desc=&quot;Was modified, moving to I, waiting for put ack&quot;;</span><br><span class="line">    SI_A,   AccessPermission:Busy,</span><br><span class="line">                desc=&quot;Was shared, moving to I, waiting for put ack&quot;;</span><br><span class="line">    II_A,   AccessPermission:Invalid,</span><br><span class="line">                desc=&quot;Sent valid data before receiving put ack. &quot;Waiting for put ack.&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>每个状态都有一个相关的访问权限<code>AccessPermission</code>，包括无效（<strong>Invalid</strong>）、不存在（<strong>NotPresent</strong>）、忙（<strong>Busy</strong>）、只读（<strong>Read_Only</strong>）、读写（<strong>Read_Write</strong>），访问权限用于对缓存进行功能访问<em>functional accesses</em>。对于功能访问，将检查所有缓存，看它们是否有具有匹配地址的相应块。</p>
-<h3 id="2-4-事件声明"><a href="#2-4-事件声明" class="headerlink" title="2.4 事件声明"></a>2.4 事件声明</h3><p>声明由该缓存控制器的传入消息触发的所有事件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">enumeration(Event, desc=&quot;Cache events&quot;) &#123;</span><br><span class="line">    // From the processor/sequencer/mandatory queue</span><br><span class="line">    Load,           desc=&quot;Load from processor&quot;;</span><br><span class="line">    Store,          desc=&quot;Store from processor&quot;;</span><br><span class="line"></span><br><span class="line">    // Internal event (only triggered from processor requests)</span><br><span class="line">    Replacement,    desc=&quot;Triggered when block is chosen as victim&quot;;</span><br><span class="line"></span><br><span class="line">    // Forwarded request from other cache via dir on the forward network</span><br><span class="line">    FwdGetS,        desc=&quot;Directory sent us a request to satisfy GetS. We must have the block in M to respond to this.&quot;;</span><br><span class="line">    FwdGetM,        desc=&quot;Directory sent us a request to satisfy GetM. We must have the block in M to respond to this.&quot;;</span><br><span class="line">    Inv,            desc=&quot;Invalidate from the directory.&quot;;</span><br><span class="line">    PutAck,         desc=&quot;Response from directory after we issue a put. This must be on the fwd network to avoid deadlock.&quot;;</span><br><span class="line"></span><br><span class="line">    // Responses from directory</span><br><span class="line">    DataDirNoAcks,  desc=&quot;Data from directory (acks = 0)&quot;;</span><br><span class="line">    DataDirAcks,    desc=&quot;Data from directory (acks &gt; 0)&quot;;</span><br><span class="line"></span><br><span class="line">    // Responses from other caches</span><br><span class="line">    DataOwner,      desc=&quot;Data from owner&quot;;</span><br><span class="line">    InvAck,         desc=&quot;Invalidation ack from other cache after Inv&quot;;</span><br><span class="line"></span><br><span class="line">    // Special event to simplify implementation</span><br><span class="line">    LastInvAck,     desc=&quot;Triggered after the last ack is received&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>状态和事件可以参考表8.3的缓存控制器转换表</p>
-<p><img src="/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/image-20231204190803198.png" alt="image-20231204190803198"></p>
-<h3 id="2-5-用户定义结构体"><a href="#2-5-用户定义结构体" class="headerlink" title="2.5 用户定义结构体"></a>2.5 用户定义结构体</h3><p>下面定义的是在这个控制器的其他地方用到的结构体</p>
-<h4 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h4><p>这是存储在CacheMemory中的结构。它只需要包含数据和状态</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">structure(Entry, desc=&quot;Cache entry&quot;, interface=&quot;AbstractCacheEntry&quot;) &#123;</span><br><span class="line">    State CacheState,        desc=&quot;cache state&quot;;</span><br><span class="line">    DataBlock DataBlk,       desc=&quot;Data in the block&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="TBE"><a href="#TBE" class="headerlink" title="TBE"></a>TBE</h4><p>TBE是“事务缓冲区条目”。这存储了瞬态期间所需的信息。这就像MSHR。它在该协议中起MSHR的作用，但该条目也被分配用于其他用途。在该协议中，它将存储状态（通常需要）、数据（通常也需要）以及该块当前正在等待的ack数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">structure(TBE, desc=&quot;Entry for transient requests&quot;) &#123;</span><br><span class="line">    State TBEState,         desc=&quot;State of block&quot;;</span><br><span class="line">    DataBlock DataBlk,      desc=&quot;Data for the block. Needed for MI_A&quot;;</span><br><span class="line">    int AcksOutstanding, default=0, desc=&quot;Number of acks left to receive.&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="TBETable"><a href="#TBETable" class="headerlink" title="TBETable"></a>TBETable</h4><p>还需要一个存放所有TBE的地方。其中<code>external=&quot;yes&quot;</code>表明这是一个外部定义的类；它是在SLICC之外的C++中定义的。因此，我们需要声明我们将要使用它，并声明我们将对其调用的任何函数。您可以在src&#x2F;mem&#x2F;ruby&#x2F;structures&#x2F;TBETable.hh中找到TBETable的代码。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">structure(TBETable, external=&quot;yes&quot;) &#123;</span><br><span class="line">  TBE lookup(Addr);</span><br><span class="line">  void allocate(Addr);</span><br><span class="line">  void deallocate(Addr);</span><br><span class="line">  bool isPresent(Addr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="外部函数声明"><a href="#外部函数声明" class="headerlink" title="外部函数声明"></a>外部函数声明</h4><p>如果我们要在文件的其余部分中使用AbstractController中的任何函数，都需要声明它们。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Tick clockEdge();</span><br><span class="line">void set_cache_entry(AbstractCacheEntry a);</span><br><span class="line">void unset_cache_entry();</span><br><span class="line">void set_tbe(TBE b);</span><br><span class="line">void unset_tbe();</span><br></pre></td></tr></table></figure>
-
-<h4 id="样板代码"><a href="#样板代码" class="headerlink" title="样板代码"></a>样板代码</h4><p>下面这一组样板工具代码很少在不同的协议之间发生变化。在AbstractController中，我们必须实现一组纯虚拟的函数。</p>
-<ul>
-<li>getState</li>
-</ul>
-<p>Given a TBE, cache entry, and address return the state of the block. This is called on the block to decide which transition to execute when an event is triggered. Usually, you return the state in the TBE or cache entry, whichever is valid.</p>
-<p>给定IBE，entry和地址，返回地址所在缓存块的状态</p>
-<ul>
-<li>setState</li>
-</ul>
-<p>Given a TBE, cache entry, and address make sure the state is set correctly on the block. This is called at the end of the transition to set the final state on the block.</p>
-<ul>
-<li>getAccessPermission</li>
-</ul>
-<p>Get the access permission of a block. This is used during functional access to decide whether or not to functionally access the block. It is similar to <code>getState</code>, get the information from the TBE if valid, cache entry, if valid, or the block is not present.</p>
-<ul>
-<li>setAccessPermission</li>
-</ul>
-<p>Like <code>getAccessPermission</code>, but sets the permission.</p>
-<ul>
-<li>functionalRead</li>
-</ul>
-<p>Functionally read the data. It is possible the TBE has more up-to-date information, so check that first. Note: testAndRead&#x2F;Write defined in src&#x2F;mem&#x2F;ruby&#x2F;slicc_interface&#x2F;Util.hh</p>
-<ul>
-<li>functionalWrite</li>
-</ul>
-<p>Functionally write the data. Similarly, you may need to update the data in both the TBE and the cache entry.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">State getState(TBE tbe, Entry cache_entry, Addr addr) &#123;</span><br><span class="line">    // The TBE state will override the state in cache memory, if valid</span><br><span class="line">    if (is_valid(tbe)) &#123; return tbe.TBEState; &#125;</span><br><span class="line">    // Next, if the cache entry is valid, it holds the state</span><br><span class="line">    else if (is_valid(cache_entry)) &#123; return cache_entry.CacheState; &#125;</span><br><span class="line">    // If the block isn&#x27;t present, then it&#x27;s state must be I.</span><br><span class="line">    else &#123; return State:I; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void setState(TBE tbe, Entry cache_entry, Addr addr, State state) &#123;</span><br><span class="line">  if (is_valid(tbe)) &#123; tbe.TBEState := state; &#125;</span><br><span class="line">  if (is_valid(cache_entry)) &#123; cache_entry.CacheState := state; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AccessPermission getAccessPermission(Addr addr) &#123;</span><br><span class="line">    TBE tbe := TBEs[addr];</span><br><span class="line">    if(is_valid(tbe)) &#123;</span><br><span class="line">        return L1Cache_State_to_permission(tbe.TBEState);</span><br><span class="line">    &#125;</span><br><span class="line">    Entry cache_entry := getCacheEntry(addr);</span><br><span class="line">    if(is_valid(cache_entry)) &#123;</span><br><span class="line">        return L1Cache_State_to_permission(cache_entry.CacheState);</span><br><span class="line">    &#125;</span><br><span class="line">    return AccessPermission:NotPresent;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void setAccessPermission(Entry cache_entry, Addr addr, State state) &#123;</span><br><span class="line">    if (is_valid(cache_entry)) &#123;</span><br><span class="line">        cache_entry.changePermission(L1Cache_State_to_permission(state));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void functionalRead(Addr addr, Packet *pkt) &#123;</span><br><span class="line">    TBE tbe := TBEs[addr];</span><br><span class="line">    if(is_valid(tbe)) &#123;</span><br><span class="line">        testAndRead(addr, tbe.DataBlk, pkt);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        testAndRead(addr, getCacheEntry(addr).DataBlk, pkt);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int functionalWrite(Addr addr, Packet *pkt) &#123;</span><br><span class="line">    int num_functional_writes := 0;</span><br><span class="line">    TBE tbe := TBEs[addr];</span><br><span class="line">    if(is_valid(tbe)) &#123;</span><br><span class="line">        num_functional_writes := num_functional_writes +</span><br><span class="line">            testAndWrite(addr, tbe.DataBlk, pkt);</span><br><span class="line">        return num_functional_writes;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>以下是对这些状态和转换的高层次描述：</p>
-<p><img src="/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89/v2-c033b43df7af58f9468432e564c4266f_720w.png" alt="img"></p>
-<h3 id="2-6-输入输出端口"><a href="#2-6-输入输出端口" class="headerlink" title="2.6 输入输出端口"></a>2.6 输入输出端口</h3><p>参考链接🔗</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/539342291">gem5模拟器入门（四） - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34898487/article/details/134252221">EM5官方教程全流程： part 3 RUBY-CSDN博客</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/25/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/25/Cache%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-25 00:08:20" itemprop="dateCreated datePublished" datetime="2023-11-25T00:08:20+08:00">2023-11-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-12-02 15:32:12" itemprop="dateModified" datetime="2023-12-02T15:32:12+08:00">2023-12-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>对称式共享存储器系统支持共享数据和私有数据的缓存。</p>
-<ul>
-<li><p><strong>私有数据被单个处理器使用。</strong></p>
-<p>好处：把一个私有数据从存储器缓存到Cache之后，对该数据的访问就可以在Cache中进行，因此减少了平均访存时间和对存储器带宽的要求。</p>
-<p>同时因为没有其他处理器使用这些数据，程序的行为与单处理器系统相同。</p>
-</li>
-<li><p><strong>共享数据被多个处理器所使用。</strong></p>
-<p>通过读写共享数据完成处理器之间的通信。</p>
-<p>好处：共享数据装载到Cache中时，会在多个Cache中形成副本，这样1. 一方面会减少访问时间并降低对存储器带宽的要求，2. 还可以减少多个处理器同时读共享数据时所产生的冲突。</p>
-<p>但是，共享数据进入Cache也产生了一个新问题——Cache的一致性问题。</p>
-</li>
-</ul>
-<h1 id="一、什么是多处理器的Cache一致性？"><a href="#一、什么是多处理器的Cache一致性？" class="headerlink" title="一、什么是多处理器的Cache一致性？"></a>一、什么是多处理器的Cache一致性？</h1><h2 id="存储器一致性定义一"><a href="#存储器一致性定义一" class="headerlink" title="存储器一致性定义一"></a>存储器一致性定义一</h2><p>一个模糊且简单的定义：如果在一个存储器系统中读取任何一个数据项的返回结果总是最近写入的数值，那么就可以认为该存储器具有一致性。（定义一）</p>
-<p>这个定义包含了两个方面：一方面是<strong>一致</strong>（coherence），它定义了读操作可以返回什么样的数值【what】；另一方面是<strong>连贯</strong>（consistency），它定义了写入的数值什么时候才能被读操作返回【when】。</p>
-<p>一致定义了对同一个存储器地址进行的读写操作行为；连贯定义了关于访问其他存储器地址的读写操作。</p>
-<h2 id="存储器一致性定义二"><a href="#存储器一致性定义二" class="headerlink" title="存储器一致性定义二"></a>存储器一致性定义二</h2><p>如果一个存储器系统满足以下条件，那么认为该存储器系统是一致的：（定义二）</p>
-<ol>
-<li><p>处理器P对地址X的写操作后面紧跟着处理器P对X的读操作，而且在这次读操作和写操作之间没有其他处理器对X进行写操作，这时读操作总是返回P写入的数值。</p>
-<blockquote>
-<p>这个性质保证了程序的顺序，即使在单处理器中也要保证这个性质。</p>
-</blockquote>
-</li>
-<li><p>在其他处理器对X的写操作后，处理器P对X执行读操作，这两个操作之间有<u>足够的间隔</u>并且没有其他处理器对X进行写操作，这是，读操作返回的是写入的数值。</p>
-<blockquote>
-<p>这个性质给出了一致性的概念，如果一个处理器对某个数据执行读操作时，总是的读入旧的数据，那么该存储器是非一致的。</p>
-</blockquote>
-</li>
-<li><p>对同一地址的写操作是串行执行的；也就是说，任何两个处理器对同一地址的两个写操作在所有处理器看来都有相同的顺序。例如，对同一地址先后写入数值1和数值2，处理器绝不会从该地址中先读出2再读出1。</p>
-</li>
-</ol>
-<blockquote>
-<p>这个性质称为<strong>写串行化</strong>，保证同一地址所写的顺序对任何处理器来说都是相同的。</p>
-</blockquote>
-<p>在三个条件之外，还又两个假设：</p>
-<p>假设：</p>
-<ol>
-<li>直到所有处理器都看到了写操作之后一个写操作才算完成，并且后续的写操作才能开始。</li>
-<li>处理器不会因为其他存储操作而改变写操作的顺序。</li>
-</ol>
-<p>这两个假设意味着如果处理器向地址A写入后又向地址B写入，所有能看到B中新值的处理器必须也能看到A的新值。</p>
-<h2 id="定义一和定义二的联系"><a href="#定义一和定义二的联系" class="headerlink" title="定义一和定义二的联系"></a>定义一和定义二的联系</h2><p>定义二的三个条件已经体现了定义一的一致方面【what】，定义一的连贯方面，即什么时候才能获得写进去的值【when】，则体现在条件2的<u>读写操作之间有足够的时间间隔</u>上面。</p>
-<p>通常不可能要求在一个处理器写入X的数值后，其他处理器就能即刻在X上读出这一值。因此，如果一个处理器对X进行写后，很短时间内另一处理器对X进行读，那么无法保证该读操作能返回写入的数值，因为这一刻写入的数据是怎知可能还没被处理器发送出去。</p>
-<p>总的来说，缓存一致性机制需要解决的问题就是 2 点：</p>
-<ul>
-<li><strong>特性 1 - 写传播（Write Propagation）：</strong> 每个 CPU 核心的写入操作，需要传播到其他 CPU 核心；</li>
-<li><strong>特性 2 - 写事务串行化（Transaction Serialization）：</strong> 各个 CPU 核心所有写入操作的顺序，在所有 CPU 核心看起来是一致。</li>
-</ul>
-<p>如果没有写串行化，举个例子：假如 CPU 有 4 个核心，Core 1 将共享数据修改为 1000，随后 Core 2 将共享数据修改为 2000。在写传播下，“修改为 1000” 和 “修改为 2000” 两个事务会同步到 Core 3 和 Core 4。但是，如果没有事务串行化，不同核心收到的事务顺序可能是不同的，最终数据还是不一致。</p>
-<h1 id="二、实现一致性的方案"><a href="#二、实现一致性的方案" class="headerlink" title="二、实现一致性的方案"></a>二、实现一致性的方案</h1><p>在一致的多处理机中，Cache提供了共享数据的迁移和复制功能。</p>
-<p>共享数据的<strong>迁移</strong>是把远程的共享数据项备份放在本处理器局部的Cache中使用，从而降低了对远程共享数据的访问延迟。</p>
-<p>共享数据的<strong>复制</strong>是把多个处理器需要同时读取的共享数据项的备份放在各自的局部Cache中使用。</p>
-<p>对多个处理器维护一致性的协议称为Cache一致性协议（Cache-coherent Protocal）</p>
-<h2 id="目录协议与监听协议"><a href="#目录协议与监听协议" class="headerlink" title="目录协议与监听协议"></a>目录协议与监听协议</h2><p>（1）监听（Snooping）——每个Cache除了包含物理存储器中块的数据备份之外，也保存着每个块的共享状态信息。Cache通常连在共享存储器的总线上，各个Cache控制器通过监听总线来判断他们是否有总线上请求的数据块。【每个数据块状态是分散在各个Cache中的】</p>
-<p>对于监听协议，常用于集中式共享存储器体系结构，因为可以利用已有的物理连接（总线）来进行广播，但因为广播带来的带宽压力大，所以监听协议的可扩展性较差。</p>
-<p>（2）目录（Directory）——物理存储器中共享数据块的状态及相关信息均被保存集中地在一个称为目录的地方。【每个数据块状态是集中在目录中的】</p>
-<p>对于目录协议，常用于分布式共享存储器体系结构，通过目录避免了广播操作，减小了带宽负担，可扩展性好。</p>
-<p>实现Cache一致性协议的关键是跟踪共享数据块的状态。目前有两类协议，采用了不同的共享数据状态跟踪技术：</p>
-<h2 id="写作废协议与写更新协议"><a href="#写作废协议与写更新协议" class="headerlink" title="写作废协议与写更新协议"></a>写作废协议与写更新协议</h2><p>可通过两种方法来维持一致性要求：</p>
-<p>（1）写作废协议（Write Invalidate）——在一个处理器写某个数据项之前保证它对该数据项有唯一的访问权，唯一的访问权保证了在进行写后不存在其他可读或可写的备份，因为别的备份都作废了。又叫写无效。</p>
-<p>（2）写更新协议（Write Update）——当一个处理器写某数据项时。通过广播使其他Cache中所有对应的该数据项备份进行更新。又叫写广播。</p>
-<p>由于写更新协议必须将所有写操作广播给共享Cache，需要更大的带宽，所以大多处理器都选择写作废协议。</p>
-<h1 id="三、监听协议"><a href="#三、监听协议" class="headerlink" title="三、监听协议"></a>三、监听协议</h1><p>由于监听协议需要广播，对总线带宽的需求大，因此仅适用于<strong>小规模的多处理机</strong>，即集中式共享存储器系统。</p>
-<p>监听协议的关键是利用总线或其他广播媒介进行作废操作。当某个处理器进行写数据时，必须先获得总线的控制权，然后将要作废的数据块的地址放在总线上。其他处理器一致监听总线，他们检测地址所对应的数据是否在它们的Cache中，若在，则作废相应数据块。</p>
-<p>当写Cache未命中时，除了作废其他处理器上相应的Cache数据块以外，还要从存储器取出该数据块。</p>
-<ul>
-<li><p>对于<strong>写直达Cache</strong>，因为所有写的数据同时被写回主存，则从主存中总可以取到最新的数据值。</p>
-</li>
-<li><p>对于<strong>写回Cache</strong>，因为最新之可能在某个处理器的Cache中，也可能在主存中，所以得到数据的最新值会困难一些。在写回Cache失效时可使用相同的监听机制：1. 当请求处理器的Cache发生写失效后，广播该数据块的地址。2. 其他处理器都监听放在总线上的地址，如果某个处理器发现它含有被请求数据块的一个已经修改过的备份（即修改过了该数据块但还未写回内存），它九江这个数据块送给发出读请求的处理器，并停止其对主存的访问请求。</p>
-</li>
-</ul>
-<p>相比于写直达Cache，写回Cache实现一致性有两个缺点：</p>
-<blockquote>
-<ol>
-<li>实现复杂度显然更高</li>
-<li>写回Cache从处理器Cache中重新找回数据块的时间通常比写直达Cache从共享存储器中找回数据块的时间长</li>
-</ol>
-</blockquote>
-<p>但写回Cache所需的<strong>存储器带宽较低</strong>的特点使得其在多处理机实现上很受欢迎。</p>
-<h2 id="写回Cache条件下的监听协议实现"><a href="#写回Cache条件下的监听协议实现" class="headerlink" title="写回Cache条件下的监听协议实现"></a>写回Cache条件下的监听协议实现</h2><p>利用总线实现写传播和写事务串行化：</p>
-<ul>
-<li><strong>写传播 - 总线嗅探：</strong> 总线除了能在一个主模块和一个从模块之间传输数据，还支持一个主模块对多个从模块写入数据，这种操作就是广播。要实现写传播，其实就是将所有的读写操作广播到所有 CPU 核心，而其它 CPU 核心时刻监听总线上的广播，再修改本地的数据；</li>
-<li><strong>事务串行化 - 总线仲裁：</strong> 总线的独占性要求同一时刻最多只有一个主模块占用总线，天然地会将所有核心对内存的读写操作串行化。如果多个核心同时发起总线事务，此时总线仲裁单元会对竞争做出仲裁，未获胜的事务只能等待获胜的事务处理完成后才能执行。</li>
-</ul>
-<p>使用的辅助结构</p>
-<ul>
-<li><p>有效位</p>
-<p>在写回Cache的数据块中，有效位被用于指示该块是否有效。利用有效位，可以使作废的处理很简单，只需要将该位置为无效即可。</p>
-</li>
-<li><p>状态位</p>
-<p>为了分辨某个数据块所处的状态，还要给每个块增加一个特殊的状态位。</p>
-</li>
-<li><p>降低冲突</p>
-<p>因为每次总线任务均要检查Cache的地址位，这可能与CPU对Cache的访问冲突，可通过以下两种技术之一降低冲突：</p>
-<ol>
-<li>复制标志位：将Cache的标志位复制一份，一份正常用于Cache访问，另一份用于监听，两个任务可以并行对标志位进行读。但代价就是修改标志位的时候也必须同时修改两份，同时如果两个任务修改标志位冲突，则非抢先者将被挂起。</li>
-<li>多级包含Cache：采用多级Cache，通常为两级，靠近CPU的第一级Cache是较远的第二级Cache的一个子集。于是，监听可针对第二级Cache进行，而处理器的大多数访问针对第一季Cache，极大地避免了冲突。但是，如果监听命中第二级Cache，它必须垄断对各级Cache的访问，更新块状态并可能写回数据，这通常要挂起处理器对Cache的访问。</li>
-</ol>
-<p>可采用将第二级Cache中的标志位复制，会更有效地减少CPU和监听之间的冲突。</p>
-<p>判断数据块是否共享，可以帮助写操作判断是否需要发送作废操作——当对<u>共享数据块</u>进行写操作时，Cache会在总线上发送一个作废操作，并把该块标记为专有（非共享）；当对<u>专有数据块</u>进行写操作时，由于只有该Cache有数据块的唯一副本，所以不用发送作废操作到总线上了。这样避免了发送作废操作，可以节省时间和带宽。</p>
-</li>
-</ul>
-<p>一致性协议本质上是一个状态机，具有若干状态。不同的协议具有不同的状态组合和转换策略。</p>
-<p>对于数据块状态的描述，可以用以下四个特征来编码：</p>
-<ul>
-<li><strong>有效性（Validity）</strong>：有效的块含有数据的最新值，可以被读。</li>
-<li><strong>肮脏性（Dirtiness）</strong>：如果一个Cache中的块与在内存中对应的块是不同的，那么意味着Cache中的块是被修改过的、最新的、有效的，还未被写入内存，而内存中的对应块是旧的、无效的。因为Cache中的块被修改了，所以称其为“脏”的。</li>
-<li><strong>独占性（Exclusivity）</strong>：如果缓存块是系统中该块的唯一私有缓存副本，则该缓存块是独占的。（它也可能出现在内存中，但不可能出现在其他Cache中）。</li>
-<li><strong>所有权（Ownership）</strong>：如果缓存控制器（或内存控制器）负责响应对该块的一致性请求，那么它就是该块的所有者。</li>
-</ul>
-<p><strong>稳态</strong></p>
-<p>一致性协议常见稳定状态：</p>
-<ul>
-<li>共享状态（S）是指块是同于主存的，该块可能还在其他Cache中，也可能仅在该Cache中</li>
-<li>独占状态（E）是指块是同于主存的，仅在该Cache中</li>
-<li>修改状态（M）是指块是不同与主存的，即在Cache中已经被更新；修改状态暗示了此时的块已经被独占，即仅在该Cache中</li>
-<li>无效状态（I）是指块里的数据是旧的，已经失效了</li>
-</ul>
-<blockquote>
-<p>NB：</p>
-<p>“同于主存”是指在Cache中的块与在内存中对应的块是相同的。有时也称是“干净”的</p>
-<p>“不同于主存”是指在Cache中的块与在内存中对应的块是不同的，内存中的块是旧的、无效的。有时也称是“脏”的</p>
-</blockquote>
-<p><strong>M (Modified)：</strong>该块是有效的、排他的、拥有的，并且可能是脏的。 该块可以被读取或写入。 缓存具有块的唯一有效副本，缓存必须响应对块的请求，并且 LLC&#x2F;内存中的块副本可能是陈旧的。</p>
-<p><strong>S (Shared)：</strong>该块有效但不排他，不脏，不拥有。缓存具有块的只读副本。其他缓存可能具有该块的有效只读副本。</p>
-<p><strong>I (Invalid)：</strong>块无效。缓存要么不包含块，要么包含可能无法读取或写入的陈旧副本。在本入门书中，我们不区分这两种情况，尽管有时前一种情况可以表示为“不存在”状态。</p>
-<p><strong>O (Owned)：</strong>该块是有效的，拥有的，并且可能是脏的，但不是独占的。 缓存具有块的只读副本，并且必须响应对该块的请求。 其他缓存可能具有该块的只读副本，但它们不是所有者。LLC&#x2F;内存中的块副本可能已过时。</p>
-<p><strong>E (Exclusive)：</strong>该块是有效的、排他的和干净的。缓存具有块的只读副本。没有其他缓存拥有该块的有效副本，并且 LLC&#x2F;内存中的块副本是最新的。在本入门书中，我们认为当区块处于独占状态时，它是拥有的，尽管在某些协议中独占状态不被视为所有权状态。当我们在后面的章节中介绍 MESI 监听和目录协议时，我们将讨论是否把独占块视为所有者的问题。</p>
-<p>监听一致性协议一般通过每个节点的有效状态控制器来实现，控制器对每个来自<strong>处理器</strong>和<strong>总线</strong>的请求做出响应，然后改变响应Cache块的状态</p>
-<h3 id="MSI协议"><a href="#MSI协议" class="headerlink" title="MSI协议"></a>MSI协议</h3><p>MSI协议是最基础的监听协议实现。有<strong>无效</strong>、<strong>共享</strong>和<strong>修改</strong>三种状态</p>
-<h3 id="MESI协议"><a href="#MESI协议" class="headerlink" title="MESI协议"></a>MESI协议</h3><p>MESI是最经典的监听协议。有<strong>无效</strong>、<strong>共享</strong>、<strong>独占</strong>和<strong>修改</strong>三种状态</p>
-<p>相比于MSI协议，MESI协议增加了独占（E）状态，是一种投机性优化：如果一个CPU想修改一个处于S状态的缓存行，总线事务需要将所有该缓存行的copy变成invalid状态，而修改E状态的缓存不需要使用总线事务。</p>
-<p>演示MESI协议网页<a target="_blank" rel="noopener" href="https://www.scss.tcd.ie/Jeremy.Jones/VivioJS/caches/MESI.htm">VivioJS MESI (tcd.ie)</a></p>
-<h2 id="监听协议和集中式共享存储器体系结构的局限性"><a href="#监听协议和集中式共享存储器体系结构的局限性" class="headerlink" title="监听协议和集中式共享存储器体系结构的局限性"></a>监听协议和集中式共享存储器体系结构的局限性</h2><blockquote>
-<p>随着多处理器中处理器数目的增加，或者处理器对存储器带宽的增加，系统的任何集中式资源都会成为“瓶颈”</p>
-</blockquote>
-<p>例如在基于总线的多处理器中，总线必须同时支持由于Cache导致的存储器通信和一致性通信。如果是只有一个物理存储器的集中式共享存储器体系结构，总线的带宽（bandwidth）负担会极大。</p>
-<p>为了增加处理器和存储器之间的通信带宽，设计者使用多种总线以及各种互联网络，如交叉开关和小型点对点网络。在该设计中，存储器系统可以被配置称多个物理组，有效增加带宽。这正是<u>集中式共享存储器和分布式共享存储器的结合</u>。</p>
-<p>图</p>
-<p>由上例可知，使用监听Cache一致性协议可以不要求使用集中式总线这样的很容易造成带宽瓶颈的通信方式，但仍然要求完成广播。由于一致性通信量与处理器速度没有关系，这种一致性通信<u>限制了处理器的扩展与速度</u>。</p>
-<h1 id="四、目录协议"><a href="#四、目录协议" class="headerlink" title="四、目录协议"></a>四、目录协议</h1><p>对于监听协议，在处理每个Cache缺失时，都需要和所有的Cache进行通信，造成带宽瓶颈，限制了处理器的扩展。</p>
-<p>每个目录负责跟踪共享本地存储器的Cache，存储器的每一块在目录中对应有一项</p>
-<p>每个目录项主要有“状态”和“位向量”两种成分。状态描述该目录所对应的存储块的当前情况；位向量有处理器数量的位数，其每一位对应于一个处理器的局部Cache，用于指出该Cache中有无该存储块的备份。</p>
-<hr>
-<p>本文是对《计算机体系结构——量化研究方法（第四版）》和《计算机体系结构（第二版）》的相关章节的整理</p>
-<p>参考链接🔗</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94811032">cache之多核一致性(一) - 总线上没有秘密 - 知乎 (zhihu.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/24/%E5%B9%B6%E8%A1%8C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/24/%E5%B9%B6%E8%A1%8C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">并行体系结构</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-24 11:02:54" itemprop="dateCreated datePublished" datetime="2023-11-24T11:02:54+08:00">2023-11-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-25 16:12:20" itemprop="dateModified" datetime="2023-11-25T16:12:20+08:00">2023-11-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="一、并行体系结构的Flynn分类法"><a href="#一、并行体系结构的Flynn分类法" class="headerlink" title="一、并行体系结构的Flynn分类法"></a>一、并行体系结构的Flynn分类法</h1><h2 id="1-单指令流，单数据流（SISD）"><a href="#1-单指令流，单数据流（SISD）" class="headerlink" title="1. 单指令流，单数据流（SISD）"></a>1. 单指令流，单数据流（SISD）</h2><p>单处理器，即传统的、串行的冯·诺伊曼计算机</p>
-<h2 id="2-单指令流，多数据流（SIMD）"><a href="#2-单指令流，多数据流（SIMD）" class="headerlink" title="2. 单指令流，多数据流（SIMD）"></a>2. 单指令流，多数据流（SIMD）</h2><p>同一条指令被多个使用不同数据流的多处理器执行，实现<strong>数据级并行</strong></p>
-<p>例如：向量计算机、阵列计算机</p>
-<h2 id="3-多指令流，单数据流（MISD）"><a href="#3-多指令流，单数据流（MISD）" class="headerlink" title="3. 多指令流，单数据流（MISD）"></a>3. 多指令流，单数据流（MISD）</h2><p>奇葩没有研究价值</p>
-<h2 id="4-多指令流，多数据流（MIMD）"><a href="#4-多指令流，多数据流（MIMD）" class="headerlink" title="4. 多指令流，多数据流（MIMD）"></a>4. 多指令流，多数据流（MIMD）</h2><p>每个处理器取自己的指令并对自己的数据进行操作，实现<strong>线程级并行</strong></p>
-<p>例如：集群、片内多处理器（多核）</p>
-<ul>
-<li><p>其中，MIMD计算机更加受到学术和商业上的关注，这是因为以下两点：</p>
-<ul>
-<li><p><strong>灵活性强：</strong>MIMD可以实现线程级并行机制，因此</p>
-<p>（1）支持数据级并行：既可以作为单用户多处理器为单一应用程序提供高性能（为一个高负载程序提供高性能）</p>
-<p>（2）支持任务级并行：也可以作为同时运行多个任务的多道程序多处理器系统使用（同时运行多个程序）</p>
-<p>（3）甚至可以支持数据级和任务级两种并行的应用。</p>
-</li>
-<li><p><strong>性价比高：</strong>能充分利用现有微处理器的性价比优势，多核芯片可以通过复制的方式，有效降低单处理器内核的设计成本。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="二、MIMD分类"><a href="#二、MIMD分类" class="headerlink" title="二、MIMD分类"></a>二、MIMD分类</h1><p>根据处理器间通信机制（传递数据所用的方法），MIMD还可以分为<strong>多处理器系统</strong>和<strong>多计算机系统</strong></p>
-<h2 id="多处理器系统"><a href="#多处理器系统" class="headerlink" title="多处理器系统"></a>多处理器系统</h2><p>多处理器系统是<strong>共享内存</strong>的计算机。多个处理器通过逻辑上共享的地址空间进行通信，换言之，CPU上运行的操作系统可以直接通过LOAD指令或者STORE指令访问其他远程CPU的内存字。</p>
-<h2 id="多计算机系统"><a href="#多计算机系统" class="headerlink" title="多计算机系统"></a>多计算机系统</h2><p>多计算机系统是<strong>消息传递</strong>的计算机，多个处理器在逻辑上没有共享的地址空间，而是有多个私有的地址空间组成，这些地址空间在逻辑上是独立分散的，换言之，CPU只能通过显示发送消息并等待响应的方式与其他远程CPU进行通信。</p>
-<p>多处理器和多计算机两种体系结构的差别</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>多处理器</th>
-<th>多计算机</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>CPU间通信方式</td>
-<td>共享内存（隐式地，通过load、store指令）</td>
-<td>消息传递（显式地，通过发送、接收消息的函数）</td>
-</tr>
-<tr>
-<td>地址空间</td>
-<td>所有CPU共享一个单一的物理地址空间</td>
-<td>每个CPU都有自己独立的物理地址空间</td>
-</tr>
-<tr>
-<td>常见编程模型</td>
-<td>OpenMP编程模型</td>
-<td>MPI编程模型</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h1 id="三、多处理器系统"><a href="#三、多处理器系统" class="headerlink" title="三、多处理器系统"></a>三、多处理器系统</h1><p>根据<strong>存储器组织方式</strong>或者说<strong>共享内存的实现方式</strong>，可以进一步把多处理器系统分为两类：集中式共享存储器系统结构和分布式存储器系统结构。</p>
-<h2 id="集中式共享存储器系统（Centralized-Shared-Memory-CSM）"><a href="#集中式共享存储器系统（Centralized-Shared-Memory-CSM）" class="headerlink" title="集中式共享存储器系统（Centralized Shared-Memory, CSM）"></a>集中式共享存储器系统（Centralized Shared-Memory, CSM）</h2><p>对于处理机数目较少的多处理机，各个处理机可以共享单个集中式存储器。当处理机数量很大时，由于访问冲突以及总线带宽的限制，访问延迟就会很大。</p>
-<ul>
-<li><p><strong>结构</strong>：多个处理器-Cache子系统共享同一个较大的物理存储器。</p>
-</li>
-<li><p><strong>如何实现共享内存？</strong>因为多处理机物理上共享单个存储器，因此逻辑上的共享是自然而然的。</p>
-</li>
-</ul>
-<p>别称：因为只用一个单独的主存，而且这个主存对于各处理器的关系是对称的，所以各处理器访问这个主存的时间相同，所以这种结构有时被称为<u>对称式共享存储器结构</u>（Symmetric shared-memory MultiProcessor, SMP），或者<u>一致性内存访问计算</u>机（Uniform Memory Access, UMA）</p>
-<blockquote>
-<p>ps：使用大容量Cache</p>
-<p>对于共享存储器结构，存储器和总线的带宽往往是瓶颈，而大容量、多级Cache可以很大程度地降低对存储器和总线的带宽要求。所以共享存储器结构往往采用大容量Cache。</p>
-</blockquote>
-<h2 id="分布式共享存储器系统（Distributed-Shared-Memory-DSM）"><a href="#分布式共享存储器系统（Distributed-Shared-Memory-DSM）" class="headerlink" title="分布式共享存储器系统（Distributed Shared-Memory, DSM）"></a>分布式共享存储器系统（Distributed Shared-Memory, DSM）</h2><p>为了支持更多的处理机，存储器不能按照集中共享方式组织，而必须分布于各个处理机。</p>
-<ul>
-<li><p><strong>结构</strong>：由多个独立结构构成（称为<code>节点</code>），每个节点包含处理器、存储器、IO系统，各个节点通过互联网络连接。</p>
-</li>
-<li><p><strong>如何实现共享内存？</strong>物理上分开的多个存储器的地址空间组织成逻辑上共享的地址空间，即在这种机器中，两个不同处理器中相同的物理地址指向一个存储器中的相同位置。实现这一效果需要硬件支持复杂的处理器间数据通信，同时时延也更大。</p>
-</li>
-</ul>
-<p>别称：由于CPU对内存字的访问时间依赖于该内存字在存储器中的存放位置，所以也被称为<u>非一致性内存访问计算机</u>（NonUniform Memory Access, NUMA）</p>
-<blockquote>
-<p>Aside：超节点</p>
-<p>每个节点还可能包含较少数目（2~8）的处理器，这些处理器之间可采用另一种技术（如总线）互联形成簇，这样的节点叫做超节点。这可以视为分布式共享存储和集中式共享存储的混合。</p>
-</blockquote>
-<p>这种将存储器分散到各个节点的结构有两个好处：</p>
-<ol>
-<li>如果大多数的访问是针对本节点的局部存储器，可降低对存储器和互联网络的带宽要求。</li>
-<li>对局部存储器的访问延迟低</li>
-</ol>
-<p>但也有缺点：</p>
-<ol>
-<li>处理器之间的通信较复杂</li>
-<li>各处理器之间访问延迟较大</li>
-</ol>
-<h1 id="四、多计算机系统"><a href="#四、多计算机系统" class="headerlink" title="四、多计算机系统"></a>四、多计算机系统</h1><p>多计算机系统类似于多处理器系统中的分布式共享存储器系统，只不过多处理器的地址空间并没有组织成逻辑上共享的地址空间，或许可以称为<u>分布式非共享存储器系统</u>，这些私有地址空间在逻辑上是分散的。即在这种机器中，两个不同处理器中相同的物理地址分别指向两个不同存储器中的不同位置。</p>
-<p>每个节点本质上是一台独立的计算机</p>
-<h1 id="五、两种通信机制"><a href="#五、两种通信机制" class="headerlink" title="五、两种通信机制"></a>五、两种通信机制</h1><p>前面提到，多处理器和多计算机的最主要区别就是通信机制的不同，多处理器采用共享内存通信机制，多计算机采用消息传递通信机制。</p>
-<h2 id="共享内存通信机制"><a href="#共享内存通信机制" class="headerlink" title="共享内存通信机制"></a>共享内存通信机制</h2><p>由于共享地址空间，可利用Load和Store指令中的地址隐含地进行数据通信。</p>
-<h2 id="消息传递通信机制"><a href="#消息传递通信机制" class="headerlink" title="消息传递通信机制"></a>消息传递通信机制</h2><p>由于有多个地址空间，数据通信要通处理器间显式地传递消息完成。</p>
-<p>同步</p>
-<p>异步</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/11/23/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/23/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（七）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-23 21:18:59" itemprop="dateCreated datePublished" datetime="2023-11-23T21:18:59+08:00">2023-11-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-12-11 20:46:15" itemprop="dateModified" datetime="2023-12-11T20:46:15+08:00">2023-12-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="gem5附带的默认配置脚本"><a href="#gem5附带的默认配置脚本" class="headerlink" title="gem5附带的默认配置脚本"></a>gem5附带的默认配置脚本</h1><p>本文是对官网教程<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part1/example_configs/">gem5: Using the default configuration scripts</a>的整理，主要介绍了</p>
-<p>gem5附带了许多配置脚本，允许用户非常快速地使用gem5。</p>
-<h2 id="1-configs文件夹"><a href="#1-configs文件夹" class="headerlink" title="1. configs文件夹"></a>1. configs文件夹</h2><p>gem5中的全部配置脚本都在<code>configs</code>文件夹中，该文件夹的结构如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">configs/boot:</span><br><span class="line">bbench-gb.rcS  bbench-ics.rcS  hack_back_ckpt.rcS  halt.sh</span><br><span class="line"></span><br><span class="line">configs/common:</span><br><span class="line">Benchmarks.py   Caches.py  cpu2000.py    FileSystemConfig.py  GPUTLBConfig.py   HMC.py       MemConfig.py   Options.py     Simulation.py</span><br><span class="line">CacheConfig.py  cores      CpuConfig.py  FSConfig.py          GPUTLBOptions.py  __init__.py  ObjectList.py  SimpleOpts.py  SysPaths.py</span><br><span class="line"></span><br><span class="line">configs/dist:</span><br><span class="line">sw.py</span><br><span class="line"></span><br><span class="line">configs/dram:</span><br><span class="line">lat_mem_rd.py  low_power_sweep.py  sweep.py</span><br><span class="line"></span><br><span class="line">configs/example:</span><br><span class="line">apu_se.py  etrace_replay.py  garnet_synth_traffic.py  hmctest.py    hsaTopology.py  memtest.py  read_config.py  ruby_direct_test.py      ruby_mem_test.py     sc_main.py</span><br><span class="line">arm        fs.py             hmc_hello.py             hmc_tgen.cfg  memcheck.py     noc_config  riscv           ruby_gpu_random_test.py  ruby_random_test.py  se.py</span><br><span class="line"></span><br><span class="line">configs/learning_gem5:</span><br><span class="line">part1  part2  part3  README</span><br><span class="line"></span><br><span class="line">configs/network:</span><br><span class="line">__init__.py  Network.py</span><br><span class="line"></span><br><span class="line">configs/nvm:</span><br><span class="line">sweep_hybrid.py  sweep.py</span><br><span class="line"></span><br><span class="line">configs/ruby:</span><br><span class="line">AMD_Base_Constructor.py  CHI.py        Garnet_standalone.py  __init__.py              MESI_Three_Level.py  MI_example.py      MOESI_CMP_directory.py  MOESI_hammer.py</span><br><span class="line">CHI_config.py            CntrlBase.py  GPU_VIPER.py          MESI_Three_Level_HTM.py  MESI_Two_Level.py    MOESI_AMD_Base.py  MOESI_CMP_token.py      Ruby.py</span><br><span class="line"></span><br><span class="line">configs/splash2:</span><br><span class="line">cluster.py  run.py</span><br><span class="line"></span><br><span class="line">configs/topologies:</span><br><span class="line">BaseTopology.py  Cluster.py  CrossbarGarnet.py  Crossbar.py  CustomMesh.py  __init__.py  MeshDirCorners_XY.py  Mesh_westfirst.py  Mesh_XY.py  Pt2Pt.py</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="boot"><a href="#boot" class="headerlink" title="boot&#x2F;"></a>boot&#x2F;</h3><p>这些是在全系统模式下使用的rcS文件。这些文件在Linux引导后由模拟器加载，并由shell执行。其中大多数用于在全系统模式下运行时控制基准测试。有些是实用函数，如hack_back_ckpt.rcS。在全系统模拟一章中，将更深入地介绍这些文件。</p>
-<h3 id="common"><a href="#common" class="headerlink" title="common&#x2F;"></a>common&#x2F;</h3><p>common目录包含许多用于创建模拟系统的辅助脚本和函数。例如，</p>
-<p><code>Caches.py</code>类似于前几章中创建的Caches.py和Caches_opts.py文件。</p>
-<p><code>Options.py</code>包含可以在命令行上设置的各种选项。比如CPU的数量、系统时钟等等。这是查看要更改的选项是否已经有命令行参数的好地方。</p>
-<p><code>CacheConfig.py</code>包含用于为经典内存系统设置缓存参数的选项和函数。</p>
-<p><code>MemConfig.py</code>提供了一些帮助函数，用于设置内存系统。</p>
-<p><code>FSConfig.py</code>包含为许多不同类型的系统设置全系统仿真所需的功能。全系统仿真将在本章中进一步讨论。</p>
-<p><code>Simulation.py</code>包含许多用于设置和运行gem5的辅助函数。该文件中包含的许多代码管理保存和恢复检查点。下面示例中的示例配置文件使用该文件中的函数来执行gem5模拟。该文件相当复杂，但它也允许在模拟运行方式上有很大的灵活性。</p>
-<h3 id="dram"><a href="#dram" class="headerlink" title="dram&#x2F;"></a>dram&#x2F;</h3><p>包含测试DRAM的脚本。</p>
-<h3 id="example"><a href="#example" class="headerlink" title="example&#x2F;"></a>example&#x2F;</h3><p>此目录包含一些示例 gem5配置脚本，可以使用这些脚本即开即用地运行 gem5。具体来说，se.py 和 fs.py 非常有用。有关这些文件的更多信息可以在下一节中找到。此目录中还有一些其他实用程序配置脚本。</p>
-<h3 id="learning-gem5"><a href="#learning-gem5" class="headerlink" title="learning_gem5&#x2F;"></a>learning_gem5&#x2F;</h3><p>该目录包含learning_gem5书中的所有gem5配置脚本。</p>
-<h3 id="network"><a href="#network" class="headerlink" title="network&#x2F;"></a>network&#x2F;</h3><p>此目录包含HeteroGarnet网络的配置脚本。</p>
-<h3 id="nvm"><a href="#nvm" class="headerlink" title="nvm&#x2F;"></a>nvm&#x2F;</h3><p>此目录包含使用NVM接口的示例脚本。</p>
-<h3 id="ruby"><a href="#ruby" class="headerlink" title="ruby&#x2F;"></a>ruby&#x2F;</h3><p>该目录包含Ruby的配置脚本及其包含的缓存一致性协议。</p>
-<h3 id="splash2"><a href="#splash2" class="headerlink" title="splash2&#x2F;"></a>splash2&#x2F;</h3><p>该目录包含用于运行splash2基准测试套件的脚本，以及用于配置模拟系统的一些选项。</p>
-<h3 id="topologies"><a href="#topologies" class="headerlink" title="topologies&#x2F;"></a>topologies&#x2F;</h3><p>该目录包含在创建Ruby缓存层次结构时可以使用的拓扑的实现。</p>
-<h2 id="2-se-py-fs-py"><a href="#2-se-py-fs-py" class="headerlink" title="2. se.py&amp;fs.py"></a>2. se.py&amp;fs.py</h2><p>SE模式默认配置脚本se.py和FS模式默认配置脚本fs.py均位于目录configs&#x2F;example&#x2F;，下面以se.py为例介绍它们通用的命令行选项：</p>
-<ul>
-<li><p>通过<code>--cmd=</code>选项指定二进制文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>默认情况下，两个配置脚本均使用 atomic CPU和 atomic memory accesses，因此没有时间统计数据产生</p>
-<p>可通过<code>--cpu-type=CPU_TYPE</code>指定CPU类型，通过<code>--mem-type=MEM_TYPE</code>指定内存类型。</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

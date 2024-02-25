@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,7 +134,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -180,6 +180,945 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/25/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E2%80%94%E2%80%94%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/25/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E2%80%94%E2%80%94%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/" class="post-title-link" itemprop="url">数字图像处理——图片拼接</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-10-25 14:32:02 / 修改时间：15:16:44" itemprop="dateCreated datePublished" datetime="2023-10-25T14:32:02+08:00">2023-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">数字图像处理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="问题导入"><a href="#问题导入" class="headerlink" title="问题导入"></a>问题导入</h1><p>图片全景拼接</p>
+<p>观察者在同一个点，不是简单的平移旋转，需要运用投射关系（近大远小）</p>
+<h1 id="图像全局变换"><a href="#图像全局变换" class="headerlink" title="图像全局变换"></a>图像全局变换</h1><p>研究对象为二维图像</p>
+<h2 id="1-线性变换"><a href="#1-线性变换" class="headerlink" title="1. 线性变换"></a>1. 线性变换</h2><p>缩放 Scale</p>
+<p>旋转 Rotation</p>
+<p>剪切 Shear</p>
+<p>镜像 mirror</p>
+<p>S &#x3D; 2 * 2矩阵<br>$$<br>S &#x3D; \begin{bmatrix}<br> a &amp; b\<br> c &amp; d<br>\end{bmatrix}<br>$$</p>
+<h2 id="2-仿射变换"><a href="#2-仿射变换" class="headerlink" title="2. 仿射变换"></a>2. 仿射变换</h2><p>仿射变换 &#x3D; 线性变换+平移</p>
+<p>S &#x3D; 3 * 3矩阵<br>$$<br> S &#x3D; \begin{bmatrix} a &amp; b &amp; c\ d &amp; e &amp; f\ 0 &amp; 0 &amp; 1\end{bmatrix}<br>$$<br>6个未知数</p>
+<h2 id="3-投影变换"><a href="#3-投影变换" class="headerlink" title="3. 投影变换"></a>3. 投影变换</h2><p>S &#x3D; 3 * 3矩阵<br>$$<br>S &#x3D; \begin{bmatrix}<br> a &amp; b &amp; c\<br> d &amp; e &amp; f\<br> g &amp; h &amp; 1<br>\end{bmatrix}<br>$$<br>8个未知数，即8个自由度，表示能力最强</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（三）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-24 21:02:46" itemprop="dateCreated datePublished" datetime="2023-10-24T21:02:46+08:00">2023-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-30 08:40:46" itemprop="dateModified" datetime="2023-10-30T08:40:46+08:00">2023-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Gem5学习——创建一个简单的SimObject"><a href="#Gem5学习——创建一个简单的SimObject" class="headerlink" title="Gem5学习——创建一个简单的SimObject"></a>Gem5学习——创建一个简单的SimObject</h1><h2 id="一、名词解释"><a href="#一、名词解释" class="headerlink" title="一、名词解释"></a>一、名词解释</h2><ul>
+<li><p>$\textcolor[RGB]{200,50,50}{SimObject}$</p>
+<p>在gem5中，SimObject是一个基础类，用于<strong>创建和管理模拟对象</strong>。</p>
+</li>
+<li><p>$\textcolor[RGB]{200,50,50}{SimObjects}$</p>
+<p>SimObjects是gem5中用于管理模拟对象的组件。通常，gem5中的模拟对象都会继承自SimpleObject类，并且通过SimObjects组件来进行管理。</p>
+</li>
+<li><p>$\textcolor[RGB]{200,50,50}{SimpleObject}$</p>
+<p>SimpleObject是SimObject类的一个派生类，它在SimObject类的基础上增加了一些额外的功能，通常，在gem5中创建新的模拟对象时，都会从SimpleObject类进行派生，以便获得这些基本的功能。</p>
+</li>
+</ul>
+<h2 id="二、创建一个简单的SimObject"><a href="#二、创建一个简单的SimObject" class="headerlink" title="二、创建一个简单的SimObject"></a>二、创建一个简单的SimObject</h2><p>即官网教程创建helloobject<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part2/helloobject/">gem5: Creating a very simple SimObject</a></p>
+<p><strong>$\textcolor[RGB]{100,200,50}{Gem5使用了Python和C++两种编程语言混合编程}$</strong></p>
+<p>gem5一方面通过python语言配置模拟器运行的参数和控制模拟过程的脚本，优势在于便于快速阅读和编写配置脚本；另一方面通过C++实现gem5中的各种模型（SimObjects），优势在于C++是一种高性能的编程语言，能够保证其模拟性能。混合编程充分发挥了两种语言的优势。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">Gem5模拟器学习（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-24 17:01:17" itemprop="dateCreated datePublished" datetime="2023-10-24T17:01:17+08:00">2023-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-12-11 20:43:08" itemprop="dateModified" datetime="2023-12-11T20:43:08+08:00">2023-12-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">Gem5模拟器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="理解gem5的输出"><a href="#理解gem5的输出" class="headerlink" title="理解gem5的输出"></a>理解gem5的输出</h1><p>本文是对官网教程<a target="_blank" rel="noopener" href="https://www.gem5.org/documentation/learning_gem5/part1/gem5_stats/">gem5: Understanding gem5 statistics and output</a>的整理，主要介绍了gem5的输出文件</p>
+<p>模拟输出默认存放在<code>m5out</code>文件夹中，也可通过<code>-d dirname</code>命令行选项控制输出文件夹，但注意该选项只能在gem5.opt和配置脚本之间。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/X86/gem5.opt -d cache_out configs/learning_gem5/part1/two_level.py</span><br></pre></td></tr></table></figure>
+
+<p>模拟系统会自动在当前文件夹下创建一个cache_out文件夹，并存放所用输出数据</p>
+<p>输出如下</p>
+<h2 id="1-config-ini"><a href="#1-config-ini" class="headerlink" title="1. config.ini"></a>1. config.ini</h2><p>模拟系统的全部配置参数</p>
+<h2 id="2-config-json"><a href="#2-config-json" class="headerlink" title="2. config.json"></a>2. config.json</h2><p>模拟系统的全部配置参数，json文件格式</p>
+<h2 id="3-stats-txt"><a href="#3-stats-txt" class="headerlink" title="3. stats.txt"></a>3. stats.txt</h2><p>模拟过程的数据统计。</p>
+<p>SimObject的每个实例化都有自己的统计信息。模拟结束时，或发出特殊统计转储命令时，所有SimObjects的统计信息的当前状态都会转储到一个文件中。</p>
+<p>统计转储以<del>—————-开始模拟统计—————-</del>开始。如果在gem5执行期间存在多个统计转储，则单个文件中可能存在多个此类转储。这对于长时间运行的应用程序或从检查点恢复时很常见。</p>
+<p>每个统计信息都有一个名称（第一列）、一个值（第二列）和一个描述（最后一列以#开头），后跟统计信息的单位。</p>
+<h4 id="（1）有关执行的一般统计信息："><a href="#（1）有关执行的一般统计信息：" class="headerlink" title="（1）有关执行的一般统计信息："></a>（1）有关执行的一般统计信息：</h4><p>首先，统计信息文件包含有关执行的一般统计信息：</p>
+<p>比如总模拟时间<code>simSeconds</code>，CPU提交的指令数<code>simInsts</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">---------- Begin Simulation Statistics ----------</span><br><span class="line">simSeconds                                   0.000057                       # Number of seconds simulated (Second)</span><br><span class="line">simTicks                                     57467000                       # Number of ticks simulated (Tick)</span><br><span class="line">finalTick                                    57467000                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset) (Tick)</span><br><span class="line">simFreq                                  1000000000000                       # The number of ticks per simulated second ((Tick/Second))</span><br><span class="line">hostSeconds                                      0.03                       # Real time elapsed on the host (Second)</span><br><span class="line">hostTickRate                               2295882330                       # The number of ticks simulated per host second (ticks/s) ((Tick/Second))</span><br><span class="line">hostMemory                                     665792                       # Number of bytes of host memory used (Byte)</span><br><span class="line">simInsts                                         6225                       # Number of instructions simulated (Count)</span><br><span class="line">simOps                                          11204                       # Number of ops (including micro ops) simulated (Count)</span><br><span class="line">hostInstRate                                   247382                       # Simulator instruction rate (inst/s) ((Count/Second))</span><br><span class="line">hostOpRate                                     445086                       # Simulator op (including micro ops) rate (op/s) ((Count/Second))</span><br><span class="line"></span><br><span class="line">---------- Begin Simulation Statistics ----------</span><br><span class="line">simSeconds                                   0.000490                       # Number of seconds simulated (Second)</span><br><span class="line">simTicks                                    490394000                       # Number of ticks simulated (Tick)</span><br><span class="line">finalTick                                   490394000                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset) (Tick)</span><br><span class="line">simFreq                                  1000000000000                       # The number of ticks per simulated second ((Tick/Second))</span><br><span class="line">hostSeconds                                      0.03                       # Real time elapsed on the host (Second)</span><br><span class="line">hostTickRate                              15979964060                       # The number of ticks simulated per host second (ticks/s) ((Tick/Second))</span><br><span class="line">hostMemory                                     657488                       # Number of bytes of host memory used (Byte)</span><br><span class="line">simInsts                                         6225                       # Number of instructions simulated (Count)</span><br><span class="line">simOps                                          11204                       # Number of ops (including micro ops) simulated (Count)</span><br><span class="line">hostInstRate                                   202054                       # Simulator instruction rate (inst/s) ((Count/Second))</span><br><span class="line">hostOpRate                                     363571                       # Simulator op (including micro ops) rate (op/s) ((Count/Second))</span><br></pre></td></tr></table></figure>
+
+<h4 id="（2）SimObjects的统计信息"><a href="#（2）SimObjects的统计信息" class="headerlink" title="（2）SimObjects的统计信息"></a>（2）SimObjects的统计信息</h4><p>接下来，将打印SimObjects的统计信息，比如CPU、内存控制器等等</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">system.clk_domain.clock                          1000                       # Clock period in ticks (Tick)</span><br><span class="line">system.clk_domain.voltage_domain.voltage            1                       # Voltage in Volts (Volt)</span><br><span class="line">system.cpu.numCycles                            58236                       # Number of cpu cycles simulated (Cycle)</span><br><span class="line">system.cpu.numWorkItemsStarted                      0                       # Number of work items this cpu started (Count)</span><br><span class="line">system.cpu.numWorkItemsCompleted                    0                       # Number of work items this cpu completed (Count)</span><br><span class="line">system.cpu.dcache.demandHits::cpu.data           1951                       # number of demand (read+write) hits (Count)</span><br><span class="line">system.cpu.dcache.demandHits::total              1951                       # number of demand (read+write) hits (Count)</span><br><span class="line">system.cpu.dcache.overallHits::cpu.data          1951                       # number of overall hits (Count)</span><br><span class="line">system.cpu.dcache.overallHits::total             1951                       # number of overall hits (Count)</span><br><span class="line">system.cpu.dcache.demandMisses::cpu.data          136                       # number of demand (read+write) misses (Count)</span><br><span class="line">system.cpu.dcache.demandMisses::total             136                       # number of demand (read+write) misses (Count)</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">system.mem_ctrl.avgPriority_cpu.inst::samples       228.00                       # Average QoS priority value for accepted requests (Count)</span><br><span class="line">system.mem_ctrl.avgPriority_cpu.data::samples       136.00                       # Average QoS priority value for accepted requests (Count)</span><br><span class="line">system.mem_ctrl.priorityMinLatency       0.000000018750                       # per QoS priority minimum request to response latency (Second)</span><br><span class="line">system.mem_ctrl.priorityMaxLatency       0.000000489500                       # per QoS priority maximum request to response latency (Second)</span><br><span class="line">system.mem_ctrl.numReadWriteTurnArounds             0                       # Number of turnarounds from READ to WRITE (Count)</span><br><span class="line">system.mem_ctrl.numWriteReadTurnArounds             0                       # Number of turnarounds from WRITE to READ (Count)</span><br><span class="line">system.mem_ctrl.numStayReadState                  742                       # Number of times bus staying in READ state (Count)</span><br><span class="line">system.mem_ctrl.numStayWriteState                   0                       # Number of times bus staying in WRITE state (Count)</span><br><span class="line">system.mem_ctrl.readReqs                          364                       # Number of read requests accepted (Count)</span><br><span class="line">system.mem_ctrl.writeReqs                           0                       # Number of write requests accepted (Count)</span><br><span class="line">system.mem_ctrl.readBursts                        364                       # Number of controller read bursts, including those serviced by the write queue (Count)</span><br><span class="line">system.mem_ctrl.writeBursts                         0                       # Number of controller write bursts, including those merged in the write queue (Count)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>安装python的Pydot包之后，当运行gem5进行模拟仿真之后，即可在m5out目录下找到config.pdf之类的配置图,如图1所示。</p>
+<p>还可以通过dot命令将config.dot文件转换成自己需要的格式</p>
+<p>pip install pydot<br>cd m5out<br>dot -Tpng -o config.png config.dot</p>
+<p>RISCV1024核模拟报错</p>
+<img src="/2023/10/24/Gem5%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20231118163457835.png" class="" title="image-20231118163457835">
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/23/1211/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/23/1211/" class="post-title-link" itemprop="url">1211-</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-23 23:35:49" itemprop="dateCreated datePublished" datetime="2023-10-23T23:35:49+08:00">2023-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-12-29 21:45:12" itemprop="dateModified" datetime="2023-12-29T21:45:12+08:00">2023-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%95%E8%AE%BE%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">毕设学习记录</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="12月11日"><a href="#12月11日" class="headerlink" title="12月11日"></a>12月11日</h1><h2 id="1-fs-py代码阅读"><a href="#1-fs-py代码阅读" class="headerlink" title="1. fs.py代码阅读"></a>1. fs.py代码阅读</h2><p>gem5通过python内置的<code>optparse</code>模块添加命令行选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 实例化命令行模块</span><br><span class="line">parser = optparse.OptionParser</span><br><span class="line"># 通过调用configs/common/Options.py模块中的方法添加相应命令行选项</span><br><span class="line">Options.addCommonOptions(parser)   # 添加常用参数。如CPU类型、CPU时钟频率等</span><br><span class="line">Options.addFSOptions(parser)       # 添加FS模拟参数。如使用的内核、镜像文件等</span><br><span class="line"></span><br><span class="line"># 如果命令行参数含有&#x27;--ruby&#x27;，则增加ruby需要的命令行选项</span><br><span class="line">if &#x27;--ruby&#x27; in sys.argv:</span><br><span class="line">    Ruby.define_options(parser)    </span><br><span class="line">    </span><br><span class="line"># 解析参数</span><br><span class="line"># parse_args()返回两个值：</span><br><span class="line"># options, 这是一个对象（optpars.Values)，保存有命令行参数值。只要知道命令行参数名，如file,就可以访问其对应的值：options.file。</span><br><span class="line"># args，一个由positional arguments组成的列表。 </span><br><span class="line">(options, args) = parser.parse_args()</span><br><span class="line"></span><br><span class="line">if args:</span><br><span class="line">    print(&quot;Error: script doesn&#x27;t take any positional arguments&quot;)</span><br><span class="line">    sys.exit(1)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>args 是一个包含所有命令行参数值的命名空间对象。每个命令行参数都成为这个对象的一个属性，可以通过 args.参数名 的形式访问。<br>在 gem5 的上下文中，这意味着 args 包含了模拟器运行所需的所有配置信息，如是否启用 Ruby 模拟、文件系统的配置等。</p>
+<p>以上代码定义了argparse解析器并添加了命令行参数。然后它解析了这些参数，并基于这些参数来设置CPU类和内存类。之后，它构建测试系统，可能还会构建驱动系统，最后创建一个root根对象来启动模拟。</p>
+<p>在gem5中，root是整个模拟环境的最顶层容器，它通常包含了模拟的计算机系统（如处理器、内存、总线等）以及与这些组件连接的所有设备和系统的配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">np = options.num_cpus</span><br><span class="line"></span><br><span class="line">test_sys = build_test_system(np)</span><br><span class="line">if len(bm) == 2:</span><br><span class="line">    drive_sys = build_drive_system(np)</span><br><span class="line">    root = makeDualRoot(True, test_sys, drive_sys, options.etherdump)</span><br><span class="line">elif len(bm) == 1 and options.dist:</span><br><span class="line">    # This system is part of a dist-gem5 simulation</span><br><span class="line">    root = makeDistRoot(test_sys,</span><br><span class="line">                        options.dist_rank,</span><br><span class="line">                        options.dist_size,</span><br><span class="line">                        options.dist_server_name,</span><br><span class="line">                        options.dist_server_port,</span><br><span class="line">                        options.dist_sync_repeat,</span><br><span class="line">                        options.dist_sync_start,</span><br><span class="line">                        options.ethernet_linkspeed,</span><br><span class="line">                        options.ethernet_linkdelay,</span><br><span class="line">                        options.etherdump);</span><br><span class="line">elif len(bm) == 1:</span><br><span class="line">    root = Root(full_system=True, system=test_sys)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;Error I don&#x27;t know how to create more than 2 systems.&quot;)</span><br><span class="line">    sys.exit(1)</span><br></pre></td></tr></table></figure>
+
+<p>在这个脚本中，root对象是在不同条件下被创建的：<br>如果模拟的是一个双系统（dual系统），那么root会通过调用makeDualRoot()函数被创建，这意味着会有两个系统（test_sys和drive_sys）并行运行在模拟中。<br>如果启用了分布式模拟（dist模式），则通过调用makeDistRoot()函数创建root，此时root代表的系统会作为分布式模拟中的一个节点。<br>如果模拟的是单个系统，那么root会简单地通过Root(full_system&#x3D;True, system&#x3D;test_sys)创建，其中test_sys是通过build_test_system()函数构建的测试系统。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34898487/article/details/134318122">https://blog.csdn.net/qq_34898487/article/details/134318122</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/23/SCons/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/23/SCons/" class="post-title-link" itemprop="url">SCons</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-23 19:04:01" itemprop="dateCreated datePublished" datetime="2023-10-23T19:04:01+08:00">2023-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-23 17:28:43" itemprop="dateModified" datetime="2023-11-23T17:28:43+08:00">2023-11-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>scons是一个Python写的自动化构建工具，使用SConstruct文件进行构建。</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://scons.org/">https://scons.org/</a></p>
+<p>Wiki：<a target="_blank" rel="noopener" href="https://github.com/SCons/scons/wiki">https://github.com/SCons/scons/wiki</a></p>
+<p>manual page： <a target="_blank" rel="noopener" href="https://www.scons.org/doc/HTML/scons-man.html">SCons 4.6.0</a></p>
+<p> SConstruct文件，类似于Make系统中的Makefile文件，这是SCons读取并控制编译构建的输入文件。 SConstruct和Makefile的最大不同是：SConstruct文件是python脚本，这会大大简化构建的过程。</p>
+<p>是从</p>
+<p><strong>Scons函数与构建顺序无关</strong></p>
+<p>   SConstruct有一点和一般python脚本不同，SCons函数的书写调用顺序，并不影响SCons真实的构建顺序，这点和Makefile有点相似。换句话说，当你调用Program构建时（或者其他构建方法），SCons并非在此刻构建可执行文件，相反，这仅仅是告诉SCons你想要获得一个可执行文件的构建结果。举例来说，需要构建hello.c的源文件，SCons也仅仅是获取了构建可执行文件hello和源码hello.c之间的关系。</p>
+<h1 id="一、Scons构建方法"><a href="#一、Scons构建方法" class="headerlink" title="一、Scons构建方法"></a>一、Scons构建方法</h1><h2 id="1-Program构建二进制文件"><a href="#1-Program构建二进制文件" class="headerlink" title="1. Program构建二进制文件"></a>1. Program构建二进制文件</h2><p>如果想构建hello.c程序，新建一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;hello.c&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>在SCons命令行中执行<code>scons</code>命令进行构建，会有scons会执行以下编译命令，默认得到<code>hello</code>二进制可执行文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o hello hello.o</span><br><span class="line">scons: done building targets. </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-指定二进制文件名称"><a href="#1-1-指定二进制文件名称" class="headerlink" title="1.1 指定二进制文件名称"></a>1.1 指定二进制文件名称</h3><p>如果想要<strong>指定二进制文件的文件名</strong>，则需要在源文件的前面，指明输出名称即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;new_hello&#x27;, &#x27;hello.c&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-简化构建输出"><a href="#1-2-简化构建输出" class="headerlink" title="1.2 简化构建输出"></a>1.2 简化构建输出</h3><p>如果想要<strong>简化构建时命令行的输出</strong>，只看实际执行的编译命令，则在构建时使用-Q选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o new_hello hello.o</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-编译多个源文件"><a href="#1-3-编译多个源文件" class="headerlink" title="1.3 编译多个源文件"></a>1.3 编译多个源文件</h3><p><strong>编译多个源文件</strong>，可以采用列表的方式指定多个源文件名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># build hello.c only</span><br><span class="line">Program(&quot;My_hello&quot;, &quot;hello.c&quot;)</span><br><span class="line"></span><br><span class="line"># build hello.c name.c</span><br><span class="line">Program(&quot;My_hello&quot;, [&quot;hello.c&quot;, &quot;name.c&quot;])</span><br><span class="line"></span><br><span class="line"># build all the .c file in the current dir</span><br><span class="line">Program(&quot;My_hello&quot;, Glob(&#x27;*.c&#x27;))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以用scons内置的Split函数自动分割字符串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Split function help divide the file string</span><br><span class="line">Program(&#x27;program&#x27;, Split(&#x27;main.c file1.c file2.c&#x27;))</span><br><span class="line"></span><br><span class="line">src_file = Split(&quot;&quot;&quot;&quot; main.c</span><br><span class="line">                      file1.c </span><br><span class="line">                      file2.c&quot;&quot;&quot;)</span><br><span class="line">Program(&#x27;program&#x27;, src_files)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-关键字参数"><a href="#1-4-关键字参数" class="headerlink" title="1.4 关键字参数"></a>1.4 关键字参数</h3><p>SCons同样支持输入或输出文件的关键字定义。输出文件的关键字是<em>target</em>，输入源文件的关键字是<em>source</em>， 因为关键字已经指明了该参数的含义，因此关键字的顺序不做要求</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src_files = Split(&#x27;main.c file1.c file2.c&#x27;)</span><br><span class="line">Program(source=src_files, target=&#x27;program&#x27;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-5-构建多个工程"><a href="#1-5-构建多个工程" class="headerlink" title="1.5  构建多个工程"></a>1.5  构建多个工程</h3><p>用一个SConstruct文件，构建多个工程，最简单的方式是调用Program多次构建：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(&#x27;foo.c&#x27;)</span><br><span class="line">Program(&#x27;bar&#x27;, [&#x27;bar1.c&#x27;, &#x27;bar2.c&#x27;])</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-6-多工程编译共享中间文件"><a href="#1-6-多工程编译共享中间文件" class="headerlink" title="1.6 多工程编译共享中间文件"></a>1.6 多工程编译共享中间文件</h3><p>   同一份源码文件对应多个工程，最直接的方式是每个工程都加入该源码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(Split(<span class="string">&#x27;foo.c common1.c common2.c&#x27;</span>))</span><br><span class="line">Program(<span class="string">&#x27;bar&#x27;</span>, Split(<span class="string">&#x27;bar1.c bar2.c common1.c common2.c&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>   当采用这种方式构建时，SCons会意识到common1.c和common2.c的复用，因此会将其仅仅编译一份中间文件，尽管生成的目标文件分别链接到各自的中间文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">% scons -Q</span><br><span class="line">cc -o bar1.o -c bar1.c</span><br><span class="line">cc -o bar2.o -c bar2.c</span><br><span class="line">cc -o common1.o -c common1.c</span><br><span class="line">cc -o common2.o -c common2.c</span><br><span class="line">cc -o bar bar1.o bar2.o common1.o common2.o</span><br><span class="line">cc -o foo.o -c foo.c</span><br><span class="line">cc -o foo foo.o common1.o common2.o</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-7-清理构建的工程"><a href="#1-7-清理构建的工程" class="headerlink" title="1.7 清理构建的工程"></a>1.7 清理构建的工程</h3><p>采用SCons我们不需要增加特殊的指令在构建后执行清除操作，相反，你可以简单使用-c或者–clean选项，此时SCons会自动删除构建的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc -o hello hello.o</span><br><span class="line">scons: done building targets.</span><br><span class="line"></span><br><span class="line">&gt; scons -c</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Cleaning targets ...</span><br><span class="line">Removed hello.o</span><br><span class="line">Removed hello</span><br><span class="line">scons: done cleaning targets.</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="2-Object构建中间文件"><a href="#2-Object构建中间文件" class="headerlink" title="2. Object构建中间文件"></a>2. Object构建中间文件</h2><p>Object用于构建中间文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object(<span class="string">&#x27;hello.c&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>执行scons命令，去构建整个工程，在LINUX工程中这将会仅仅构建hello.o。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: <span class="keyword">done</span> reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">scons: <span class="keyword">done</span> building targets.</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="3-Libary编译库文件"><a href="#3-Libary编译库文件" class="headerlink" title="3. Libary编译库文件"></a>3. Libary编译库文件</h2><p>与Program格式相同</p>
+<h3 id="3-1-全部通过源文件来编译库"><a href="#3-1-全部通过源文件来编译库" class="headerlink" title="3.1 全部通过源文件来编译库"></a>3.1 全部通过<code>源文件</code>来编译库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.c&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>SCons会自动根据系统来创建合适的库文件前缀和后缀，因此在Linux系统上，上述示例将会构建以下内容：</p>
+<p>SCons会自动给库文件加入前缀和后缀。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f2.o -c f2.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o</span><br><span class="line">ranlib libfoo.a</span><br></pre></td></tr></table></figure>
+
+<p>如果不特别指定目标库文件名称，SCons将会从源文件列表中选择第一个作为库文件名称。</p>
+<h3 id="3-2-通过中间文件或源文件和中间文件来编译库"><a href="#3-2-通过中间文件或源文件和中间文件来编译库" class="headerlink" title="3.2 通过中间文件或源文件和中间文件来编译库"></a>3.2 通过<code>中间文件</code>或<code>源文件和中间文件</code>来编译库</h3><p>上述示例介绍了通过源文件列表构建库文件，SCons同样也支持通过中间文件构建，或者源文件和中间文件混在一起构建也可以。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.o&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>, <span class="string">&#x27;f4.o&#x27;</span>])</span><br><span class="line">Library(<span class="string">&#x27;foo&#x27;</span>, [<span class="string">&#x27;f1.c&#x27;</span>, <span class="string">&#x27;f2.o&#x27;</span>, <span class="string">&#x27;f3.c&#x27;</span>, <span class="string">&#x27;f4.o&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>   同时SCons也会意识到，只有源文件才需要进一步构建成中间文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o f4.o</span><br><span class="line">ranlib libfoo.a</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-StaticLibrary编译静态库"><a href="#4-StaticLibrary编译静态库" class="headerlink" title="4. StaticLibrary编译静态库"></a>4. StaticLibrary编译静态库</h2><p> 对于<strong>Library</strong>和<strong>StaticLibrary</strong>，他们完全等价，没有任何区别。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StaticLibrary(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-SharedLibrary构建动态库文件"><a href="#5-SharedLibrary构建动态库文件" class="headerlink" title="5. SharedLibrary构建动态库文件"></a>5. SharedLibrary构建动态库文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SharedLibrary(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br></pre></td></tr></table></figure>
+
+<p>Linux系统上输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.os -c f1.c</span><br><span class="line">cc -o f2.os -c f2.c</span><br><span class="line">cc -o f3.os -c f3.c</span><br><span class="line">cc -o libfoo.so -shared f1.os f2.os f3.os</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="二、链接库文件"><a href="#二、链接库文件" class="headerlink" title="二、链接库文件"></a>二、链接库文件</h1><h2 id="1-LIBS关键字指明库文件"><a href="#1-LIBS关键字指明库文件" class="headerlink" title="1. LIBS关键字指明库文件"></a>1. LIBS关键字指明库文件</h2><p>通过指明<strong>LIBS</strong>变量关键字，来指定需要链接的库文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Library(&#x27;foo&#x27;, [&#x27;f1.c&#x27;, &#x27;f2.c&#x27;, &#x27;f3.c&#x27;])</span><br><span class="line">Program(&#x27;prog.c&#x27;, LIBS=[&#x27;foo&#x27;, &#x27;bar&#x27;], LIBPATH=&#x27;.&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>不需要特别声明库文件的前缀（如lib），或者后缀（如.a或.lib），SCons会自动根据系统来查找相关前缀或后缀。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o f1.o -c f1.c</span><br><span class="line">cc -o f2.o -c f2.c</span><br><span class="line">cc -o f3.o -c f3.c</span><br><span class="line">ar rc libfoo.a f1.o f2.o f3.o</span><br><span class="line">ranlib libfoo.a</span><br><span class="line">cc -o prog.o -c prog.c</span><br><span class="line">cc -o prog prog.o -L. -lfoo -lbar</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-LIBPATH关键字指明库文件的查找路径"><a href="#2-LIBPATH关键字指明库文件的查找路径" class="headerlink" title="2.LIBPATH关键字指明库文件的查找路径"></a>2.LIBPATH关键字指明库文件的查找路径</h2><p>通过指明<strong>LIBPATH</strong>变量关键字，来指定库文件的查找路径</p>
+<p>默认情况下，连接器只会在系统路径中查找库文件，SCons可以通过用户指定的LIBPATH变量，来查找用户定义路径：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Program(<span class="string">&#x27;prog.c&#x27;</span>, LIBS = <span class="string">&#x27;m&#x27;</span>,</span><br><span class="line">                  LIBPATH = [<span class="string">&#x27;/usr/lib&#x27;</span>, <span class="string">&#x27;usr/local/lib&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>Linux 中输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o prog.o -c prog.c</span><br><span class="line">cc -o prog prog.o -L/usr/lib -L/usr/local/lib -lm</span><br></pre></td></tr></table></figure>
+
+<p>这里推荐使用python的列表（list），因为python是跨平台的，这要迁移起来比较方便。当然您也可以将搜索路径放到一个字符串中，采用系统指定的分割符分开，如POSIX系统中采用冒号，Windows系统中采用分号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># POSIX</span></span><br><span class="line">LIBPATH = <span class="string">&#x27;/usr/lib:/usr/local/lib&#x27;</span></span><br><span class="line"><span class="comment"># Windows</span></span><br><span class="line">LIBPATH = <span class="string">&#x27;C:\\lib;D:\\lib&#x27;</span>  </span><br></pre></td></tr></table></figure>
+
+<p>python在Windows路径中要求采用<strong>反斜杠</strong>转义符</p>
+<h1 id="三、节点对象"><a href="#三、节点对象" class="headerlink" title="三、节点对象"></a>三、节点对象</h1><p>在SCons内部，所有的文件和路径都被看作是节点（<em>Nodes</em>），这种方式让SConscript脚本更加便于<strong>迁移</strong>和<strong>阅读</strong>。</p>
+<h2 id="1-跨平台时出现的问题"><a href="#1-跨平台时出现的问题" class="headerlink" title="1. 跨平台时出现的问题"></a>1. 跨平台时出现的问题</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object(&#x27;hello.c&#x27;, CCFLAGS=&#x27;-DHELLO&#x27;)</span><br><span class="line">Object(&#x27;goodbye.c&#x27;, CCFLAGS=&#x27;-DGOODBYE&#x27;)</span><br><span class="line">Program([&#x27;hello.o&#x27;, &#x27;goodbye.o&#x27;])</span><br></pre></td></tr></table></figure>
+
+<p>以上代码在linux上是可以正常编译的，但在windows上不可以，因为在Windows平台上，生成的中间文件是hello.obj和goodbye.obj，而非hello.o和goodby.o。</p>
+<p>较好的处理方式是将<strong>Object</strong>的构建输出存入变量中，这样我们可以不断在列表后追加新的内容，将其作为<strong>Program</strong>的输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hello_list = Object(&#x27;hello.c&#x27;, CCFLAGS=&#x27;-DHELLO&#x27;)</span><br><span class="line">goodbye_list = Object(&#x27;goodbye.c&#x27;, CCFLAGS=&#x27;-DGOODBYE&#x27;)</span><br><span class="line">Program(hello_list + goodbye_list)</span><br></pre></td></tr></table></figure>
+
+<p>这样SConstruct脚本的跨平台性可以得到保证，其在Linux平台输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">cc -o goodbye.o -c -DGOODBYE goodbye.c</span><br><span class="line">cc -o hello.o -c -DHELLO hello.c</span><br><span class="line">cc -o hello hello.o goodbye.o</span><br></pre></td></tr></table></figure>
+
+<p>   Windows平台输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;scons -Q</span><br><span class="line">cl /Fogoodbye.obj /c goodbye.c -DGOODBYE</span><br><span class="line">cl /Fohello.obj /c hello.c -DHELLO</span><br><span class="line"><span class="built_in">link</span> /nologo /OUT:hello.exe hello.obj goodbye.obj</span><br><span class="line">embedManifestExeCheck(target, <span class="built_in">source</span>, <span class="built_in">env</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="2-构建方法返回目标节点列表"><a href="#2-构建方法返回目标节点列表" class="headerlink" title="2. 构建方法返回目标节点列表"></a>2. 构建方法返回目标节点列表</h2><p>所有的构建方法返回一个节点对象列表，这些节点可以被用作其他构建方法的参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object_list = Object(&#x27;hello.c&#x27;)</span><br><span class="line">program_list = Program(object_list)</span><br><span class="line">print(type(object_list))</span><br><span class="line">print(object_list)</span><br></pre></td></tr></table></figure>
+
+<p>linux平台输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">&lt;class &#x27;SCons.Node.NodeList&#x27;&gt;</span><br><span class="line">[&#x27;hello.o&#x27;]</span><br><span class="line">The object file is: hello.o</span><br><span class="line">The program file is: hello</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-File创建文件节点-Dir创建路径节点"><a href="#3-File创建文件节点-Dir创建路径节点" class="headerlink" title="3. File创建文件节点 &amp; Dir创建路径节点"></a>3. File创建文件节点 &amp; Dir创建路径节点</h2><p>SCons明确了文件节点和路径节点的不同，SCons支持<strong>File</strong> 和<strong>Dir</strong>两个函数，用于返回文件和路径节点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hello_c = File(&#x27;hello.c&#x27;)</span><br><span class="line">Program(hello_c)</span><br><span class="line"></span><br><span class="line">classes = Dir(&#x27;classes&#x27;)</span><br><span class="line">Java(classes, &#x27;src&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>通常情况下，您不需要手动调用File或Dir，因为调用构建方法时，会自动将输入作为文件或目录的名称，并将其转换为一个Node对象。</p>
+<p>有时对象可能是文件也可能是一个路径，此时SCons提供了一个<strong>Entry</strong>函数，用于返回一个文件节点或者路径节点。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xyzzy = Entry(&#x27;xyzzy&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-打印节点对象名称"><a href="#4-打印节点对象名称" class="headerlink" title="4. 打印节点对象名称"></a>4. 打印节点对象名称</h2><p>大多数情况下我们需要调用节点去打印其内部的文件名称，但是请注意<strong>此时的对象是节点列表，而非文件对象</strong>，因此打印的时候需要增加<strong>下标访问</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object_list = Object(<span class="string">&#x27;hello.c&#x27;</span>)</span><br><span class="line">program_list = Program(object_list)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The object file is: %s&quot;</span>%object_list[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The program file is: %s&quot;</span>%program_list[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<p>   在Linux系统输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">The object files is: hello.o</span><br><span class="line">The program file is: hello</span><br><span class="line">cc - o hello.o -c hello.c</span><br><span class="line">cc -o hello hello.o</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，object_list[0]从列表中提取了一个实际的Node对象，Python的print语句将该对象转换为要打印的字符串。</p>
+<h2 id="5-节点对象转换为字符串"><a href="#5-节点对象转换为字符串" class="headerlink" title="5. 节点对象转换为字符串"></a>5. 节点对象转换为字符串</h2><p>如上节介绍所示，我们可以直接打印节点的文件信息，但是如果您想得到一个节点字符串，而非列表，则可以通过python内置的<strong><em>str</em>函数</strong>实现。举例而言，如果您希望使用Python的<em>os.path.exists</em>来确认文件是否存在，您可以采用如下方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line">program_list = Program(<span class="string">&#x27;hello.c&#x27;</span>)</span><br><span class="line">program_name = <span class="built_in">str</span>(program_list[<span class="number">0</span>])</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(program_name):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%s doses not exist!&quot;</span>%program_name)</span><br></pre></td></tr></table></figure>
+
+<p>   此时，在Linux系统中将会得到如下输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">hello does not exist!</span><br><span class="line">cc -o hello.o -c hello.c</span><br><span class="line">cc - o hello hello.o</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="四、判断是否需要重新编译"><a href="#四、判断是否需要重新编译" class="headerlink" title="四、判断是否需要重新编译"></a>四、判断是否需要重新编译</h1><p>SCons很智能，只会编译需要编译的内容。比如我刚执行完scons，再次执行，则会提示<code>scons: . is up to date.</code>。 那么他是如何做到的呢？也不复杂，依赖一个Decider的方法，以及一个<code>.sconsign.dblite</code>文件。</p>
+<p>默认情况下，如果文件的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=md5&spm=1001.2101.3001.7020">md5</a>值改变了，才会重新编译。每次编译，SCons都会把md5存起来，再次执行时，如果md5没变，则不需要rebuild。</p>
+<h1 id="五、解析命令行选项"><a href="#五、解析命令行选项" class="headerlink" title="五、解析命令行选项"></a>五、解析命令行选项</h1><h2 id="1-AddOption"><a href="#1-AddOption" class="headerlink" title="1. AddOption"></a>1. AddOption</h2><p>作用：添加一项命令行选项</p>
+<p>用法类似python中optparse库解析命令行参数的方法<code>add_option</code></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lwnylslwnyls/article/details/8199454">https://blog.csdn.net/lwnylslwnyls/article/details/8199454</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AddOption(</span><br><span class="line">    &#x27;--prefix&#x27;,</span><br><span class="line">    dest=&#x27;prefix&#x27;,</span><br><span class="line">    nargs=1,</span><br><span class="line">    type=&#x27;string&#x27;,</span><br><span class="line">    action=&#x27;store&#x27;,</span><br><span class="line">    metavar=&#x27;DIR&#x27;,</span><br><span class="line">    help=&#x27;installation prefix&#x27;,</span><br><span class="line">)</span><br><span class="line">env = Environment(PREFIX=GetOption(&#x27;prefix&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>添加以上命令行选项后，执行scons -h后可以看到添加的选项说明</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Local Options:</span><br><span class="line">  --prefix=DIR                installation prefix</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-GetOption"><a href="#2-GetOption" class="headerlink" title="2. GetOption"></a>2. GetOption</h2><p>作用：读取相应的命令行选项</p>
+<p>通过AddOption得到的命令行参数，可以通过GetOption(‘参数名’)来获得，如上例所示</p>
+<h2 id="3-SetOption"><a href="#3-SetOption" class="headerlink" title="3. SetOption"></a>3. SetOption</h2><p>作用：设置相应的命令行选项。</p>
+<p>通过命令行选项设置的值将优先于使用SetOption设置的值</p>
+<p>SetOption允许在脚本中设置项目默认值，并通过命令行临时覆盖它。SetOption调用也可以放在site_init.py文件中。</p>
+<h2 id="4-Help"><a href="#4-Help" class="headerlink" title="4. Help"></a>4. Help</h2><p>在一个命令不知道怎么使用时，使用 –help 来获取当前命令的选项帮助是最好的方法。SCons 也是提供了 help 选项的编写，可以帮助用户简单的创建 –help 的语句。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Help(&quot;&quot;&quot;</span><br><span class="line">Type: &#x27;scons program&#x27; to build the production program,</span><br><span class="line">&#x27;scons debug&#x27; to build the debug version.</span><br><span class="line">&quot;&quot;&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>scons -h输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -h</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line"></span><br><span class="line">Type: &#x27;scons program&#x27; to build the production program,</span><br><span class="line">&#x27;scons debug&#x27; to build the debug version.</span><br><span class="line"></span><br><span class="line">Use scons -H for help about command-line options.</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h1 id="六、site-scons目录"><a href="#六、site-scons目录" class="headerlink" title="六、site_scons目录"></a>六、site_scons目录</h1><p>在scons解析SConscript文件之前，scons将首先在<code>各种系统目录</code>，<code>含有SConstruct文件的目录</code>和<code>scons 的命令行选项--site-dir指定的目录</code>这三种目录下寻找site_scons目录，并将找到的site_scons目录放到python模块的搜索路径中，即sys.path。这样就使得SConscript文件可以引入site_scons目录下的模块并使用。</p>
+<p>此外，有的site_scons目录还可能含有 <code>site_init.py</code>文件和<code>site_tools</code>目录</p>
+<h2 id="1-site-init-py"><a href="#1-site-init-py" class="headerlink" title="1.site_init.py"></a>1.site_init.py</h2><p>site_init.py文件将会先于SConscript文件被执行</p>
+<h2 id="2-site-tools"><a href="#2-site-tools" class="headerlink" title="2. site_tools"></a>2. site_tools</h2><p>site_tools目录的路径会被预先添加到默认工作路径</p>
+<h1 id="七、SCons内置函数"><a href="#七、SCons内置函数" class="headerlink" title="七、SCons内置函数"></a>七、SCons内置函数</h1><h2 id="1-GetCurrentDir"><a href="#1-GetCurrentDir" class="headerlink" title="1 GetCurrentDir()"></a>1 GetCurrentDir()</h2><p>获取当前路径。</p>
+<h2 id="2-Glob"><a href="#2-Glob" class="headerlink" title="2 Glob()"></a>2 Glob()</h2><p>获取当前目录下的所有 C 文件。修改参数的值为其他后缀就可以匹配当前目录下的所有某类型的文件。</p>
+<h2 id="3-Split-str"><a href="#3-Split-str" class="headerlink" title="3 Split(str)"></a>3 Split(str)</h2><p>将字符串 str 分割成一个列表 list。</p>
+<h1 id="八、环境"><a href="#八、环境" class="headerlink" title="八、环境"></a>八、环境</h1><p>环境是可以影响程序执行方式的值的集合，SCons区分了三种不同类型的环境，这些环境都可能会影响SCons本身的行为、它执行的编译器以及其他工具。</p>
+<h2 id="1-外部环境-External-Environment"><a href="#1-外部环境-External-Environment" class="headerlink" title="1. 外部环境 External Environment"></a>1. 外部环境 External Environment</h2><p>外部环境是用户运行SCons时用户环境中的一组变量。这些变量不是SCons构建的自动组成部分，但在需要时可以进行检查。</p>
+<p>外部环境即为Python 中os模块的environ字典，它提供了用户在执行SCons时有效的外部环境变量设置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">print(&quot;Shell is&quot;, os.environ[&#x27;SHELL&#x27;])</span><br></pre></td></tr></table></figure>
+
+<p><strong>os.environ 是一个字典，是环境变量的字典</strong>，环境变量是程序和操作系统之间的通信方式</p>
+<p>常见 key 字段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">windows：</span><br><span class="line">os.environ[&#x27;HOMEPATH&#x27;]:当前用户主目录。</span><br><span class="line">os.environ[&#x27;TEMP&#x27;]:临时目录路径。</span><br><span class="line">os.environ[&quot;PATHEXT&quot;]:可执行文件。</span><br><span class="line">os.environ[&#x27;SYSTEMROOT&#x27;]:系统主目录。</span><br><span class="line">os.environ[&#x27;LOGONSERVER&#x27;]:机器名。</span><br><span class="line">os.environ[&#x27;PROMPT&#x27;]:设置提示符。</span><br><span class="line"></span><br><span class="line">linux：</span><br><span class="line">os.environ[&#x27;USER&#x27;]:当前使用用户。</span><br><span class="line">os.environ[&#x27;LC_COLLATE&#x27;]:路径扩展的结果排序时的字母顺序。</span><br><span class="line">os.environ[&#x27;SHELL&#x27;]:使用shell的类型。</span><br><span class="line">os.environ[&#x27;LAN&#x27;]:使用的语言。</span><br><span class="line">os.environ[&#x27;SSH_AUTH_SOCK&#x27;]:ssh的执行路径。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-构造环境-Construction-Environment"><a href="#2-构造环境-Construction-Environment" class="headerlink" title="2. 构造环境 Construction Environment"></a>2. 构造环境 Construction Environment</h2><p>构造环境是在SConscript文件中创建的一个不同对象，它包含的值会影响SCons如何决定使用什么操作来构建目标，甚至定义应该从哪些源构建哪些目标。SCons最强大的功能之一是能够创建多个构造环境，包括从现有构造环境克隆新的自定义构造环境的能力。</p>
+<p>构造环境是一个对象，它有许多相关的构造变量，每个变量都有一个名称和一个值，就像字典一样。</p>
+<h3 id="2-1-设置环境构造变量"><a href="#2-1-设置环境构造变量" class="headerlink" title="2.1 设置环境构造变量"></a>2.1 设置环境构造变量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 由Environment()方法创建一个构造环境对象</span><br><span class="line">env = Environment()</span><br><span class="line"># 默认情况下，SCons使用一组适用于当前平台的构建器方法和构建变量初始化每个新的构造环境</span><br><span class="line"># 初始化构造环境时，可以设置环境构造变量的值，以控制程序的生成方式。</span><br><span class="line">env = Environment(CC=&#x27;gcc&#x27;, CCFLAGS=&#x27;-O2&#x27;)</span><br><span class="line">env.Program(&#x27;foo.c&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>用户已明确指定使用GNU C编译器gcc，并且在编译对象文件时应使用-O2（优化级别2）标志。换句话说，$CC和$CCFLAGS的显式初始化会覆盖新创建的构造环境中的默认值。此时使用scons输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; scons -Q</span><br><span class="line">gcc -o foo.o -c -O2 foo.c</span><br><span class="line">gcc -o foo foo.o</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-获取环境构造变量的值"><a href="#2-2-获取环境构造变量的值" class="headerlink" title="2.2 获取环境构造变量的值"></a>2.2 获取环境构造变量的值</h3><p>Python打印调用将为我们输出CC和LATEX的值</p>
+<p>ps:使用.get（xxx, None）方法进行获取意味着，如果未设置变量，我们将返回None，而不是失败</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">env = Environment()</span><br><span class="line">print(&quot;CC is: %s&quot; % env[&#x27;CC&#x27;])</span><br><span class="line">print(&quot;LATEX is: %s&quot; % env.get(&#x27;LATEX&#x27;, None))</span><br></pre></td></tr></table></figure>
+
+<p>构造环境实际上是一个具有关联方法和属性的对象。如果您只想直接访问构造变量的字典，则可以使用env的Dictionary方法获取该字典。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">env = Environment(FOO=&#x27;foo&#x27;, BAR=&#x27;bar&#x27;)</span><br><span class="line">cvars = env.Dictionary()</span><br><span class="line">for key in [&#x27;OBJSUFFIX&#x27;, &#x27;LIBSUFFIX&#x27;, &#x27;PROGSUFFIX&#x27;]:</span><br><span class="line">    print(&quot;key = %s, value = %s&quot; % (key, cvars[key]))</span><br></pre></td></tr></table></figure>
+
+<p>使用dump()方法格式化输出构造环境的信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">env = Environment()</span><br><span class="line">print(env.Dump())</span><br></pre></td></tr></table></figure>
+
+<p><strong>subst方法</strong></p>
+<p>直接通过字典索引的方式输出环境构造变量的值时，有些环境构造变量不会展开，使得阅读存在困难</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">env = Environment(CCFLAGS=&#x27;-DFOO&#x27;)</span><br><span class="line">print(&quot;CCCOM is: %s&quot; % env[&#x27;CCCOM&#x27;])</span><br><span class="line"></span><br><span class="line">&gt; scons -Q</span><br><span class="line">CCCOM is: $CC $CCFLAGS $CPPFLAGS $_CPPDEFFLAGS $_CPPINCFLAGS -c -o $TARGET $SOURCES</span><br><span class="line">scons: `.&#x27; is up to date.</span><br></pre></td></tr></table></figure>
+
+<p>而使用subst方法输出，则会展开全部环境构造变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">env = Environment(CCFLAGS=&#x27;-DFOO&#x27;)</span><br><span class="line">print(&quot;CCCOM is: %s&quot; % env.subst(&#x27;$CCCOM&#x27;))</span><br><span class="line"></span><br><span class="line">&gt; scons -Q</span><br><span class="line">CCCOM is: gcc -DFOO -c -o</span><br><span class="line">scons: `.&#x27; is up to date.</span><br></pre></td></tr></table></figure>
+
+<p>可见，CC被展开为gcc，CCFLAGS被展开为-DFOO</p>
+<h3 id="2-3-默认构造环境"><a href="#2-3-默认构造环境" class="headerlink" title="2.3 默认构造环境"></a>2.3 默认构造环境</h3><p>如果没有指定构造环境，Program和Library等构造方法都是使用默认构造环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 使用默认构造环境</span><br><span class="line">Program(&#x27;foo&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line"></span><br><span class="line"># 使用指定构造环境</span><br><span class="line">opt = Environment(CCFLAGS=&#x27;-O2&#x27;)</span><br><span class="line">opt.Program(&#x27;foo&#x27;, &#x27;foo.c&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>而控制默认构造和环境的方法为<code>DefaultEnvironment</code></p>
+<p>DefaultEnvironment函数返回初始化的默认构造环境对象，然后可以像任何其他构造环境一样对其进行操作，例如以下示例指定了默认构造环境使用的编译器为’&#x2F;usr&#x2F;local&#x2F;bin&#x2F;gcc’</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 方式一</span><br><span class="line">DefaultEnvironment(CC=&#x27;/usr/local/bin/gcc&#x27;)</span><br><span class="line"># 方式二</span><br><span class="line">def_env = DefaultEnvironment()</span><br><span class="line">def_env[&#x27;CC&#x27;] = &#x27;/usr/local/bin/gcc&#x27;</span><br><span class="line"># 两种方式等价</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-4-创建多个构造环境"><a href="#2-4-创建多个构造环境" class="headerlink" title="2.4 创建多个构造环境"></a>2.4 创建多个构造环境</h3><p>SCons的一大优势是可以创造多个构造环境。</p>
+<p>不同的源文件可能需要在命令行上启用不同的选项，或者不同的可执行程序需要与不同的库链接。SCons允许您创建和配置控制软件构建方式的多个构建环境，从而满足这些不同的构建需求。</p>
+<p>每个构建环境根据构建某个软件或其他文件的不同方式进行定制。例如，如果我们需要用 -O2标志构建一个程序，用 -g (debug)标志构建另一个程序，我们可以这样做:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">opt = Environment(CCFLAGS=&#x27;-O2&#x27;)</span><br><span class="line">dbg = Environment(CCFLAGS=&#x27;-g&#x27;)</span><br><span class="line">opt.Program(&#x27;foo&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line">dbg.Program(&#x27;bar&#x27;, &#x27;bar.c&#x27;)</span><br><span class="line">        </span><br><span class="line">&gt; scons -Q</span><br><span class="line">cc -o bar.o -c -g bar.c</span><br><span class="line">cc -o bar bar.o</span><br><span class="line">cc -o foo.o -c -O2 foo.c</span><br><span class="line">cc -o foo foo.o</span><br></pre></td></tr></table></figure>
+
+<p>甚至可以构建同一个源文件的不同版本程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">opt = Environment(CCFLAGS=&#x27;-O2&#x27;)</span><br><span class="line">dbg = Environment(CCFLAGS=&#x27;-g&#x27;)</span><br><span class="line">opt.Program(&#x27;foo&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line">dbg.Program(&#x27;foo&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line"></span><br><span class="line">&gt; scons -Q</span><br><span class="line">scons: *** Two environments with different actions were specified for the same target: foo.o</span><br><span class="line">File &quot;/home/my/project/SConstruct&quot;, line 6, in &lt;module&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但是因为产生了相同名字的不同中间文件而报错，为了避免这个问题，我们必须明确指定每个环境使用object生成器将foo.c编译为一个单独命名的对象文件，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">opt = Environment(CCFLAGS=&#x27;-O2&#x27;)</span><br><span class="line">dbg = Environment(CCFLAGS=&#x27;-g&#x27;)</span><br><span class="line">o = opt.Object(&#x27;foo-opt&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line">opt.Program(o)</span><br><span class="line">d = dbg.Object(&#x27;foo-dbg&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line">dbg.Program(d)</span><br><span class="line">        </span><br><span class="line">&gt; scons -Q</span><br><span class="line">cc -o foo-dbg.o -c -g foo.c</span><br><span class="line">cc -o foo-dbg foo-dbg.o</span><br><span class="line">cc -o foo-opt.o -c -O2 foo.c</span><br><span class="line">cc -o foo-opt foo-opt.o</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-5-复制构造环境"><a href="#2-5-复制构造环境" class="headerlink" title="2.5 复制构造环境"></a>2.5 复制构造环境</h3><p>有时，您希望多个构造环境共享一个或多个变量的相同值。在创建每个构造环境时，不必总是重复所有公共变量，而是可以使用env构造环境的Clone方法来创建构造环境的副本。</p>
+<p>与创建构造环境的Environment调用一样，Clone方法接受构造变量赋值，该赋值将覆盖复制的构造环境中的值。</p>
+<p>例如，假设我们想使用gcc创建一个程序的三个版本，一个是优化的，一个调试的，还有一个两者都没有。我们可以通过创建一个“基本”构造环境来实现这一点，该环境将CC设置为gcc，然后创建两个副本，一个设置CCFLAGS用于优化，另一个设置CCFLAGS用于调试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">env = Environment(CC=&#x27;gcc&#x27;)</span><br><span class="line">opt = env.Clone(CCFLAGS=&#x27;-O2&#x27;)</span><br><span class="line">dbg = env.Clone(CCFLAGS=&#x27;-g&#x27;)</span><br><span class="line"></span><br><span class="line">env.Program(&#x27;foo&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line">o = opt.Object(&#x27;foo-opt&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line">opt.Program(o)</span><br><span class="line">d = dbg.Object(&#x27;foo-dbg&#x27;, &#x27;foo.c&#x27;)</span><br><span class="line">dbg.Program(d)</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">&gt; scons -Q</span><br><span class="line">gcc -o foo.o -c foo.c</span><br><span class="line">gcc -o foo foo.o</span><br><span class="line">gcc -o foo-dbg.o -c -g foo.c</span><br><span class="line">gcc -o foo-dbg foo-dbg.o</span><br><span class="line">gcc -o foo-opt.o -c -O2 foo.c</span><br><span class="line">gcc -o foo-opt foo-opt.o</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-6-更改环境构造变量"><a href="#2-6-更改环境构造变量" class="headerlink" title="2.6 更改环境构造变量"></a>2.6 更改环境构造变量</h3><p>通过env的Replace方法可以更改env构造环境中环境构造变量的值，如果这个环境构造变量不存在，则新增。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">env = Environment(CCFLAGS=&#x27;-DDEFINE1&#x27;)</span><br><span class="line">env.Replace(CCFLAGS=&#x27;-DDEFINE2&#x27;)</span><br><span class="line">env.Program(&#x27;foo.c&#x27;)</span><br><span class="line"></span><br><span class="line">&gt; scons -Q</span><br><span class="line">cc -o foo.o -c -DDEFINE2 foo.c</span><br><span class="line">cc -o foo foo.o</span><br></pre></td></tr></table></figure>
+
+<p>在构建环境实际用于构建目标之前，变量不会展开，而且SCons函数和方法调用与顺序无关，所以最后一个替换“获胜”并用于构建所有目标，而不管对Replace（）的调用与对构建器方法的调用之间的顺序如何</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">env = Environment(CCFLAGS=&#x27;-DDEFINE1&#x27;)</span><br><span class="line">print(&quot;CCFLAGS = %s&quot; % env[&#x27;CCFLAGS&#x27;])</span><br><span class="line">env.Program(&#x27;foo.c&#x27;)</span><br><span class="line"></span><br><span class="line">env.Replace(CCFLAGS=&#x27;-DDEFINE2&#x27;)</span><br><span class="line">print(&quot;CCFLAGS = %s&quot; % env[&#x27;CCFLAGS&#x27;])</span><br><span class="line">env.Program(&#x27;bar.c&#x27;)</span><br><span class="line"></span><br><span class="line">&gt; scons</span><br><span class="line">scons: Reading SConscript files ...</span><br><span class="line">CCFLAGS = -DDEFINE1</span><br><span class="line">CCFLAGS = -DDEFINE2</span><br><span class="line">scons: done reading SConscript files.</span><br><span class="line">scons: Building targets ...</span><br><span class="line">cc -o bar.o -c -DDEFINE2 bar.c</span><br><span class="line">cc -o bar bar.o</span><br><span class="line">cc -o foo.o -c -DDEFINE2 foo.c</span><br><span class="line">cc -o foo foo.o</span><br><span class="line">scons: done building targets.</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-执行环境-Execution-Environment"><a href="#3-执行环境-Execution-Environment" class="headerlink" title="3. 执行环境 Execution Environment"></a>3. 执行环境 Execution Environment</h2><p>执行环境是SCons在执行外部命令（如编译器或链接器）以构建一个或多个目标时设置的值。</p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/u/ddb7903b52e4">VictorWANG1992 - 简书 (jianshu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/danshiming/article/details/122771064?ops_request_misc=%7B%22request_id%22:%22169805899416777224422665%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169805899416777224422665&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-122771064-null-null.142%5Ev96%5Epc_search_result_base2&utm_term=SCons&spm=1018.2226.3001.4187">SCons简单入门（一）-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.scons.org/doc/production/HTML/scons-user/index.html">SCons 4.5.2官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jeek_we/category_12034807.html">scons_jeek_we的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/645748713">【千锋RT-Thread】第31章 SCons 构建工具 - 知乎 (zhihu.com)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">第二章：指令系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-22 16:21:00" itemprop="dateCreated datePublished" datetime="2023-10-22T16:21:00+08:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-05 09:17:33" itemprop="dateModified" datetime="2023-11-05T09:17:33+08:00">2023-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《计算机体系结构》学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="1-指令系统结构的分类"><a href="#1-指令系统结构的分类" class="headerlink" title="1 指令系统结构的分类"></a>1 指令系统结构的分类</h1><p>CPU中用来存放操作数的存储单元主要有三种：<strong>堆栈</strong>、<strong>累加器</strong>、<strong>通用寄存器组</strong>。据此，指令系统（Instruction Set Architecture）可分为三种：</p>
+<ul>
+<li><strong>$\color[RGB]{40,120,181}{堆栈型结构}$：</strong>堆栈栈顶和次栈顶中的数据，运算后写入栈顶。两个操作数都是隐式的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>不能随机地访问堆栈，难以生成有效的代码，而且对栈顶的访问是个瓶颈。</li>
+<li><strong>$\color[RGB]{40,120,181}{累加器型结构}$：</strong>一个操作数是隐式的，即累加器；另一个是显示给出的。<strong>优点：</strong>指令字比较短，程序占用的空间小；<strong>缺点：</strong>只有一个中间结果暂存在累加器中，需要频繁访问存储器。</li>
+</ul>
+<p>早期计算机大多采用堆栈型结构或累加器型结构</p>
+<ul>
+<li><strong>$\color[RGB]{40,120,181}{通用寄存器型结构}$：</strong>所有操作数都是显示给出的。<strong>优点：</strong>1.寄存器的访问比存储器快得多 2. 编译器能够更加容易、有效地分配寄存器 。根据操作数显式给出的来源不同，又可以分为两类：<ul>
+<li>$\color[RGB]{248,172,140}{寄存器-存储器型结构(RM结构)}:$一个操作数来自寄存器，另一个来自存储器。</li>
+<li>$\color[RGB]{248,172,140}{寄存器-寄存器型结构(RR结构)}:$两个操作数都来自寄存器。</li>
+</ul>
+</li>
+</ul>
+<p>**显式给出:**用指令字中的操作数字段给出</p>
+<p>**隐式给出:**用事先约定好的单元</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/10/22/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/19/1019-1021/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/19/1019-1021/" class="post-title-link" itemprop="url">宝藏博客</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-19 23:50:11" itemprop="dateCreated datePublished" datetime="2023-10-19T23:50:11+08:00">2023-10-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-21 16:45:02" itemprop="dateModified" datetime="2023-11-21T16:45:02+08:00">2023-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%94%B6%E8%97%8F/" itemprop="url" rel="index"><span itemprop="name">收藏</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://dongshao.blog.csdn.net/?type=blog">董哥的黑板报_APUE编程,TCP&#x2F;IP卷一,C++-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://csdiy.wiki/">CS自学指南 (csdiy.wiki)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -308,7 +1247,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-01-08 16:20:45" itemprop="dateModified" datetime="2024-01-08T16:20:45+08:00">2024-01-08</time>
+      <time title="修改时间：2024-01-17 09:25:40" itemprop="dateModified" datetime="2024-01-17T09:25:40+08:00">2024-01-17</time>
     </span>
 
   
@@ -392,7 +1331,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-23 19:50:33" itemprop="dateModified" datetime="2023-11-23T19:50:33+08:00">2023-11-23</time>
+      <time title="修改时间：2024-01-17 11:11:34" itemprop="dateModified" datetime="2024-01-17T11:11:34+08:00">2024-01-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -440,361 +1379,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/07/Markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/07/Markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/" class="post-title-link" itemprop="url">Markdown常用语法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-07 20:12:34" itemprop="dateCreated datePublished" datetime="2023-10-07T20:12:34+08:00">2023-10-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-05 09:13:02" itemprop="dateModified" datetime="2023-11-05T09:13:02+08:00">2023-11-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>markdown是一种被广泛使用的轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档，Markdown文件的后缀名是“.md”。</p>
-<h1 id="修改文字颜色"><a href="#修改文字颜色" class="headerlink" title="修改文字颜色"></a>修改文字颜色</h1><p>默认字体颜色自然是黑色啦，想要修改字体颜色有两种方法</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/07/Markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/07/Hexo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/07/Hexo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/" class="post-title-link" itemprop="url">Hexo上传图片</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-07 19:45:52" itemprop="dateCreated datePublished" datetime="2023-10-07T19:45:52+08:00">2023-10-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-19 15:04:13" itemprop="dateModified" datetime="2023-10-19T15:04:13+08:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Hexo网站已经搭建好了，我们可以开始愉快地写博客了！</p>
-<h2 id="1-Typora编辑器"><a href="#1-Typora编辑器" class="headerlink" title="1. Typora编辑器"></a>1. Typora编辑器</h2><p>Typora是一种markdown语言的常用编辑器，这个软件的方便之处在于可以直接将markdown语法呈现出其效果，并且集成了许多有用的工具，是编辑markdown的不二之选。</p>
-<p><a target="_blank" rel="noopener" href="https://typora.io/">Typora官网</a></p>
-<hr>
-<h2 id="2-Hexo插入本地图片遇到的问题"><a href="#2-Hexo插入本地图片遇到的问题" class="headerlink" title="2. Hexo插入本地图片遇到的问题"></a>2. Hexo插入本地图片遇到的问题</h2><p>markdown的图片插入语法为</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![图片描述](图片路径)</span><br></pre></td></tr></table></figure>
-
-<p>如果使用Typora，可以直接将图片复制粘贴在想要放置的位置，十分方便</p>
-<p>当我们将图片直接复制到Typora中时，会出现图片可以在markdown中显示，但却无法在网页中显示的问题。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/07/Hexo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/10/05/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/05/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">网络配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-05 23:06:59" itemprop="dateCreated datePublished" datetime="2023-10-05T23:06:59+08:00">2023-10-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-21 15:24:15" itemprop="dateModified" datetime="2023-11-21T15:24:15+08:00">2023-11-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1-ifconfig（Linux）-ipconfig（windows）"><a href="#1-ifconfig（Linux）-ipconfig（windows）" class="headerlink" title="1. ifconfig（Linux） &#x2F; ipconfig（windows）"></a>1. ifconfig（Linux） &#x2F; ipconfig（windows）</h2><p>作用：用于查看网卡配置信息</p>
-<p>如IPV4地址、IPV6地址、工作状态、网络类型</p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/l_liangkk/article/details/114959914">查看网卡信息：ifconfig命令及详细介绍_ifconfig ether_-纸短情长的博客-CSDN博客</a> </p>
-<p><img src="/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/image-20231007104602303.png" alt="image-20231007104602303"></p>
-<h2 id="Ubuntu网络图标消失"><a href="#Ubuntu网络图标消失" class="headerlink" title="Ubuntu网络图标消失"></a>Ubuntu网络图标消失</h2><p>[Ubuntu 虚拟机没有网络图标（连接不上网络）_ubuntu没有网络图标_快乐科研喵的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_53089817/article/details/119490128#:~:text=%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%9A">https://blog.csdn.net/qq_53089817/article/details/119490128#:~:text=解决方法：</a> 1、先关闭当前的虚拟机。 2、选择虚拟机设置查看网络配置是否正确（选择NAT连接）。 点击确定。,3、选择菜单编辑的虚拟网络编辑器。 选择NAT模式后 点击更改设置。 4、最后重启Ubuntu系统就有网络图标了。)</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/aggie4628/article/details/125765055">ubuntu-22.04无法连接网络-sudo service network-manager stop说不行-CSDN博客</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo service NetworkManager stop</span><br><span class="line"> </span><br><span class="line">sudo rm /var/lib/NetworkManager/NetworkManager.state</span><br><span class="line"> </span><br><span class="line">sudo service NetworkManager start</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2023/09/26/Hexo%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lang Yi Qun">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郎轶群的博客">
-      <meta itemprop="description" content="this is a personal blog of lyq">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郎轶群的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/26/Hexo%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">Hexo网站搭建教程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-09-26 17:03:12" itemprop="dateCreated datePublished" datetime="2023-09-26T17:03:12+08:00">2023-09-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-16 11:31:48" itemprop="dateModified" datetime="2023-10-16T11:31:48+08:00">2023-10-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>如果</p>
-<p>你也可以像我一样</p>
-<p>拥有一篇属于你自己的Hexo框架博客网站</p>
-<p>那我觉得</p>
-<p>这件事情</p>
-<p>泰酷辣！！！！！！！！！</p>
-<p><img src="/Hexo%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1684920495319.png" alt="泰裤辣"></p>
-</blockquote>
-<hr>
-<p>这是一个手把手教你如何搭建一个属于你自己的Hexo框架博客网站的教程</p>
-<hr>
-<h2 id="第一节-Hexo简介"><a href="#第一节-Hexo简介" class="headerlink" title="第一节  Hexo简介"></a>第一节  Hexo简介</h2><p>Hexo是一款基于Node.js的静态博客框架，Hexo 使用 <a href="https://link.zhihu.com/?target=http://daringfireball.net/projects/markdown/">Markdown</a>（或其他渲染引擎）解析文章，可以方便地生成静态网页，并托管在GitHub和Gitee上，是搭建博客的首选框架，让你实现在不用购买云服务器的情况下拥有一个属于自己的博客网站的梦想。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/26/Hexo%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
