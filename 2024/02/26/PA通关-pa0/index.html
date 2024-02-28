@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"langyiqun.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="PA (Programming Assignment, PA)是南京大学计算机科学与技术系推出的计算机系统基础课程实验，也是一生一芯项目的必做实验。 本博客记录一下我自己完成pa的过程，将会展示代码并阐述自己的方案。 以下是PA的实验资料： 实验讲义：Introduction · GitBook (nju-projectn.github.io) 2023年秋季学期实验介绍：计算机系统基础习题课 (">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PA通关--pa0">
+<meta property="og:url" content="https://langyiqun.github.io/2024/02/26/PA%E9%80%9A%E5%85%B3-pa0/index.html">
+<meta property="og:site_name" content="郎轶群的博客">
+<meta property="og:description" content="PA (Programming Assignment, PA)是南京大学计算机科学与技术系推出的计算机系统基础课程实验，也是一生一芯项目的必做实验。 本博客记录一下我自己完成pa的过程，将会展示代码并阐述自己的方案。 以下是PA的实验资料： 实验讲义：Introduction · GitBook (nju-projectn.github.io) 2023年秋季学期实验介绍：计算机系统基础习题课 (">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-26T15:17:41.000Z">
+<meta property="article:modified_time" content="2024-02-26T16:11:04.740Z">
+<meta property="article:author" content="Lang Yi Qun">
+<meta property="article:tag" content="nemu pa">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://langyiqun.github.io/2024/02/26/PA%E9%80%9A%E5%85%B3-pa0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://langyiqun.github.io/2024/02/26/PA%E9%80%9A%E5%85%B3-pa0/","path":"2024/02/26/PA通关-pa0/","title":"PA通关--pa0"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PA通关--pa0 | 郎轶群的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">郎轶群的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">却道天凉好个秋</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">实验方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">实验环境</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PA-zero%EF%BC%9A%E9%85%8D%E7%BD%AE%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="nav-number"></span> <span class="nav-text">PA zero：配置实验环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E5%AE%89%E8%A3%85Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">一、 安装Ubuntu虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">二、常用工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">三、克隆项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%AF%95%E8%BF%90%E8%A1%8Cnemu"><span class="nav-number">4.</span> <span class="nav-text">四、试运行nemu</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lang Yi Qun</p>
+  <div class="site-description" itemprop="description">this is a personal blog of lyq</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/yourname" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener me" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://langyiqun.github.io/2024/02/26/PA%E9%80%9A%E5%85%B3-pa0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lang Yi Qun">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郎轶群的博客">
+      <meta itemprop="description" content="this is a personal blog of lyq">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="PA通关--pa0 | 郎轶群的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PA通关--pa0
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-02-26 23:17:41" itemprop="dateCreated datePublished" datetime="2024-02-26T23:17:41+08:00">2024-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-02-27 00:11:04" itemprop="dateModified" datetime="2024-02-27T00:11:04+08:00">2024-02-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>PA (Programming Assignment, PA)是南京大学计算机科学与技术系推出的计算机系统基础课程实验，也是一生一芯项目的必做实验。</p>
+<p>本博客记录一下我自己完成pa的过程，将会展示代码并阐述自己的方案。</p>
+<p>以下是PA的实验资料：</p>
+<p>实验讲义：<a target="_blank" rel="noopener" href="https://nju-projectn.github.io/ics-pa-gitbook/ics2023/index.html">Introduction · GitBook (nju-projectn.github.io)</a></p>
+<p>2023年秋季学期实验介绍：<a target="_blank" rel="noopener" href="http://why.ink:8080/ICS/2023/">计算机系统基础习题课 (2023 秋季学期) (why.ink)</a></p>
+<h2 id="实验方案"><a href="#实验方案" class="headerlink" title="实验方案"></a>实验方案</h2><p>理解”程序如何在计算机上运行”的根本途径是从”零”开始实现一个完整的计算机系统. 南京大学计算机科学与技术系<code>计算机系统基础</code>课程的小型项目PA将提出x86&#x2F;mips32&#x2F;riscv32(64)架构相应的教学版子集, 指导学生实现一个经过简化但功能完备的x86&#x2F;mips32&#x2F;riscv32(64)模拟器<strong>NEMU</strong>(NJU EMUlator), 最终在NEMU上运行游戏”仙剑奇侠传”, 来让学生探究”程序在计算机上运行”的基本原理. NEMU受到了<a target="_blank" rel="noopener" href="http://www.qemu.org/">QEMU</a>的启发, 并去除了大量与课程内容差异较大的部分. PA包括一个准备实验(配置实验环境)以及5部分连贯的实验内容:</p>
+<ul>
+<li>图灵机与简易调试器</li>
+<li>冯诺依曼计算机系统</li>
+<li>批处理系统</li>
+<li>分时多任务</li>
+<li>程序性能优化</li>
+</ul>
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
+<li>CPU架构: x64</li>
+<li>操作系统: GNU&#x2F;Linux</li>
+<li>编译器: GCC</li>
+<li>编程语言: C语言</li>
+</ul>
+<h1 id="PA-zero：配置实验环境"><a href="#PA-zero：配置实验环境" class="headerlink" title="PA zero：配置实验环境"></a>PA zero：配置实验环境</h1><h2 id="一、-安装Ubuntu虚拟机"><a href="#一、-安装Ubuntu虚拟机" class="headerlink" title="一、 安装Ubuntu虚拟机"></a>一、 安装Ubuntu虚拟机</h2><p> 我使用的是VMware，Ubuntu版本为22.04.6</p>
+<p>pa0教程很大一部分都是介绍虚拟机、Linux的配置和使用，例如更换国内源、检查网络、安装常用工具等，按照讲义来就好啦。</p>
+<h2 id="二、常用工具"><a href="#二、常用工具" class="headerlink" title="二、常用工具"></a>二、常用工具</h2><p>vim、tmux、apt</p>
+<h2 id="三、克隆项目"><a href="#三、克隆项目" class="headerlink" title="三、克隆项目"></a>三、克隆项目</h2><p>如果只做pa，那么只需要通过以下git命令获得框架代码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b 2023 git@github.com:NJU-ProjectN/ics-pa.git ics2023</span><br></pre></td></tr></table></figure>
+
+<p>如果是要准备一生一芯，那么需要通过以下命令获得整个一生一芯的框架代码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b master git@github.com:OSCPU/ysyx-workbench.git</span><br></pre></td></tr></table></figure>
+
+<p>然后进入master分支，通过脚本自动获得nemu和am的项目源代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git branch -m master</span><br><span class="line">bash init.sh nemu</span><br><span class="line">bash init.sh abstract-machine</span><br></pre></td></tr></table></figure>
+
+<p>以上脚本在自动下载源码的同时还会在<code>~/.bashrc</code>中分别添加nemu和am两个项目所在目录的环境变量（<code>$NEMU_HOME</code>，<code>$AM_HOME</code>）</p>
+<p>所以需要通过source命令使环境变量生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>如果你参加”一生一芯”, 请通过<code>git log tracer-ysyx</code>查看代码跟踪日志.</p>
+<h2 id="四、试运行nemu"><a href="#四、试运行nemu" class="headerlink" title="四、试运行nemu"></a>四、试运行nemu</h2><p>克隆完成之后，进入nemu目录，首先通过<code>make menuconfig</code>命令配置nemu</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
+
+<p>进入配置页面后直接EXIT即可</p>
+<p>然后通过<code>make run</code>命令运行nemu</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make run</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nemu-pa/" rel="tag"># nemu pa</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/25/C%E8%AF%AD%E8%A8%80-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="prev" title="C语言-类型转换">
+                  <i class="fa fa-angle-left"></i> C语言-类型转换
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/02/26/PA%E9%80%9A%E5%85%B3-pa1/" rel="next" title="PA通关--pa1">
+                  PA通关--pa1 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Lang Yi Qun</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
