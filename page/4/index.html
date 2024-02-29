@@ -867,7 +867,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-23 17:28:43" itemprop="dateModified" datetime="2023-11-23T17:28:43+08:00">2023-11-23</time>
+      <time title="修改时间：2024-02-28 17:26:21" itemprop="dateModified" datetime="2024-02-28T17:26:21+08:00">2024-02-28</time>
     </span>
 
   
@@ -885,7 +885,6 @@
 <p>Wiki：<a target="_blank" rel="noopener" href="https://github.com/SCons/scons/wiki">https://github.com/SCons/scons/wiki</a></p>
 <p>manual page： <a target="_blank" rel="noopener" href="https://www.scons.org/doc/HTML/scons-man.html">SCons 4.6.0</a></p>
 <p> SConstruct文件，类似于Make系统中的Makefile文件，这是SCons读取并控制编译构建的输入文件。 SConstruct和Makefile的最大不同是：SConstruct文件是python脚本，这会大大简化构建的过程。</p>
-<p>是从</p>
 <p><strong>Scons函数与构建顺序无关</strong></p>
 <p>   SConstruct有一点和一般python脚本不同，SCons函数的书写调用顺序，并不影响SCons真实的构建顺序，这点和Makefile有点相似。换句话说，当你调用Program构建时（或者其他构建方法），SCons并非在此刻构建可执行文件，相反，这仅仅是告诉SCons你想要获得一个可执行文件的构建结果。举例来说，需要构建hello.c的源文件，SCons也仅仅是获取了构建可执行文件hello和源码hello.c之间的关系。</p>
 <h1 id="一、Scons构建方法"><a href="#一、Scons构建方法" class="headerlink" title="一、Scons构建方法"></a>一、Scons构建方法</h1><h2 id="1-Program构建二进制文件"><a href="#1-Program构建二进制文件" class="headerlink" title="1. Program构建二进制文件"></a>1. Program构建二进制文件</h2><p>如果想构建hello.c程序，新建一个</p>
